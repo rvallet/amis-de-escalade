@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head">...</head>
+	<head>
+		<title>Identification</title>
+		<meta name="description" content="Page d'identification des amis de l'ecalade"/>
+	</head>
+	
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="Identification">
+				<div class="container">
+					<h1>Page d'identification des amis de l'escalade</h1>
+	
+					<p th:if="${identificationError}" class="error">Vérifier l'email et le mot de passe</p>
+					
+					<form th:action="@{/identification}" method="post">
+						<div class="">
+							<label for="email"> e-Mail </label>
+							<input type="text" id="email" name="email" class="form-control" placeholder="Adresse e-mail" autofocus="autofocus" required=""/>
+							<br />
+						</div>
+						<div class="">
+							<label for="password"> Mot de passe </label>
+							<input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" required=""/>
+							<br />
+						</div>
+						<div class="">
+							<div class="row">
+								<div class="col-sm-6 col-sm-offset-3">
+									<input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-info" value="S'identifier" />
+								</div>
+							</div>
+						</div>
+					</form>
+					
+					<ol>
+						<li><a th:href="@{/creation-compte}">Créer un compte</a></li>
+						<li><a th:href="@{/creation-compte}">Récupérer son mot de passe</a></li>
+					</ol>
+
+				</div>
+			</section>
+
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>
