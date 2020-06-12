@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<link rel="stylesheet" type="text/css" 
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+		crossorigin="anonymous" />
+		<link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{../static/css/style.css}"/>
+		<link rel="icon" href="../static/img/icon.png">
+		<link rel="shortcut icon" href="../static/img/favicon.ico"/>
+	</head>
+
+	<body>
+		<header>
+			<nav role="navigation" aria-label="Menu principal">
+					<ul>
+						<li><a th:href="@{/accueil}">Accueil</a></li>
+						<li><a th:href="@{/identification}">Identification</a></li>			
+						<li><a href="#">Rubrique 3</a></li>
+						<li><a href="#">Rubrique 4</a></li>
+						<li><a href="#" th:href="@{/logout}">Se déconnecter</a></li>
+					</ul>
+			</nav>
+			<div class="container-fluid">
+				<nav role="navigation" aria-label="breadcrumb">
+					<ol class="breadcrumb">
+					<th:block layout:fragment="breadcrumb">
+						<li class="breadcrumb-item active" aria-current="page"> Accueil </li>
+					</th:block>
+					</ol>
+				</nav>
+			</div>
+		</header>
+		
+		<main layout:fragment="content"></main>
+
+		<footer role="contentinfo">
+			<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" aria-label="Footer">
+				<ol class="breadcrumb container-fluid">Footer - &copy; lade.org</div>			
+			</nav>
+		</footer>
+		
+		<!-- jQuery (min) -->
+		<!-- 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+				integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+				crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+				integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+				crossorigin="anonymous"></script>		
+		<!-- Bootstrap -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+				integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+				crossorigin="anonymous"></script>	
+	</body>
+</html>

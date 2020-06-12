@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="base">
+
+	<head th:insert="base :: head">
+		<title>Création de compte - LADE</title>
+		<meta name="description" content="Page de création de compte - Les amis de l'ecalade"/>
+	</head>
+	
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<div layout:fragment="content">
+			<section id="Accueil">
+				<div class="container">
+					<h1>Page de création de compte LADE !</h1>
+					<h2 th:utext="${message}"></h2>	
+				</div>
+			</section>
+
+		</div>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>
