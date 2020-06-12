@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	private Collection<? extends GrantedAuthority> convertRoleEnumToAuthorities(RoleEnum role){
-	return AuthorityUtils.createAuthorityList(role.toString());
+		return AuthorityUtils.createAuthorityList(role.toString());
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService{
 		user.setEmail(userRegistrationDto.getEmail());
 		user.setPassword(webSecurityConfig.passwordEncoder().encode(userRegistrationDto.getPassword()));
 		user.setRole(RoleEnum.USER);
-		return null;
+		return userRepository.save(user);
 	}
 
 }

@@ -39,13 +39,16 @@ public class UserRegistrationController {
 	
 	@PostMapping
 	public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto, BindingResult result){
+		LOGGER.info("AccountCreation for {}", userDto.getEmail());
 		User existing = userService.findByEmail(userDto.getEmail());
 		
 			if (existing != null){
+				LOGGER.warn("This email already exist");
 				result.rejectValue("email", null, "There is already an account registered with that email");
 			}
 	
 			if (result.hasErrors()){
+				LOGGER.debug("form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
 				return "creation-compte?error";
 			}
 	
