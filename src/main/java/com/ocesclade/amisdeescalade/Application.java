@@ -36,10 +36,10 @@ public class Application implements CommandLineRunner {
 				new User("email@user2.fr", webSecurityConfig.passwordEncoder().encode("passwordUser2"), RoleEnum.USER),
 				new User("email@admin1.fr", webSecurityConfig.passwordEncoder().encode("passwordAdmin1"), RoleEnum.ADMIN),
 				new User("email@admin2.fr", webSecurityConfig.passwordEncoder().encode("passwordAdmin2"), RoleEnum.ADMIN),
-				new User("email@user3.fr", "user3_lastName","user3_firstName", webSecurityConfig.passwordEncoder().encode("passwordUser3"), RoleEnum.USER), 
-				new User("email@user4.fr", "user4_lastName","user4_firstName", webSecurityConfig.passwordEncoder().encode("passwordUser4"), RoleEnum.USER),
-				new User("email@admin3.fr", "admin3_lastName","admin3_firstName", webSecurityConfig.passwordEncoder().encode("passwordAdmin3"), RoleEnum.ADMIN),
-				new User("email@admin4.fr", "admin4_lastName","admin4_firstName", webSecurityConfig.passwordEncoder().encode("passwordAdmin4"), RoleEnum.ADMIN));		
+				new User("email@user3.fr", "user3_pseudo", "user3_lastName","user3_firstName", webSecurityConfig.passwordEncoder().encode("passwordUser3"), RoleEnum.USER), 
+				new User("email@user4.fr", "user4_pseudo", "user4_lastName","user4_firstName", webSecurityConfig.passwordEncoder().encode("passwordUser4"), RoleEnum.USER),
+				new User("email@admin3.fr", "admin3_pseudo", "admin3_lastName","admin3_firstName", webSecurityConfig.passwordEncoder().encode("passwordAdmin3"), RoleEnum.ADMIN),
+				new User("email@admin4.fr", "admin4_pseudo", "admin4_lastName","admin4_firstName", webSecurityConfig.passwordEncoder().encode("passwordAdmin4"), RoleEnum.ADMIN));		
 
 		userRepository.saveAll(userList);
 		}

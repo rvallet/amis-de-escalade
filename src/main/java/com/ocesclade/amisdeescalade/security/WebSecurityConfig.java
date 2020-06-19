@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.ocesclade.amisdeescalade.controller.DeniedAccessController;
 import com.ocesclade.amisdeescalade.service.UserService;
 
 @Configuration
@@ -19,6 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DeniedAccessController deniedAccessController;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -40,13 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/accueil").permitAll();
 		http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN");
-//		http.authorizeRequests().antMatchers("/login").permitAll();
-//		http.authorizeRequests().antMatchers("/autre").hasAnyRole("USER","ADMIN");
+//		http.authorizeRequests().antMatchers("/autrePage").hasAnyRole("USER","ADMIN");
         http
         .authorizeRequests()
             .antMatchers(
+            		"/accueil",
+            		"/",
                     "/registration**",
                     "/creation-compte**",
                     "/js/**",
@@ -64,7 +68,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
-        .permitAll();
+                .permitAll()
+         .and()
+         .exceptionHandling().accessDeniedHandler(deniedAccessController);
 
 	}
 	

@@ -25,6 +25,12 @@ public class HomeController {
 		return "user/index";
 	}
 	
+	@GetMapping("/access-denied")
+	public String accessDenied(Model model) {
+		model.addAttribute("message", message);
+		return "access-denied";
+	}
+	
 	/* Thymeleaf Page content */
 	@Value("${welcome.message}")
 	private String message;
