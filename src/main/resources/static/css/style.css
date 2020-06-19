@@ -9,3 +9,8 @@ h1 {
 .error-message:first-letter {
 	text-transform: capitalize;
 }
+
+.carousel-inner img {
+	width: 100%;
+	height: 100%;
+}
