@@ -23,11 +23,11 @@ public class DeniedAccessController implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
-			LOGGER.info(auth.getName() + " a tenté de se connecté à l'URL suivante " + request.getRequestURI());
+			LOGGER.info("{} a tenté de se connecté à l'URL {}",auth.getName(), request.getRequestURI());
+		} else {
+			LOGGER.info("Tentative d'accès à l'URL {]", request.getRequestURI());
 		}
-
 		response.sendRedirect(request.getContextPath() + "/access-denied");
-		
 	}
 		
 }
