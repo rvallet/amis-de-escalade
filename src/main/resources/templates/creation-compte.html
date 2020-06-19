@@ -28,27 +28,27 @@
 							
 							<div class="form-group" th:classappend="${#fields.hasErrors('pseudo')}? 'has-error':''">
 								<label for="pseudo" class="control-label">Pseudo *</label>
-								<input id="pseudo" class="form-control" th:field="*{pseudo}" placeholder="Pseudonyme (Votre nom d'utilisateur sur le site)" autofocus="autofocus" required />
+								<input id="pseudo" class="form-control" autocomplete="username" th:field="*{pseudo}" placeholder="Pseudonyme (Votre nom d'utilisateur sur le site)" autofocus="autofocus" required />
 								<p class="error-message" th:each="error : ${#fields.errors('pseudo')}" th:text="${error}">Validation error</p>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
 								<label for="lastName" class="control-label">Nom </label>
-								<input id="lastName" class="form-control" th:field="*{lastName}" placeholder="Nom de famille (n'apparait pas sur le site)" />
+								<input id="lastName" class="form-control" autocomplete="family-name" th:field="*{lastName}" placeholder="Nom de famille (n'apparait pas sur le site)" />
 								<p class="error-message" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Validation error</p>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
 								<label for="firstName" class="control-label">Prénom </label>
-								<input id="firstName" class="form-control" th:field="*{firstName}" placeholder="Prénom (n'apparait pas sur le site)" />
+								<input id="firstName" class="form-control" autocomplete="given-name" th:field="*{firstName}" placeholder="Prénom (n'apparait pas sur le site)" />
 								<p class="error-message" th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation error</p>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
 								<label for="email" class="control-label">eMail*</label>
-								<input id="email" class="form-control" th:field="*{email}" placeholder="Adresse e-Mail" required />
+								<input id="email" class="form-control" autocomplete="username" th:field="*{email}" placeholder="Adresse e-Mail" required />
 								<p class="error-message" th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
 								<label for="password" class="control-label">Mot de passe*</label>
-								<input id="password" class="form-control" type="password" th:field="*{password}" placeholder="Mot de passe (8 caractères min.)" />
+								<input id="password" class="form-control" type="password" autocomplete="new-password" th:field="*{password}" placeholder="Mot de passe (8 caractères min.)" />
 								<p class="error-message" th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
 							</div>
 <!-- 							<div class="form-group" th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''"> -->

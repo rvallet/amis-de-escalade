@@ -39,11 +39,13 @@ public class UserServiceImpl implements UserService{
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
 		
-		LOGGER.info("loadUserByUsername with {} {} {}",user.getEmail(),user.getPassword(),user.getRole());
-		return new org.springframework.security.core.userdetails.User(
+		LOGGER.info("Found - loadUserByUsername with {} {} {}",user.getEmail(),user.getPassword(),user.getRole());
+		org.springframework.security.core.userdetails.User uControl = new org.springframework.security.core.userdetails.User(
 				user.getEmail(),
 				user.getPassword(),
 				convertRoleEnumToAuthorities(user.getRole()));
+		LOGGER.info("Found - loadUserByUsername with {}",uControl.toString());
+		return uControl;
 	}
 	
 	private Collection<? extends GrantedAuthority> convertRoleEnumToAuthorities(RoleEnum role){

@@ -1,11 +1,16 @@
 h1 {
-    color: #78ab46;
+	color: #78ab46;
 }
 
 .error-message {
-    color: #a94442;
+	color: #a94442;
 }
 
 .error-message:first-letter {
-    text-transform: capitalize;
+	text-transform: capitalize;
+}
+
+.carousel-inner img {
+	width: 100%;
+	height: 100%;
 }
