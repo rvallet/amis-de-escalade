@@ -49,7 +49,7 @@ public class UserRegistrationController {
 	
 			if (result.hasErrors()){
 				LOGGER.debug("form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
-				return "creation-compte?error";
+				return "creation-compte";
 			}
 	
 		userService.save(userDto);
