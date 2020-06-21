@@ -1,17 +1,26 @@
 package com.ocesclade.amisdeescalade.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import com.ocesclade.amisdeescalade.security.ValidPassword;
 import com.ocesclade.amisdeescalade.utils.RoleEnum;
 
 public class UserRegistrationDto {
 
+	@NotEmpty
 	private String pseudo;
 	
 	private String lastName;
 	
 	private String firstName;
 	
+	@Email
+	@NotEmpty
 	private String email;
 
+	@ValidPassword
+	@NotEmpty
 	private String password;
 	
 	private RoleEnum role;
