@@ -28,7 +28,7 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+
 		/* Initialize BDD with sample test users if empty (on first launch only) */
 		if (userRepository.findUserByEmail("email@user1.fr") == null) {
 		List<User> userList = Arrays.asList(
