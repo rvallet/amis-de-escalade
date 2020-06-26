@@ -1,14 +1,19 @@
 package com.ocesclade.amisdeescalade.entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -38,10 +43,16 @@ public class User implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private RoleEnum role;
 	
-	private String resetToken;	
+	private String resetToken;
+	
+	private Date creationDate;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private Collection<Topo> topos;
 	
 	public User() {
 		super();
+		this.creationDate= Calendar.getInstance().getTime();
 	}	
 	
 	public User(String email, String password, RoleEnum role) {
@@ -49,6 +60,7 @@ public class User implements Serializable {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.creationDate= Calendar.getInstance().getTime();
 	}
 	
 	public User(String email, String pseudo, String lastName, String firstName, String password, RoleEnum role) {
@@ -59,8 +71,9 @@ public class User implements Serializable {
 		this.firstName = firstName;
 		this.password = password;
 		this.role = role;
+		this.creationDate= Calendar.getInstance().getTime();
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -123,12 +136,29 @@ public class User implements Serializable {
 	
 	public void setResetToken(String resetToken) {
 		this.resetToken = resetToken;
+	}	
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Collection<Topo> getTopos() {
+		return topos;
+	}
+
+	public void setTopos(Collection<Topo> topos) {
+		this.topos = topos;
 	}
 
 	@Override
 	public String toString() {
 		return "User [pseudo=" + pseudo + ", lastName=" + lastName + ", firstName=" + firstName + ", email=" + email
-				+ ", role=" + role + "]";
+				+ ", password=" + password + ", role=" + role + ", resetToken=" + resetToken + ", creationDate="
+				+ creationDate + "]";
 	}
 	
 }
