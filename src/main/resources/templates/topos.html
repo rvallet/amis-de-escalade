@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head"></head>
+	<head>
+		<title>Topos - LADE</title>
+		<meta name="description" content="Liste des topos des amis de l'escalade"/>
+	</head>
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="Topos">
+				<div class="container">
+			
+					<div id="topoList" class="col-md-6" th:each="topo:${topoList}">
+						<div class="panel-default">
+							<div class="panel-heading" >
+								<div th:text="${topo.name}">Nom</div>
+							</div>
+							<div class="panel-body" >
+								<div th:text="${topo.location}">Lieu</div>
+								<div th:text="${topo.releaseDate}">Date</div>
+								<div th:text="${topo.belongTo}">Pseudo</div>
+								<div th:text="${topo.shortDescription}">Description</div>
+							</div>
+							<div>
+								<form th:action="@{loanTopo}" method="get">
+									<input type="hidden" name="idTopo" th:value="${topo.id}"/>
+									<button type="submit" th:disabled="${!topo.isAvailableForLoan}" class="btn btn-secondary pull-right">Demande de Prêt</button>
+								</form>
+							</div>
+						</div>
+					</div>
+			
+				</div>
+			</section>
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>

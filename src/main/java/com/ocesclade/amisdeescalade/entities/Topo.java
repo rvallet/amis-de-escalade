@@ -43,7 +43,7 @@ public class Topo implements Serializable {
 	private String belongTo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_user")
 	private User user;	
 	
 
