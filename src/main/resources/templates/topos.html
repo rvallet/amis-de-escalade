@@ -18,31 +18,25 @@
 				<div class="container">
 				
 					<div class="card-group">
-
-							<div class="card" id="topoList" th:each="topo:${topoList}">
+						<div class="card" id="topoList" th:each="topo:${topoList}">
 <!-- 								<img src="..." class="card-img-top" alt="..."> -->
-								<div class="card-body">
-									<div class="card-header">
-										<p class="card-title text-center" th:text="${topo.name}">Nom</p>
-									</div>
-										<p class="card-text" th:text="${topo.shortDescription}">Description</p>
-										<p class="text-muted"> Localisation : <span th:text="${topo.location}">Lieu</span></p>
-										<p class="card-text text-right"><small class="text-muted" th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</small></p>
-									</div>
-									<div class="card-footer">
-										<p class="card-text"><small class="text-muted" th:text="${topo.belongTo}">Pseudo</small></p>
-
-											<form th:action="@{loanTopo}" method="get">
-												<input type="hidden" name="idTopo" th:value="${topo.id}"/>
-												<button type="submit" th:disabled="${!topo.isAvailableForLoan}" class="btn btn-secondary btn-block">Demande de Prêt</button>
-											</form>
-
-									</div>							
+							<div class="card-body">
+								<div class="card-header">
+									<p class="card-title text-center" th:text="${topo.name}">Nom</p>
 								</div>
-
-							
-							</div>						
-					</div>
+									<p class="card-text" th:text="${topo.shortDescription}">Description</p>
+									<p class="text-muted"> Localisation : <span th:text="${topo.location}">Lieu</span></p>
+									<p class="card-text text-right"><small class="text-muted" th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</small></p>
+							</div>
+							<div class="card-footer">
+								<p class="card-text"><small class="text-muted" th:text="${topo.belongTo}">Pseudo</small></p>
+								<form th:action="@{topo-pret}" method="get">
+									<input type="hidden" name="idTopo" th:value="${topo.id}"/>
+									<button type="submit" th:disabled="${!topo.isAvailableForLoan}" class="btn btn-secondary btn-block">Demande de Prêt</button>
+								</form>
+							</div>							
+						</div>							
+					</div>						
 			
 				</div>
 			</section>
