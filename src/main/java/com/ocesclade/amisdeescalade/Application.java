@@ -39,7 +39,7 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Boolean isBddInit = false;
+		boolean isBddInit = false;
 		
 		/* Initialize BDD with sample test users if empty (on first launch only) */
 		LOGGER.info("Recherche de l'existance de l'utilisateur 'email@user1.fr' en BDD");
@@ -136,6 +136,9 @@ public class Application implements CommandLineRunner {
 			topoRepository.saveAll(toposList);
 			LOGGER.info("Ajout de {} Topos", toposList.size());
 			}
+			
+			//TODO : Sites, Secteurs et voies
 		}
+		
 	}
 }

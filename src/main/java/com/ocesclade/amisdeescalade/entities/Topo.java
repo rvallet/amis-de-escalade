@@ -1,6 +1,7 @@
 package com.ocesclade.amisdeescalade.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -43,10 +45,12 @@ public class Topo implements Serializable {
 	private String belongTo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
-	private User user;	
+	@JoinColumn(name = "id_user")
+	private User user;
 	
-
+	@OneToMany(mappedBy = "topo", fetch = FetchType.LAZY)
+	private Collection<TopoLoan> topoLoan;
+	
 	public Topo() {
 		super();
 		this.name="";
