@@ -46,7 +46,6 @@ public class Topo implements Serializable {
 	@JoinColumn(name = "id_user")
 	private User user;	
 	
-
 	public Topo() {
 		super();
 		this.name="";
