@@ -13,10 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.ocesclade.amisdeescalade.entities.Topo;
 import com.ocesclade.amisdeescalade.entities.User;
+import com.ocesclade.amisdeescalade.enumerated.RoleEnum;
 import com.ocesclade.amisdeescalade.repository.TopoRepository;
 import com.ocesclade.amisdeescalade.repository.UserRepository;
 import com.ocesclade.amisdeescalade.security.WebSecurityConfig;
-import com.ocesclade.amisdeescalade.utils.RoleEnum;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
