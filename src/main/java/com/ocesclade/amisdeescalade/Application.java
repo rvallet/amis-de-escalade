@@ -3,6 +3,7 @@ package com.ocesclade.amisdeescalade;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +12,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.ocesclade.amisdeescalade.entities.Area;
+import com.ocesclade.amisdeescalade.entities.Comment;
+import com.ocesclade.amisdeescalade.entities.Route;
+import com.ocesclade.amisdeescalade.entities.Sector;
 import com.ocesclade.amisdeescalade.entities.Topo;
 import com.ocesclade.amisdeescalade.entities.User;
+import com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum;
 import com.ocesclade.amisdeescalade.enumerated.RoleEnum;
+import com.ocesclade.amisdeescalade.repository.ClimbAreaRepository;
+import com.ocesclade.amisdeescalade.repository.ClimbCommentRepository;
+import com.ocesclade.amisdeescalade.repository.ClimbRouteRepository;
+import com.ocesclade.amisdeescalade.repository.ClimbSectorRepository;
 import com.ocesclade.amisdeescalade.repository.TopoRepository;
 import com.ocesclade.amisdeescalade.repository.UserRepository;
 import com.ocesclade.amisdeescalade.security.WebSecurityConfig;
@@ -28,6 +38,18 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private TopoRepository topoRepository;
+	
+	@Autowired
+	private ClimbAreaRepository climbAreaRepository;
+	
+	@Autowired
+	private ClimbRouteRepository climbRouteRepository;
+	
+	@Autowired
+	private ClimbSectorRepository climbSectorRepository;
+	
+	@Autowired
+	private ClimbCommentRepository climbCommentRepository;
 	
 	@Autowired
 	private WebSecurityConfig webSecurityConfig;
@@ -94,7 +116,7 @@ public class Application implements CommandLineRunner {
 		}
 		
 		if (isBddInit) {
-			/* Load users for tests */
+			/* Load previous users */
 			User user1 = userRepository.findUserByEmail("email@user1.fr");
 			User user2 = userRepository.findUserByEmail("email@user2.fr");
 			User user3 = userRepository.findUserByEmail("email@user3.fr");
@@ -137,7 +159,201 @@ public class Application implements CommandLineRunner {
 			LOGGER.info("Ajout de {} Topos", toposList.size());
 			}
 			
-			//TODO : Sites, Secteurs et voies
+			/* Initialize BDD with sample Climbing Areas if empty (on first launch only) */
+			LOGGER.info("Initialisation des données de la table 'area'");
+			List<Area> climbAreaList = Arrays.asList(
+					new Area(
+							"areaName1",
+							"aeraDescription1"),
+					new Area(
+							"areaName2",
+							"aeraDescription2"),
+					new Area(
+							"areaName3",
+							"aeraDescription3"),
+					new Area(
+							"areaName4",
+							"aeraDescription4")
+					);
+			
+			climbAreaRepository.saveAll(climbAreaList);
+			LOGGER.info("Ajout de {} Area", climbAreaList.size());
+			
+			/* Load previous Areas */
+			Area area1 = climbAreaRepository.findOneById(1L);
+			Area area2 = climbAreaRepository.findOneById(2L);
+			Area area3 = climbAreaRepository.findOneById(3L);
+			Area area4 = climbAreaRepository.findOneById(4L);			
+			
+			/* Initialize BDD with sample Climbing Sectors if empty (on first launch only) */
+			LOGGER.info("Initialisation des données de la table 'sector'");
+			List<Sector> climbSectorList = Arrays.asList(
+					new Sector(
+							"sectorName1",
+							"sectorDescription1",
+							area1),
+					new Sector(
+							"sectorName2",
+							"sectorDescription2",
+							area2),
+					new Sector(
+							"sectorName3",
+							"sectorDescription3",
+							area3),
+					new Sector(
+							"sectorName4",
+							"sectorDescription4",
+							area4),
+					new Sector(
+							"sectorName5",
+							"sectorDescription5",
+							area1),
+					new Sector(
+							"sectorName6",
+							"sectorDescription6",
+							area2),
+					new Sector(
+							"sectorName7",
+							"sectorDescription7",
+							area3),
+					new Sector(
+							"sectorName8",
+							"sectorDescription8",
+							area4)
+					);
+			climbSectorRepository.saveAll(climbSectorList);
+			LOGGER.info("Ajout de {} Sector", climbSectorList.size());
+
+			/* Initialize BDD with sample Climbing Routes if empty (on first launch only) */
+			Random ran = new Random();
+			LOGGER.info("Initialisation des données de la table 'route'");
+			List<Route> climbRouteList = Arrays.asList(
+					new Route(
+							"routeName1",
+							"routeDescription1",
+							ClimbingGradeEnum.CINQ_B,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName2",
+							"routeDescription2",
+							ClimbingGradeEnum.HUIT_A,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName3",
+							"routeDescription3",
+							ClimbingGradeEnum.HUIT_B_PLUS,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName4",
+							"routeDescription4",
+							ClimbingGradeEnum.HUIT_C_PLUS,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName5",
+							"routeDescription5",
+							ClimbingGradeEnum.QUATRES,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName6",
+							"routeDescription6",
+							ClimbingGradeEnum.SEPT_C_PLUS,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName7",
+							"routeDescription7",
+							ClimbingGradeEnum.CINQ_C,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName8",
+							"routeDescription8",
+							ClimbingGradeEnum.NEUF_A_PLUS,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName9",
+							"routeDescription9",
+							ClimbingGradeEnum.TROIS,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName10",
+							"routeDescription10",
+							ClimbingGradeEnum.SIX_A_PLUS,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName11",
+							"routeDescription11",
+							ClimbingGradeEnum.SEPT_B,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName12",
+							"routeDescription12",
+							ClimbingGradeEnum.SIX_B,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName13",
+							"routeDescription13",
+							ClimbingGradeEnum.NEUF_B,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName14",
+							"routeDescription14",
+							ClimbingGradeEnum.SIX_B_PLUS,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName15",
+							"routeDescription15",
+							ClimbingGradeEnum.DEUX,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							),
+					new Route(
+							"routeName16",
+							"routeDescription16",
+							ClimbingGradeEnum.SEPT_B_PLUS,
+							climbSectorList.get(ran.nextInt(climbSectorList.size()))
+							)
+					);
+			climbRouteRepository.saveAll(climbRouteList);
+			LOGGER.info("Ajout de {} Route", climbRouteList.size());
+			
+			/* Initialize BDD with sample Climbing Comments if empty (on first launch only) */
+			LOGGER.info("Initialisation des données de la table 'comment'");
+			List<Comment> climbCommentList = Arrays.asList(
+					new Comment(
+							"commentTitle1",
+							"commentContent1",
+							user1.getPseudo(),
+							area1),
+					new Comment(
+							"commentTitle2",
+							"commentContent2",
+							user2.getPseudo(),
+							area2),
+					new Comment(
+							"commentTitle3",
+							"commentContent3",
+							user3.getPseudo(),
+							area3),
+					new Comment(
+							"commentTitle4",
+							"commentContent4",
+							user4.getPseudo(),
+							area4)
+					);
+			climbCommentRepository.saveAll(climbCommentList);
+			LOGGER.info("Ajout de {} Comment", climbCommentList.size());
 		}
 		
 	}

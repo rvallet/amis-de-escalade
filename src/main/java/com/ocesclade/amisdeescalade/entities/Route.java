@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum;
+
 @Entity
 public class Route implements Serializable {
 
@@ -31,8 +33,6 @@ public class Route implements Serializable {
 	@Size(min = 5, max = 250)
 	private String description;
 	
-	@NotNull
-	@Size(min = 1, max = 5)
 	private String climbingGrade;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -43,19 +43,18 @@ public class Route implements Serializable {
 		super();
 		this.name="";
 		this.description="";
-		this.climbingGrade="";
 		this.sector = new Sector();
 	}
 
 	public Route(
 			@NotNull @Size(min = 5, max = 75) String name,
 			@NotNull @Size(min = 5, max = 250) String description,
-			@NotNull @Size(min = 1, max = 5) String climbingGrade,
+			ClimbingGradeEnum climbingGrade,
 			Sector sector
 			) {
 		this.name = name;
 		this.description = description;
-		this.climbingGrade = climbingGrade;
+		this.climbingGrade = climbingGrade.toString();
 		this.sector = sector;
 	}
 
@@ -87,8 +86,8 @@ public class Route implements Serializable {
 		return climbingGrade;
 	}
 
-	public void setClimbingGrade(String climbingGrade) {
-		this.climbingGrade = climbingGrade;
+	public void setClimbingGrade(ClimbingGradeEnum climbingGrade) {
+		this.climbingGrade = climbingGrade.toString();
 	}
 
 	@Override

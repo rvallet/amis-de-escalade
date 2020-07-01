@@ -1,5 +1,18 @@
 package com.ocesclade.amisdeescalade.enumerated;
 
 public enum ClimbingGradeEnum {
- // 	"1","2","3","4","5a","5b","5c","6a","6a+","6b","6b+","6c","6c+","7a","7a+","7b","7b+","7c","7c+","8a","8a+","8b","8b+","8c","8c+","9a","9a+","9b","9b+","9c"
+
+	UN("1"), DEUX ("2"), TROIS ("3"), QUATRES ("4"), CINQ_A ("5a"), CINQ_B ("5b"), CINQ_C ("5c"), SIX_A ("6a"), SIX_A_PLUS ("6a+"), SIX_B ("6b"), SIX_B_PLUS ("6b+"), SIX_C ("6c"), SIX_C_PLUS ("6c+"), SEPT_A ("7a"), SEPT_A_PLUS ("7a+"), SEPT_B ("7b"), SEPT_B_PLUS ("7b+"), SEPT_C ("7c"), SEPT_C_PLUS ("7c+"), HUIT_A ("8a"), HUIT_A_PLUS ("8a+"), HUIT_B ("8b"), HUIT_B_PLUS ("8b+"), HUIT_C ("8c"), HUIT_C_PLUS ("8c+"), NEUF_A ("9a"), NEUF_A_PLUS ("9a+"), NEUF_B ("9b"), NEUF_B_PLUS ("9b+"), NEUF_C ("9c");
+
+	private String climbingGrade;
+
+	ClimbingGradeEnum(String climbingGrade){
+		this.climbingGrade = climbingGrade;
+	}
+
+	@Override
+	public String toString(){
+		return climbingGrade;
+	}	
+
 }

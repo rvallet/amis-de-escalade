@@ -1,7 +1,6 @@
 package com.ocesclade.amisdeescalade.entities;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collection;
 
 import javax.persistence.Column;
