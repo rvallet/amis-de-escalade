@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.ocesclade.amisdeescalade.dto.UserRegistrationDto;
 import com.ocesclade.amisdeescalade.entities.User;
+import com.ocesclade.amisdeescalade.enumerated.RoleEnum;
 import com.ocesclade.amisdeescalade.repository.UserRepository;
 import com.ocesclade.amisdeescalade.security.WebSecurityConfig;
-import com.ocesclade.amisdeescalade.utils.RoleEnum;
 
 @Service
 public class UserServiceImpl implements UserService{

@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.ocesclade.amisdeescalade.utils.RoleEnum;
+import com.ocesclade.amisdeescalade.enumerated.RoleEnum;
 
 @Entity
 @Table(name="user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))

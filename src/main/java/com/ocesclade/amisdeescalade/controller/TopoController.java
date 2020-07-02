@@ -58,7 +58,7 @@ public class TopoController {
 		Topo topo = topoRepository.findTopoById(id);
 		model.addAttribute("topo", topo);
 		topoLoan.setBorrower(email);
-		topoLoan.setLender(topo.getBelongTo());
+		topoLoan.setLender(topo.getUser().getEmail());
 		topoLoan.setTopo(topo);
 		topoLoanRepository.save(topoLoan);
 		model.addAttribute("topoLoan", topoLoan);

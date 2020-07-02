@@ -3,8 +3,8 @@ package com.ocesclade.amisdeescalade.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import com.ocesclade.amisdeescalade.enumerated.RoleEnum;
 import com.ocesclade.amisdeescalade.security.ValidPassword;
-import com.ocesclade.amisdeescalade.utils.RoleEnum;
 
 public class UserRegistrationDto {
 
