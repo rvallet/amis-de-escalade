@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head"></head>
+	<head>
+		<title>Les sites d'escalade - LADE</title>
+		<meta name="description" content="Page de confirmation de demande de prêt de topos des amis de l'escalade"/>
+	</head>
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="ClimbAreas">
+				<div class="container">				
+				
+					<H2>Nos Sites d'escalade</H2>
+					<form th:action="@{sites}" method="get">
+						<label>Nom :</label>
+						<input type="text" name="param1" th:value="${param1}"/>
+						<label>Description :</label>
+						<input type="text" name="param2" th:value="${param2}"/>
+						<button class="btn btn-secondary">Chercher</button>
+					</form>
+
+					<div class="card-group">
+						<div class="card" id="areaList" th:each="area:${areaList}">
+							<img class="card-img-top" th:src="@{/img/area1.jpg}" alt="...">
+							<div class="card-body">
+								<div class="card-header">
+									<p class="card-title text-center" th:text="${area.name}">Nom</p>
+								</div>
+								<p class="card-text" th:text="${area.description}">Description</p>
+								<p class="card-text text-right"><small class="text-muted" th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</small></p>
+							</div>
+							<div class="card-footer">
+								<form th:action="@{site}" method="get">
+									<input type="hidden" name="SiteID" th:value="${area.id}"/>
+									<button type="submit" class="btn btn-secondary btn-block">En savoir plus</button>
+								</form>
+							</div>
+						</div>
+					</div>
+
+			
+				</div>
+			</section>
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>	
