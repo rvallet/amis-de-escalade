@@ -9,7 +9,7 @@
 	<head th:insert="base :: head"></head>
 	<head>
 		<title>Les sites d'escalade - LADE</title>
-		<meta name="description" content="Page de confirmation de demande de prêt de topos des amis de l'escalade"/>
+		<meta name="description" content="Les sites d'escalade des amis de l'escalade"/>
 	</head>
 	<body>
 		<th:block th:insert="base :: header">...</th:block>
@@ -23,13 +23,26 @@
 							<div class="input-group-prepend">
 								<button class="btn btn-outline-secondary">Filtrer</button>
 							</div>
-							<input type="text" name="param1" th:value="${param1}" class="form-control" placeholder="par nom de sites" />
+							<input type="text" id="param1" name="param1" th:value="${param1}" class="form-control" placeholder="par nom de sites" />
+							<div class="input-group-append">
+								<button class="btn btn-default btn-sm" onclick="document.getElementById('param1').value = ''">
+<!-- 									<span class="glyphicon glyphicon-trash"></span> -->
+									<span class="glyphicon glyphicon-remove"></span> Supprimer 
+								</button>
+							</div>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<button class="btn btn-outline-secondary">Filtrer</button>
 							</div>
-							<input type="text" name="param2" th:value="${param2}" class="form-control" placeholder="par description de sites" />
+							<input type="text" id="param2" name="param2" th:value="${param2}" class="form-control" placeholder="par description de sites" />
+							<div class="input-group-append">								
+								<button class="btn btn-default btn-sm" onclick="document.getElementById('param2').value = ''">
+<!-- 									<span class="glyphicon glyphicon-trash"></span> -->
+									<span class="glyphicon glyphicon-remove"></span>
+									Supprimer 
+								</button>
+							</div>
 						</div>
 					</form>
 					
@@ -80,17 +93,20 @@
 
 					<div class="card-deck">
 						<div class="card" id="areaList" th:each="area:${areaList}">
+							<div class="logo" th:if="${area.isPromoted}">
+								<img width="40" height="40" th:src="@{/img/officiel-LADE_150x150.png}" alt="Sélection officiel LADE">
+							</div>
 							<img class="card-img-top" th:src="@{/img/area1_200x100.jpg}" alt="...">
 							<div class="card-body">
 								<div class="card-header">
 									<p class="card-title text-center" th:text="${area.name}">Nom</p>
 								</div>
-								<p class="card-text" th:text="${area.description}">Description</p>
+								<p class="card-text" th:text="${area.shortDescription}">Description</p>
 								<p class="card-text text-right"><small class="text-muted" th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</small></p>
 							</div>
 							<div class="card-footer">
 								<form th:action="@{site}" method="get">
-									<input type="hidden" name="SiteID" th:value="${area.id}"/>
+									<input type="hidden" name="id_area" th:value="${area.id}"/>
 									<button type="submit" class="btn btn-secondary btn-block">En savoir plus</button>
 								</form>
 							</div>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head"></head>
+	<head>
+		<title>Détail du site - LADE</title>
+		<meta name="description" content="Site d'escalade détaillé - Les amis de l'escalade"/>
+	</head>
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="ClimbArea">
+				<div class="container">				
+				
+					<H2>Site</H2>
+					
+					<div class="col-md-12">
+						<div class="panel-default">
+							<div class="panel-heading" th:value="${area}" >
+								<div th:text="${area.name}">Nom </div>
+							</div>
+							<div class="panel-body" >
+								<div th:text="${area.description}">Description </div>
+
+								<img class="center-block" th:src="@{/img/area1_200x100.jpg}">
+							
+							</div>
+						</div>
+					</div>
+
+					<h3>Secteurs</h3>
+					<div class="col-md-12" th:each="sector:${sectorList}">
+						<div class="panel-default">
+							<div class="panel-heading" >
+								<div th:text="${sector.name}">Nom </div>
+							</div>
+							<div class="panel-body" >
+								<div th:text="${sector.description}">Description </div>
+							</div>
+						</div>
+					</div>
+
+					<h3>Voies</h3>
+					<div class="col-md-12" th:each="route:${routeList}">
+						<div class="panel-default">
+							<div class="panel-heading" >
+								<div th:text="${route.name}">Nom </div>
+							</div>
+							<div class="panel-body" >
+								<div th:text="${route.climbingGrade}">Niveau </div>
+								<div th:text="${route.description}">Description </div>
+							</div>
+						</div>
+					</div>
+
+					<h3>Commentaires</h3>
+					<div class="col-md-12" th:each="comment:${commentList}">
+						<div class="panel-default">
+							<div class="panel-heading" >
+								<div th:text="${comment.title}">Titre </div>
+							</div>
+							<div class="panel-body" >
+								<div th:text="${comment.content}">Contenu </div>
+								<p th:text="${comment.author}">Auteur </p>
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+			</section>
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>	

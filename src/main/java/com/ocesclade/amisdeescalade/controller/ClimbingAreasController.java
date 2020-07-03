@@ -1,7 +1,6 @@
 package com.ocesclade.amisdeescalade.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -13,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ocesclade.amisdeescalade.entities.Area;
+import com.ocesclade.amisdeescalade.entities.Comment;
+import com.ocesclade.amisdeescalade.entities.Route;
+import com.ocesclade.amisdeescalade.entities.Sector;
 import com.ocesclade.amisdeescalade.repository.ClimbAreaRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbCommentRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbRouteRepository;
@@ -41,6 +43,7 @@ public class ClimbingAreasController {
 			@RequestParam(name="param1", required = false) String param1,
 			@RequestParam(name="param2", required = false) String param2){
 		List<Area> areaList = climbAreaRepository.findAll();
+
 		if (param1!=null && param2!=null) {
 			LOGGER.info("Chargement des sites (Nom {} - Description {})",param1, param2);
 			
@@ -70,5 +73,27 @@ public class ClimbingAreasController {
 		}
 		
 		return "sites";		
+	}
+	
+	@GetMapping(value="/site")
+	public String displayArea(
+			Model model,
+			@RequestParam(name="id_area") Long idArea
+			){
+		LOGGER.info("Chargement du site id_area={}", idArea);
+		model.addAttribute("id_area", idArea);
+		Area area = climbAreaRepository.findOneById(idArea);
+		model.addAttribute("area" , area );
+		
+		List<Sector> sectorList = climbSectorRepository.findSectorsByAreaId(idArea);
+		model.addAttribute("sectorList" , sectorList );
+		List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
+		model.addAttribute("routeList", routeList);
+		List<Comment> commentList = climbCommentRepository.findCommentsByAreaId(idArea);
+		model.addAttribute("commentList", commentList);
+
+		model.addAttribute("newComment", new Comment());
+
+		return "site";
 	}
 }

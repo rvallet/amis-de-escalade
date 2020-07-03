@@ -149,12 +149,24 @@ public class Topo implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	
+
+	public Collection<TopoLoan> getTopoLoan() {
+		return topoLoan;
+	}
+
+	public void setTopoLoan(Collection<TopoLoan> topoLoan) {
+		this.topoLoan = topoLoan;
+	}
 
 	@Override
 	public String toString() {
 		return "Topo [id=" + id + ", name=" + name + ", shortDescription=" + shortDescription + ", location=" + location
 				+ ", releaseDate=" + releaseDate + ", isAvailableForLoan=" + isAvailableForLoan + ", belongTo="
-				+ belongTo + ", user=" + user + "]";
-	}	
+				+ belongTo + ", user=" + user + ", topoLoan=" + topoLoan + "]";
+	}
+
+
 	
 }

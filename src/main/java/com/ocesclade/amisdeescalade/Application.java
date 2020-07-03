@@ -28,6 +28,7 @@ import com.ocesclade.amisdeescalade.repository.ClimbSectorRepository;
 import com.ocesclade.amisdeescalade.repository.TopoRepository;
 import com.ocesclade.amisdeescalade.repository.UserRepository;
 import com.ocesclade.amisdeescalade.security.WebSecurityConfig;
+import com.ocesclade.amisdeescalade.utils.StringTools;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -54,7 +55,7 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private WebSecurityConfig webSecurityConfig;
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -161,19 +162,21 @@ public class Application implements CommandLineRunner {
 			
 			/* Initialize BDD with sample Climbing Areas */
 			LOGGER.info("Initialisation des données de la table 'area'");
+			String loremIpsum = "Vi simulationem difficillimum aliis et placuerat placuerat simulationem ponderibus simulationem tamquam placuerat nimis obstaculo nimis confidentia auxilio commentis qua nimis.";
+			String randomDesc = StringTools.randomText(50,12);
 			List<Area> climbAreaList = Arrays.asList(
-					new Area(
-							"areaName1",
-							"aeraDescription1"),
-					new Area(
-							"areaName2",
-							"aeraDescription2"),
-					new Area(
-							"areaName3",
-							"aeraDescription3"),
-					new Area(
-							"areaName4",
-							"aeraDescription4")
+				new Area(
+						"areaName1",
+						"aeraDescription1 : "+loremIpsum),
+				new Area(
+						"areaName2",
+						"aeraDescription2 : "+randomDesc),
+				new Area(
+						"areaName3",
+						"aeraDescription3 : "+StringTools.randomText(50,12)),
+				new Area(
+						"areaName4",
+						"aeraDescription4 : "+StringTools.randomText(50,12))
 					);
 			
 			climbAreaRepository.saveAll(climbAreaList);

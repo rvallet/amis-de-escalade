@@ -25,3 +25,7 @@ table td{
 [aria-expanded="true"] > .collapsed {
 	display: none;
 }
+
+.logo img {
+	position:absolute;
+	}
