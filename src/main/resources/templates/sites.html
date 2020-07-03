@@ -94,9 +94,9 @@
 					<div class="card-deck">
 						<div class="card" id="areaList" th:each="area:${areaList}">
 							<div class="logo" th:if="${area.isPromoted}">
-								<img width="40" height="40" th:src="@{/img/officiel-LADE_150x150.png}" alt="Sélection officiel LADE">
+								<img class="img-fluid" width="40" height="40" th:src="@{/img/officiel-LADE_150x150.png}" alt="Sélection officiel LADE">
 							</div>
-							<img class="card-img-top" th:src="@{/img/area1_200x100.jpg}" alt="...">
+							<img class="card-img-top img-fluid" th:src="@{/img/area1_200x100.jpg}" alt="...">
 							<div class="card-body">
 								<div class="card-header">
 									<p class="card-title text-center" th:text="${area.name}">Nom</p>

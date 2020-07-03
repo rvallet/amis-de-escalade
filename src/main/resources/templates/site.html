@@ -17,60 +17,58 @@
 			<section id="ClimbArea">
 				<div class="container">				
 				
-					<H2>Site</H2>
-					
-					<div class="col-md-12">
-						<div class="panel-default">
-							<div class="panel-heading" th:value="${area}" >
-								<div th:text="${area.name}">Nom </div>
+					<div class="col-md-12" th:value="${area}">
+						<H2><span th:text="${area.name}">Nom</span></H2>
+						<hr />
+						<p th:text="${area.description}">Description </p>
+						<br />
+						<img class="center-block img-fluid" th:src="@{/img/area1_1100x350.jpg}" alt="">
+					</div>					
+				
+					<br /><br />
+					<nav>
+						<div class="nav nav-tabs" id="nav-tab" role="tablist">
+							<a class="nav-item nav-link active" id="nav-home-tab" 
+								data-toggle="tab" href="#nav-home" 
+								role="tab" aria-controls="nav-home" 
+								aria-selected="true">Secteurs
+							</a>
+							<a class="nav-item nav-link" id="nav-profile-tab" 
+								data-toggle="tab" href="#nav-profile" 
+								role="tab" aria-controls="nav-profile" 
+								aria-selected="false">Voies
+							</a>
+							<a class="nav-item nav-link" id="nav-contact-tab" 
+								data-toggle="tab" href="#nav-contact" 
+								role="tab" aria-controls="nav-contact" 
+								aria-selected="false">Commentaires
+							</a>
+						</div>
+					</nav>
+					<div class="tab-content" id="nav-tabContent">
+						<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+							<div class="col-md-12" th:each="sector:${sectorList}">
+								<p>Nom : <span th:text="${sector.name}">Nom</span></p>
+								<p>Description : <span th:text="${sector.description}">Description</span></p>
 							</div>
-							<div class="panel-body" >
-								<div th:text="${area.description}">Description </div>
-
-								<img class="center-block" th:src="@{/img/area1_200x100.jpg}">
-							
+						</div>
+						<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+							<div class="col-md-12" th:each="route:${routeList}">
+								<p>Nom : <span th:text="${route.name}">Nom</span></p>
+								<p>Niveau : <span th:text="${route.climbingGrade}">Niveau</span></p>
+								<p>Description : <span th:text="${route.description}">Description</span></p>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+							<div class="col-md-12" th:each="comment:${commentList}">
+								<p>Titre : <span th:text="${comment.title}">Titre</span></p>
+								<p><span th:text="${comment.content}">Contenu</span></p>
+								<span th:text="${comment.author}">Auteur </span>
 							</div>
 						</div>
 					</div>
 
-					<h3>Secteurs</h3>
-					<div class="col-md-12" th:each="sector:${sectorList}">
-						<div class="panel-default">
-							<div class="panel-heading" >
-								<div th:text="${sector.name}">Nom </div>
-							</div>
-							<div class="panel-body" >
-								<div th:text="${sector.description}">Description </div>
-							</div>
-						</div>
-					</div>
-
-					<h3>Voies</h3>
-					<div class="col-md-12" th:each="route:${routeList}">
-						<div class="panel-default">
-							<div class="panel-heading" >
-								<div th:text="${route.name}">Nom </div>
-							</div>
-							<div class="panel-body" >
-								<div th:text="${route.climbingGrade}">Niveau </div>
-								<div th:text="${route.description}">Description </div>
-							</div>
-						</div>
-					</div>
-
-					<h3>Commentaires</h3>
-					<div class="col-md-12" th:each="comment:${commentList}">
-						<div class="panel-default">
-							<div class="panel-heading" >
-								<div th:text="${comment.title}">Titre </div>
-							</div>
-							<div class="panel-body" >
-								<div th:text="${comment.content}">Contenu </div>
-								<p th:text="${comment.author}">Auteur </p>
-							</div>
-						</div>
-					</div>
-					
+		
 					
 				</div>
 			</section>
