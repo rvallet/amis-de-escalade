@@ -20,3 +20,8 @@ table td{
 	border:solid 1px #888;
 	padding:10px;
 }
+
+[aria-expanded="false"] > .expanded,
+[aria-expanded="true"] > .collapsed {
+	display: none;
+}

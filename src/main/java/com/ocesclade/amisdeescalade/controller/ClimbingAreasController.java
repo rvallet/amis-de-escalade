@@ -43,13 +43,26 @@ public class ClimbingAreasController {
 		List<Area> areaList = climbAreaRepository.findAll();
 		if (param1!=null && param2!=null) {
 			LOGGER.info("Chargement des sites (Nom {} - Description {})",param1, param2);
-			areaList = areaList.stream()
-					.filter(e -> e.getName().toLowerCase().contains(param1.toLowerCase()) 
-							|| e.getDescription().toLowerCase().contains(param2.toLowerCase()))
-					.collect(Collectors.toList());
+			
+			if (param1.length()>0 && param2.length()>0) {
+				areaList = areaList.stream()
+						.filter(e -> e.getName().toLowerCase().contains(param1.toLowerCase()) 
+								|| e.getDescription().toLowerCase().contains(param2.toLowerCase()))
+						.collect(Collectors.toList());
+				model.addAttribute("param1", param1 );
+				model.addAttribute("param2", param2 );
+			} else if (param1.length()>0) {
+				areaList = areaList.stream()
+						.filter(e -> e.getName().toLowerCase().contains(param1.toLowerCase()))
+						.collect(Collectors.toList());
+				model.addAttribute("param1", param1 );
+			} else {
+				areaList = areaList.stream()
+						.filter(e -> e.getDescription().toLowerCase().contains(param2.toLowerCase()))
+						.collect(Collectors.toList());
+				model.addAttribute("param2", param2 );
+			}
 			model.addAttribute("areaList" , areaList );
-			model.addAttribute("param1", param1 );
-			model.addAttribute("param2", param2 );
 			LOGGER.info("Résultat : {} sites", areaList.size());
 		} else {
 		model.addAttribute("areaList" , areaList );
