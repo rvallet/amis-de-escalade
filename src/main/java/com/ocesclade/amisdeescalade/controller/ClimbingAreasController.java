@@ -12,22 +12,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ocesclade.amisdeescalade.dto.CommentDto;
 import com.ocesclade.amisdeescalade.entities.Area;
 import com.ocesclade.amisdeescalade.entities.Comment;
 import com.ocesclade.amisdeescalade.entities.Route;
 import com.ocesclade.amisdeescalade.entities.Sector;
+import com.ocesclade.amisdeescalade.entities.User;
 import com.ocesclade.amisdeescalade.repository.ClimbAreaRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbCommentRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbRouteRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbSectorRepository;
+import com.ocesclade.amisdeescalade.service.CommentService;
+import com.ocesclade.amisdeescalade.service.UserService;
 
 @Controller
 public class ClimbingAreasController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClimbingAreasController.class);
+	
+	@Autowired
+	private CommentService commentService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private ClimbAreaRepository climbAreaRepository;
@@ -40,6 +51,11 @@ public class ClimbingAreasController {
 
 	@Autowired
 	private ClimbCommentRepository climbCommentRepository;
+	
+	@ModelAttribute("newComment")
+	public CommentDto commentDto() {
+		return new CommentDto();
+	}
 	
 	@GetMapping(value="/sites")
 	public String climbAreas(
@@ -88,8 +104,8 @@ public class ClimbingAreasController {
 		LOGGER.info("Chargement du site id_area={}", idArea);
 		model.addAttribute("id_area", idArea);
 		Area area = climbAreaRepository.findOneById(idArea);
-		model.addAttribute("area" , area );
 		
+		model.addAttribute("area" , area );		
 		List<Sector> sectorList = climbSectorRepository.findSectorsByAreaId(idArea);
 		model.addAttribute("sectorList" , sectorList );
 		List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
@@ -97,32 +113,41 @@ public class ClimbingAreasController {
 		List<Comment> commentList = climbCommentRepository.findCommentsByAreaId(idArea);
 		model.addAttribute("commentList", commentList);
 
-		model.addAttribute("newComment", new Comment());
+		model.addAttribute("newComment", new CommentDto());
 
 		return "site";
 	}
 	
-	@PostMapping(value="/commentaire")
+	@PostMapping(value="/site")
 	public String addComment(
 			@RequestParam(name="id_area", required = false) Long idArea,
-			@Valid Comment comment,
-			BindingResult bindingResult,
+			@ModelAttribute("newComment") @Valid CommentDto commentDto,
+//			@Valid Comment newComment,
+			BindingResult result,
 			Model model
 			) {
 		if (idArea==null) {return "sites";}
 		LOGGER.info("Ajout d'un commentaire sur le site id_area={}", idArea);
 		model.addAttribute("id_area", idArea);
 		Area area = climbAreaRepository.findOneById(idArea);
-		comment.setArea(area);
-		if(bindingResult.hasErrors()){
-			LOGGER.warn("Echec : {} erreurs", bindingResult.getErrorCount());
-			return"sites";
+		commentDto.setArea(area);
+		if(result.hasErrors()){
+			LOGGER.debug("form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+			model.addAttribute("area" , area );
+			List<Sector> sectorList = climbSectorRepository.findSectorsByAreaId(idArea);
+			model.addAttribute("sectorList" , sectorList );
+			List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
+			model.addAttribute("routeList", routeList);
+			List<Comment> commentList = climbCommentRepository.findCommentsByAreaId(idArea);
+			model.addAttribute("commentList", commentList);
+			return "site";
 		}
-		climbCommentRepository.save(comment);
-		model.addAttribute("comment", comment);
+		User u = userService.findByEmail(commentDto.getAuthor());
+		commentDto.setAuthor(u.getPseudo());
+		commentService.save(commentDto);
+		model.addAttribute("newComment", commentDto);
 		
-//		return "site?id_area="+idArea+"#nav-comments";
-		return "sites";
+		return "redirect:/site?id_area="+idArea+"#nav-comments";
 	}
 	
 }
