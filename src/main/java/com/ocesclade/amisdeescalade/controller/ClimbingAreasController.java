@@ -3,12 +3,16 @@ package com.ocesclade.amisdeescalade.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ocesclade.amisdeescalade.entities.Area;
@@ -78,8 +82,9 @@ public class ClimbingAreasController {
 	@GetMapping(value="/site")
 	public String displayArea(
 			Model model,
-			@RequestParam(name="id_area") Long idArea
+			@RequestParam(name="id_area", required = false) Long idArea
 			){
+		if (idArea==null) {return "sites";}
 		LOGGER.info("Chargement du site id_area={}", idArea);
 		model.addAttribute("id_area", idArea);
 		Area area = climbAreaRepository.findOneById(idArea);
@@ -96,4 +101,28 @@ public class ClimbingAreasController {
 
 		return "site";
 	}
+	
+	@PostMapping(value="/commentaire")
+	public String addComment(
+			@RequestParam(name="id_area", required = false) Long idArea,
+			@Valid Comment comment,
+			BindingResult bindingResult,
+			Model model
+			) {
+		if (idArea==null) {return "sites";}
+		LOGGER.info("Ajout d'un commentaire sur le site id_area={}", idArea);
+		model.addAttribute("id_area", idArea);
+		Area area = climbAreaRepository.findOneById(idArea);
+		comment.setArea(area);
+		if(bindingResult.hasErrors()){
+			LOGGER.warn("Echec : {} erreurs", bindingResult.getErrorCount());
+			return"sites";
+		}
+		climbCommentRepository.save(comment);
+		model.addAttribute("comment", comment);
+		
+//		return "site?id_area="+idArea+"#nav-comments";
+		return "sites";
+	}
+	
 }

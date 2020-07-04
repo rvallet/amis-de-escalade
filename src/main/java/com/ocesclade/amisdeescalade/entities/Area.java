@@ -54,7 +54,7 @@ public class Area implements Serializable {
 	
 	public Area(
 			@NotNull @Size(min = 5, max = 75) String name,
-			@NotNull @Size(min = 5, max = 250) String description
+			@NotNull @Size(min = 5, max = 1000) String description
 			) {
 		this.name = name;
 		this.description = description;
@@ -84,7 +84,6 @@ public class Area implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-//		this.shortDescription = description.length() > 75 ? description.substring(0, 72)+"...":description;
 	}
 
 	public Boolean getIsPromoted() {
