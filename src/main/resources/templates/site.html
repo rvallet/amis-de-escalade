@@ -24,10 +24,11 @@
 						<br />
 						<img class="center-block img-fluid" th:src="@{/img/area1_1100x350.jpg}" alt="">
 					</div>					
-				
+					
+<!-- 					Onglets détail du site d'escalade -->
 					<br /><br />
 					<nav>
-						<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<div class="nav nav-tabs anchor" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link active" id="nav-sectors-tab" 
 								data-toggle="tab" href="#nav-sectors" 
 								role="tab" aria-controls="nav-sectors" 
@@ -78,6 +79,46 @@
 							</div>
 						</div>
 						<div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+							
+<!-- 							Ajout d'un commentaire -->
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="addComment">
+								<span class="collapsed">
+									Ajouter un commentaire
+								</span>
+								<span class="expanded">
+									Replier
+								</span>
+							</button>
+							<div class="collapse" id="addComment">
+								<form th:action="@{site}" th:object="${newComment}" method="post">
+								
+									<p class="error-message" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
+									
+									<div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error':''">
+										<label for="title" class="control-label">Titre :</label>
+										<input id="title" class="form-control" 
+											type="text" th:field="*{title}" 
+											name="title" th:value="${newComment.title}" 
+											placeholder="Titre de votre commentaire" autofocus="autofocus" required />
+										<p class="error-message" th:each="error : ${#fields.errors('title')}" th:text="${error}">Validation error</p>
+									</div>
+									<div class="form-group" th:classappend="${#fields.hasErrors('content')}? 'has-error':''">
+										<label for="content" class="control-label">Message :</label>
+										<input id="content" class="form-control" 
+											type="text" th:field="*{content}" 
+											name="content" th:value="${newComment.content}" 
+											placeholder="Contenu de votre commentaire" required />
+										<p class="error-message" th:each="error : ${#fields.errors('content')}" th:text="${error}">Validation error</p>
+									</div>
+									<input type="hidden" name="id_area" th:value="${area.id}"/>
+									<input type="hidden" name="author" th:value="${#httpServletRequest.remoteUser}"/>
+									<div class="form-group">
+										<button type="submit" class="btn btn-default">Envoyer</button>
+									</div>
+								</form>
+							</div>
+							
+<!-- 							Liste de commentaires -->
 							<div class="col-md-12" th:each="comment:${commentList}">
 								<br />
 								<div class="card">
@@ -104,32 +145,6 @@
 					</div>
 
 
-<form th:action="@{site}" th:object="${newComment}" method="post">
-
-	<p class="error-message" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
-	
-	<div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error':''">
-		<label for="title" class="control-label">Titre :</label>
-		<input id="title" class="form-control" 
-			type="text" th:field="*{title}" 
-			name="title" th:value="${newComment.title}" 
-			placeholder="Titre de votre commentaire" autofocus="autofocus" required />
-		<p class="error-message" th:each="error : ${#fields.errors('title')}" th:text="${error}">Validation error</p>
-	</div>
-	<div class="form-group" th:classappend="${#fields.hasErrors('content')}? 'has-error':''">
-		<label for="content" class="control-label">Message :</label>
-		<input id="content" class="form-control" 
-			type="text" th:field="*{content}" 
-			name="content" th:value="${newComment.content}" 
-			placeholder="Contenu de votre commentaire" required />
-		<p class="error-message" th:each="error : ${#fields.errors('content')}" th:text="${error}">Validation error</p>
-	</div>
-	<input type="hidden" name="id_area" th:value="${area.id}"/>
-	<input type="hidden" name="author" th:value="${#httpServletRequest.remoteUser}"/>
-	<div class="form-group">
-		<button type="submit" class="btn btn-default">Envoyer</button>
-	</div>
-</form>
 		
 					
 				</div>
