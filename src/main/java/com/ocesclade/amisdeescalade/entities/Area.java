@@ -29,30 +29,36 @@ public class Area implements Serializable {
 	private String name;
 	
 	@NotNull
-	@Size(min = 5, max = 250)
+	@Size(min = 5, max = 1000)
 	private String description;
+	
+	private String shortDescription;
+	
+	private Boolean isPromoted;	
 	
 	private Date releaseDate;
 	
 	@OneToMany(mappedBy = "area", fetch = FetchType.LAZY)
-	private Collection<Sector> sectors;
+	private Collection<Sector> sectorList;
 	
 	@OneToMany(mappedBy = "area", fetch = FetchType.LAZY)
-	private Collection<Comment> comments;	
+	private Collection<Comment> commentList;	
 
 	public Area() {
 		super();
 		this.name="";
 		this.description="";
+		this.setShortDescription(description);
 		this.releaseDate=new Date();
 	}
 	
 	public Area(
 			@NotNull @Size(min = 5, max = 75) String name,
-			@NotNull @Size(min = 5, max = 250) String description
+			@NotNull @Size(min = 5, max = 1000) String description
 			) {
 		this.name = name;
 		this.description = description;
+		this.setShortDescription(description);
 		this.releaseDate=new Date();
 	}
 
@@ -80,6 +86,14 @@ public class Area implements Serializable {
 		this.description = description;
 	}
 
+	public Boolean getIsPromoted() {
+		return isPromoted;
+	}
+
+	public void setIsPromoted(Boolean isPromoted) {
+		this.isPromoted = isPromoted;
+	}
+
 	public Date getReleaseDate() {
 		return releaseDate;
 	}
@@ -88,26 +102,36 @@ public class Area implements Serializable {
 		this.releaseDate = releaseDate;
 	}
 
-	public Collection<Sector> getSector() {
-		return sectors;
+	public Collection<Sector> getSectorList() {
+		return sectorList;
 	}
 
-	public void setSector(Collection<Sector> sector) {
-		this.sectors = sector;
+	public void setSectorList(Collection<Sector> sectorList) {
+		this.sectorList = sectorList;
 	}
 
-	public Collection<Comment> getComment() {
-		return comments;
+	public Collection<Comment> getCommentList() {
+		return commentList;
 	}
 
-	public void setComment(Collection<Comment> comment) {
-		this.comments = comment;
+	public void setCommentList(Collection<Comment> commentList) {
+		this.commentList = commentList;
+	}	
+	
+
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription.length() > 75 ? shortDescription.substring(0, 72)+"...": shortDescription;
 	}
 
 	@Override
 	public String toString() {
-		return "Area [id=" + id + ", name=" + name + ", description=" + description + ", releaseDate="
-				+ releaseDate + ", climbingSector=" + sectors + ", climbingComment=" + comments + "]";
+		return "Area [id=" + id + ", name=" + name + ", description=" + description + ", isPromoted=" + isPromoted
+				+ ", releaseDate=" + releaseDate + "]";
 	}
+
 	
 }

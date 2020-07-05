@@ -28,6 +28,7 @@ import com.ocesclade.amisdeescalade.repository.ClimbSectorRepository;
 import com.ocesclade.amisdeescalade.repository.TopoRepository;
 import com.ocesclade.amisdeescalade.repository.UserRepository;
 import com.ocesclade.amisdeescalade.security.WebSecurityConfig;
+import com.ocesclade.amisdeescalade.utils.StringTools;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -54,7 +55,7 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private WebSecurityConfig webSecurityConfig;
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -73,15 +74,27 @@ public class Application implements CommandLineRunner {
 			
 			List<User> userList = Arrays.asList(
 					new User("email@user1.fr", 
+							"user1_pseudo", 
+							"user1_lastName",
+							"user1_firstName",
 							webSecurityConfig.passwordEncoder().encode("passwordUser1"), 
 							RoleEnum.USER), 
 					new User("email@user2.fr", 
+							"user2_pseudo", 
+							"user2_lastName",
+							"user2_firstName",
 							webSecurityConfig.passwordEncoder().encode("passwordUser2"), 
 							RoleEnum.USER),
 					new User("email@admin1.fr", 
+							"admin1_pseudo", 
+							"admin1_lastName",
+							"admin1_firstName",
 							webSecurityConfig.passwordEncoder().encode("passwordAdmin1"), 
 							RoleEnum.ADMIN),
 					new User("email@admin2.fr", 
+							"admin2_pseudo", 
+							"admin2_lastName",
+							"admin2_firstName",
 							webSecurityConfig.passwordEncoder().encode("passwordAdmin2"), 
 							RoleEnum.ADMIN),
 					new User("email@user3.fr", 
@@ -117,6 +130,10 @@ public class Application implements CommandLineRunner {
 		}
 		
 		if (isBddInit) {
+			/* Randomize of feed some elements */
+			Random ran = SecureRandom.getInstanceStrong();
+			String loremIpsum = "Vi simulationem difficillimum aliis et placuerat placuerat simulationem ponderibus simulationem tamquam placuerat nimis obstaculo nimis confidentia auxilio commentis qua nimis.";
+			
 			/* Load previous users from DB */
 			User user1 = userRepository.findUserByEmail("email@user1.fr");
 			User user2 = userRepository.findUserByEmail("email@user2.fr");
@@ -128,28 +145,28 @@ public class Application implements CommandLineRunner {
 				LOGGER.info("Initialisation des données de la table 'topo'");
 				List<Topo> toposList = Arrays.asList(
 					new Topo("topoName1",
-							"topoShortDescription1", 
+							"topoShortDescription1"+loremIpsum, 
 							"topoLocation1", 
 							new Date(), 
 							true, 
 							user1.getPseudo(), 
 							user1),
 					new Topo("topoName2",
-							"topoShortDescription2", 
+							"topoShortDescription2"+loremIpsum, 
 							"topoLocation2", 
 							null, 
 							false, 
 							user2.getPseudo(), 
 							user2),
 					new Topo("topoName3",
-							"topoShortDescription3", 
+							"topoShortDescription3"+loremIpsum, 
 							"topoLocation3", 
 							new Date(), 
 							true, 
 							user3.getPseudo(), 
 							user3),
 					new Topo("topoName4",
-							"topoShortDescription4", 
+							"topoShortDescription4"+loremIpsum, 
 							"topoLocation4", 
 							null, 
 							false, 
@@ -162,18 +179,18 @@ public class Application implements CommandLineRunner {
 			/* Initialize BDD with sample Climbing Areas */
 			LOGGER.info("Initialisation des données de la table 'area'");
 			List<Area> climbAreaList = Arrays.asList(
-					new Area(
-							"areaName1",
-							"aeraDescription1"),
-					new Area(
-							"areaName2",
-							"aeraDescription2"),
-					new Area(
-							"areaName3",
-							"aeraDescription3"),
-					new Area(
-							"areaName4",
-							"aeraDescription4")
+				new Area(
+						"areaName1",
+						"aeraDescription1 "+loremIpsum),
+				new Area(
+						"areaName2",
+						"aeraDescription2 "+StringTools.randomText(100,12)),
+				new Area(
+						"areaName3",
+						"aeraDescription3 "+StringTools.randomText(100,12)),
+				new Area(
+						"areaName4",
+						"aeraDescription4 "+StringTools.randomText(100,12))
 					);
 			
 			climbAreaRepository.saveAll(climbAreaList);
@@ -190,114 +207,113 @@ public class Application implements CommandLineRunner {
 			List<Sector> climbSectorList = Arrays.asList(
 					new Sector(
 							"sectorName1",
-							"sectorDescription1",
+							"sectorDescription1 "+loremIpsum,
 							area1),
 					new Sector(
 							"sectorName2",
-							"sectorDescription2",
+							"sectorDescription2 "+loremIpsum,
 							area2),
 					new Sector(
 							"sectorName3",
-							"sectorDescription3",
+							"sectorDescription3 "+loremIpsum,
 							area3),
 					new Sector(
 							"sectorName4",
-							"sectorDescription4",
+							"sectorDescription4 "+loremIpsum,
 							area4),
 					new Sector(
 							"sectorName5",
-							"sectorDescription5",
+							"sectorDescription5 "+loremIpsum,
 							area1),
 					new Sector(
 							"sectorName6",
-							"sectorDescription6",
+							"sectorDescription6 "+loremIpsum,
 							area2),
 					new Sector(
 							"sectorName7",
-							"sectorDescription7",
+							"sectorDescription7 "+loremIpsum,
 							area3),
 					new Sector(
 							"sectorName8",
-							"sectorDescription8",
+							"sectorDescription8 "+loremIpsum,
 							area4)
 					);
 			climbSectorRepository.saveAll(climbSectorList);
 			LOGGER.info("Ajout de {} Sector", climbSectorList.size());
 
 			/* Initialize BDD with sample Climbing Routes (random grades and sectors) */
-			Random ran = SecureRandom.getInstanceStrong();
-
+			
 			LOGGER.info("Initialisation des données de la table 'route'");
 			List<Route> climbRouteList = Arrays.asList(
 					new Route(
 							"routeName1",
-							"routeDescription1",
+							"routeDescription1 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName2",
-							"routeDescription2",
+							"routeDescription2 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName3",
-							"routeDescription3",
+							"routeDescription3 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName4",
-							"routeDescription4",
+							"routeDescription4 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName5",
-							"routeDescription5",
+							"routeDescription5 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName6",
-							"routeDescription6",
+							"routeDescription6 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName7",
-							"routeDescription7",
+							"routeDescription7 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName8",
-							"routeDescription8",
+							"routeDescription8 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName9",
-							"routeDescription9",
+							"routeDescription9 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName10",
-							"routeDescription10",
+							"routeDescription10 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName11",
-							"routeDescription11",
+							"routeDescription11 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName12",
-							"routeDescription12",
+							"routeDescription12 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
@@ -309,19 +325,19 @@ public class Application implements CommandLineRunner {
 							),
 					new Route(
 							"routeName14",
-							"routeDescription14",
+							"routeDescription14 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName15",
-							"routeDescription15",
+							"routeDescription15 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							),
 					new Route(
 							"routeName16",
-							"routeDescription16",
+							"routeDescription16 "+loremIpsum,
 							Arrays.asList(ClimbingGradeEnum.values()).get(ran.nextInt(Arrays.asList(ClimbingGradeEnum.values()).size())),
 							climbSectorList.get(ran.nextInt(climbSectorList.size()))
 							)
@@ -334,37 +350,38 @@ public class Application implements CommandLineRunner {
 			List<Comment> climbCommentList = Arrays.asList(
 					new Comment(
 							"commentTitle1",
-							"commentContent1",
+							"commentContent1 "+loremIpsum,
 							user1.getPseudo(),
 							area1),
 					new Comment(
 							"commentTitle2",
-							"commentContent2",
+							"commentContent2 "+loremIpsum,
 							user2.getPseudo(),
 							area2),
 					new Comment(
 							"commentTitle3",
-							"commentContent3",
+							"commentContent3 "+loremIpsum,
 							user3.getPseudo(),
 							area3),
 					new Comment(
 							"commentTitle4",
-							"commentContent4",
+							"commentContent4 "+loremIpsum,
 							user4.getPseudo(),
 							area4),
 					new Comment(
 							"commentTitle5",
-							"commentContent5",
+							"commentContent5 "+loremIpsum,
 							user3.getPseudo(),
 							area1),
 					new Comment(
 							"commentTitle6",
-							"commentContent6",
+							"commentContent6 "+loremIpsum,
 							user4.getPseudo(),
 							area2)
 					);
 			climbCommentRepository.saveAll(climbCommentList);
 			LOGGER.info("Ajout de {} Comment", climbCommentList.size());
+			LOGGER.info("La BDD possède maintenant un jeux de données de démonstration");
 			}
 		}
 	}

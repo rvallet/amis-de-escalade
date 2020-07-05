@@ -9,7 +9,7 @@
 	<head th:insert="base :: head"></head>
 	<head>
 		<title>Les sites d'escalade - LADE</title>
-		<meta name="description" content="Page de confirmation de demande de prêt de topos des amis de l'escalade"/>
+		<meta name="description" content="Les sites d'escalade des amis de l'escalade"/>
 	</head>
 	<body>
 		<th:block th:insert="base :: header">...</th:block>
@@ -19,32 +19,113 @@
 				
 					<H2>Nos Sites d'escalade</H2>
 					<form th:action="@{sites}" method="get">
-						<label>Nom :</label>
-						<input type="text" name="param1" th:value="${param1}"/>
-						<label>Description :</label>
-						<input type="text" name="param2" th:value="${param2}"/>
-						<button class="btn btn-secondary">Chercher</button>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<button class="btn btn-outline-secondary">Filtrer</button>
+							</div>
+							<input type="text" id="param1" name="param1" th:value="${param1}" class="form-control" placeholder="par nom de sites" />
+							<div class="input-group-append">
+								<button class="btn btn-default btn-sm" onclick="document.getElementById('param1').value = ''">
+<!-- 									<span class="glyphicon glyphicon-trash"></span> -->
+									<span class="glyphicon glyphicon-remove"></span> Supprimer 
+								</button>
+							</div>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<button class="btn btn-outline-secondary">Filtrer</button>
+							</div>
+							<input type="text" id="param2" name="param2" th:value="${param2}" class="form-control" placeholder="par description de sites" />
+							<div class="input-group-append">								
+								<button class="btn btn-default btn-sm" onclick="document.getElementById('param2').value = ''">
+<!-- 									<span class="glyphicon glyphicon-trash"></span> -->
+									<span class="glyphicon glyphicon-remove"></span>
+									Supprimer 
+								</button>
+							</div>
+						</div>
 					</form>
+					
+					<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#searchCriteria" aria-expanded="false" aria-controls="searchCriteria">
+						<span class="collapsed">
+							Plus de critères
+						</span>
+						<span class="expanded">
+							Moins de critères
+						</span>
+					</button>
+					<div class="collapse" id="searchCriteria">
+	
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="inputGroupSelect01">Lieu</label>
+							</div>
+							<select class="custom-select" id="inputGroupSelect01">
+								<option selected>Choisir...</option>
+								<option value="1">Lieu 1</option>
+								<option value="2">Lieu 2</option>
+								<option value="3">Lieu 3</option>
+							</select>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="inputGroupSelect01">Cotation</label>
+							</div>
+							<select class="custom-select" id="inputGroupSelect01">
+								<option selected>Choisir...</option>
+								<option value="1">Lieu 1</option>
+								<option value="2">Lieu 2</option>
+								<option value="3">Lieu 3</option>
+							</select>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="inputGroupSelect01">Nombre de secteurs</label>
+							</div>
+							<select class="custom-select" id="inputGroupSelect01">
+								<option selected>Choisir...</option>
+								<option value="1">Lieu 1</option>
+								<option value="2">Lieu 2</option>
+								<option value="3">Lieu 3</option>
+							</select>
+						</div>
+					</div>
 
-					<div class="card-group">
+					<div class="card-deck">
 						<div class="card" id="areaList" th:each="area:${areaList}">
-							<img class="card-img-top" th:src="@{/img/area1.jpg}" alt="...">
+							<div class="logo" th:if="${area.isPromoted}">
+								<img class="img-fluid" width="40" height="40" th:src="@{/img/officiel-LADE_150x150.png}" alt="Sélection officiel LADE">
+							</div>
+							<img class="card-img-top img-fluid" th:src="@{/img/area1_200x100.jpg}" alt="...">
 							<div class="card-body">
 								<div class="card-header">
 									<p class="card-title text-center" th:text="${area.name}">Nom</p>
 								</div>
-								<p class="card-text" th:text="${area.description}">Description</p>
+								<p class="card-text" th:text="${area.shortDescription}">Description</p>
 								<p class="card-text text-right"><small class="text-muted" th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</small></p>
 							</div>
 							<div class="card-footer">
 								<form th:action="@{site}" method="get">
-									<input type="hidden" name="SiteID" th:value="${area.id}"/>
+									<input type="hidden" name="id_area" th:value="${area.id}"/>
 									<button type="submit" class="btn btn-secondary btn-block">En savoir plus</button>
 								</form>
 							</div>
 						</div>
 					</div>
 
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item disabled">
+								<a class="page-link" href="#" tabindex="-1"><<</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item">
+								<a class="page-link" href="#">>></a>
+							</li>
+						</ul>
+					</nav>
 			
 				</div>
 			</section>

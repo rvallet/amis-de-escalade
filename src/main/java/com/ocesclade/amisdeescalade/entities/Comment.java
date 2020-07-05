@@ -29,7 +29,7 @@ public class Comment implements Serializable {
 	private String title;
 	
 	@NotNull
-	@Size(min = 5, max = 250)
+	@Size(min = 5, max = 1000)
 	private String content;
 	
 	private String author;
@@ -49,7 +49,7 @@ public class Comment implements Serializable {
 
 	public Comment(
 			@NotNull @Size(min = 5, max = 75) String title, 
-			@NotNull @Size(min = 5, max = 250) String content, 
+			@NotNull @Size(min = 5, max = 1000) String content, 
 			String author,
 			Area area) {
 		this.title = title;

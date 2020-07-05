@@ -33,7 +33,9 @@ public class Topo implements Serializable {
 	private String name;
 
 	@NotNull
-	@Size(min = 15, max = 250)
+	@Size(min = 15, max = 1000)
+	private String description;
+	
 	private String shortDescription;
 	
 	private String location;
@@ -54,20 +56,21 @@ public class Topo implements Serializable {
 	public Topo() {
 		super();
 		this.name="";
-		this.shortDescription="";
+		this.description="";
 	}
 
 	public Topo(@NotNull @Size(min = 5, max = 40) String name,
-			@NotNull @Size(min = 15, max = 250) String shortDescription, String location, Date releaseDate,
+			@NotNull @Size(min = 15, max = 1000) String description, String location, Date releaseDate,
 			Boolean isAvailableForLoan, String belongTo, User user) {
 		super();
 		this.name = name;
-		this.shortDescription = shortDescription;
+		this.description = description;
 		this.location = location;
 		this.releaseDate = releaseDate;
 		this.isAvailableForLoan = isAvailableForLoan;
 		this.belongTo = belongTo;
 		this.user = user;
+		this.setShortDescription(description);
 	}
 
 
@@ -88,16 +91,6 @@ public class Topo implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-
-	public String getShortDescription() {
-		return shortDescription;
-	}
-
-
-	public void setShortDescription(String shortDescription) {
-		this.shortDescription = shortDescription;
 	}
 
 
@@ -149,12 +142,38 @@ public class Topo implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription.length() > 75 ? shortDescription.substring(0, 72)+"...": shortDescription;
+	}
+
+	public Collection<TopoLoan> getTopoLoan() {
+		return topoLoan;
+	}
+
+	public void setTopoLoan(Collection<TopoLoan> topoLoan) {
+		this.topoLoan = topoLoan;
+	}
 
 	@Override
 	public String toString() {
-		return "Topo [id=" + id + ", name=" + name + ", shortDescription=" + shortDescription + ", location=" + location
-				+ ", releaseDate=" + releaseDate + ", isAvailableForLoan=" + isAvailableForLoan + ", belongTo="
-				+ belongTo + ", user=" + user + "]";
-	}	
+		return "Topo [id=" + id + ", name=" + name + ", description=" + description + ", shortDescription="
+				+ shortDescription + ", location=" + location + ", releaseDate=" + releaseDate + ", isAvailableForLoan="
+				+ isAvailableForLoan + ", belongTo=" + belongTo + ", user=" + user + ", topoLoan=" + topoLoan + "]";
+	}
+
 	
 }

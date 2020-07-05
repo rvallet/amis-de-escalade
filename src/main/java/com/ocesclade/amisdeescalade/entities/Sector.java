@@ -38,7 +38,7 @@ public class Sector implements Serializable {
 	private Area area;
 	
 	@OneToMany(mappedBy = "sector", fetch = FetchType.LAZY)
-	private Collection<Route> routes;
+	private Collection<Route> routeList;
 
 	public Sector() {
 		super();
@@ -89,19 +89,19 @@ public class Sector implements Serializable {
 		this.area = area;
 	}
 
-	public Collection<Route> getRoute() {
-		return routes;
+	public Collection<Route> getRouteList() {
+		return routeList;
 	}
 
-	public void setRoute(Collection<Route> route) {
-		this.routes = route;
+	public void setRouteList(Collection<Route> routeList) {
+		this.routeList = routeList;
 	}
 
 	@Override
 	public String toString() {
-		return "Sector [id=" + id + ", name=" + name + ", description=" + description + ", area="
-				+ area + ", routes=" + routes + "]";
+		return "Sector [id=" + id + ", name=" + name + ", description=" + description + ", area=" + area + "]";
 	}
+
 
 			
 }

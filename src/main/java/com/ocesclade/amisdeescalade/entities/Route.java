@@ -89,11 +89,25 @@ public class Route implements Serializable {
 	public void setClimbingGrade(ClimbingGradeEnum climbingGrade) {
 		this.climbingGrade = climbingGrade.toString();
 	}
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setClimbingGrade(String climbingGrade) {
+		this.climbingGrade = climbingGrade;
+	}
 
 	@Override
 	public String toString() {
-		return "Route [id=" + id + ", name=" + name + ", description=" + description + ", sector="
-				+ sector + ", climbingGrade=" + climbingGrade + "]";
+		return "Route [id=" + id + ", name=" + name + ", description=" + description + ", climbingGrade="
+				+ climbingGrade + ", sector=" + sector + "]";
 	}
 	
 		
