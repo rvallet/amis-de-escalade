@@ -110,7 +110,7 @@ public class ClimbingAreasController {
 		model.addAttribute("sectorList" , sectorList );
 		List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
 		model.addAttribute("routeList", routeList);
-		List<Comment> commentList = climbCommentRepository.findCommentsByAreaId(idArea);
+		List<Comment> commentList = climbCommentRepository.findByAreaIdOrderByIdDesc(idArea);
 		model.addAttribute("commentList", commentList);
 
 		model.addAttribute("newComment", new CommentDto());
@@ -138,7 +138,7 @@ public class ClimbingAreasController {
 			model.addAttribute("sectorList" , sectorList );
 			List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
 			model.addAttribute("routeList", routeList);
-			List<Comment> commentList = climbCommentRepository.findCommentsByAreaId(idArea);
+			List<Comment> commentList = climbCommentRepository.findByAreaIdOrderByIdDesc(idArea);
 			model.addAttribute("commentList", commentList);
 			return "site";
 		}

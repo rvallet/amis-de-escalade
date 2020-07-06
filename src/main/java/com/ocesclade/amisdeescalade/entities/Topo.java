@@ -57,16 +57,20 @@ public class Topo implements Serializable {
 		super();
 		this.name="";
 		this.description="";
+		this.releaseDate = new Date();
 	}
 
 	public Topo(@NotNull @Size(min = 5, max = 40) String name,
-			@NotNull @Size(min = 15, max = 1000) String description, String location, Date releaseDate,
-			Boolean isAvailableForLoan, String belongTo, User user) {
+			@NotNull @Size(min = 15, max = 1000) String description, 
+			String location, 
+			Boolean isAvailableForLoan, 
+			String belongTo, 
+			User user) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.location = location;
-		this.releaseDate = releaseDate;
+		this.releaseDate = new Date();
 		this.isAvailableForLoan = isAvailableForLoan;
 		this.belongTo = belongTo;
 		this.user = user;
