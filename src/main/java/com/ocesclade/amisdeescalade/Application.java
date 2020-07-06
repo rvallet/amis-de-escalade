@@ -176,16 +176,20 @@ public class Application implements CommandLineRunner {
 			List<Area> climbAreaList = Arrays.asList(
 				new Area(
 						"areaName1",
-						"aeraDescription1 "+loremIpsum),
+						"aeraDescription1 "+loremIpsum+StringTools.randomText(999,15),
+						user1.getPseudo()),
 				new Area(
 						"areaName2",
-						"aeraDescription2 "+StringTools.randomText(999,15)),
+						"aeraDescription2 "+loremIpsum+StringTools.randomText(999,15),
+						user2.getPseudo()),
 				new Area(
 						"areaName3",
-						"aeraDescription3 "+StringTools.randomText(999,15)),
+						"aeraDescription3 "+loremIpsum+StringTools.randomText(999,15),
+						user3.getPseudo()),
 				new Area(
 						"areaName4",
-						"aeraDescription4 "+StringTools.randomText(999,15))
+						"aeraDescription4 "+loremIpsum+StringTools.randomText(999,15),
+						user4.getPseudo())
 					);
 			
 			climbAreaRepository.saveAll(climbAreaList);
@@ -366,13 +370,23 @@ public class Application implements CommandLineRunner {
 					new Comment(
 							"commentTitle5",
 							"commentContent5 "+loremIpsum,
-							user3.getPseudo(),
+							user4.getPseudo(),
 							area1),
 					new Comment(
 							"commentTitle6",
 							"commentContent6 "+loremIpsum,
-							user4.getPseudo(),
-							area2)
+							user3.getPseudo(),
+							area2),
+					new Comment(
+							"commentTitle7",
+							"commentContent77 "+loremIpsum,
+							user2.getPseudo(),
+							area3),
+					new Comment(
+							"commentTitle8",
+							"commentContent8 "+loremIpsum,
+							user1.getPseudo(),
+							area4)
 					);
 			climbCommentRepository.saveAll(climbCommentList);
 			LOGGER.info("Ajout de {} Comment", climbCommentList.size());
