@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 				"/accueil**",
 				"/creation-compte**",
 				"/sites**",
+				"/site**",
 				"/topos**",
 				"/contact**",
 				"/about**",

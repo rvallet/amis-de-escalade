@@ -2,7 +2,6 @@ package com.ocesclade.amisdeescalade;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -180,13 +179,13 @@ public class Application implements CommandLineRunner {
 						"aeraDescription1 "+loremIpsum),
 				new Area(
 						"areaName2",
-						"aeraDescription2 "+StringTools.randomText(100,12)),
+						"aeraDescription2 "+StringTools.randomText(999,15)),
 				new Area(
 						"areaName3",
-						"aeraDescription3 "+StringTools.randomText(100,12)),
+						"aeraDescription3 "+StringTools.randomText(999,15)),
 				new Area(
 						"areaName4",
-						"aeraDescription4 "+StringTools.randomText(100,12))
+						"aeraDescription4 "+StringTools.randomText(999,15))
 					);
 			
 			climbAreaRepository.saveAll(climbAreaList);
