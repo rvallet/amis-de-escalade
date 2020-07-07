@@ -36,12 +36,6 @@ public class ProfilController {
 	private TopoRepository topoRepository;
 	
 	@Autowired
-	private TopoLoanRepository topoLoanRepository;
-	
-	@Autowired
-	private CommentService commentService;
-	
-	@Autowired
 	private UserService userService;
 	
 	@Autowired
@@ -49,12 +43,6 @@ public class ProfilController {
 	
 	@Autowired
 	private ClimbAreaRepository climbAreaRepository;
-
-	@Autowired
-	private ClimbSectorRepository climbSectorRepository;
-
-	@Autowired
-	private ClimbRouteRepository climbRouteRepository;
 
 	@Autowired
 	private ClimbCommentRepository climbCommentRepository;
@@ -96,36 +84,36 @@ public class ProfilController {
 		return "admin/profil";
 	}
 	
-	@PostMapping("/admin/update")
-	public String updateData(
-			@RequestParam(name="type", required = false) String dataType,
-			@RequestParam(name="id", required = false) Long dataId,
-			BindingResult result, 
-			Model model
-		) {
-		
-		switch (dataType) {
-		case "area":
-			Area updatedArea = (Area) model.getAttribute(dataType);
-			Area dbArea = climbAreaRepository.findOneById(dataId);
-			dbArea.setIsPromoted(updatedArea.getIsPromoted());
-			climbAreaRepository.save(dbArea);
-			break;
-		case "user":
-			User updatedUser = (User) model.getAttribute(dataType);
-			User dbUser = userService.findById(dataId);
-			dbUser.setRole(updatedUser.getRole());
-			result.getFieldValue("role");
-			userRepository.save(dbUser);
-			break;
-		case "topo":
-			break;
-		case "comment":
-			break;
-		default:
-			break;
-		}
-		
-		return null;
-	}
+//	@PostMapping("/admin/update")
+//	public String updateData(
+//			@RequestParam(name="type", required = false) String dataType,
+//			@RequestParam(name="id", required = false) Long dataId,
+//			BindingResult result, 
+//			Model model
+//		) {
+//		
+//		switch (dataType) {
+//		case "area":
+//			Area updatedArea = (Area) model.getAttribute(dataType);
+//			Area dbArea = climbAreaRepository.findOneById(dataId);
+//			dbArea.setIsPromoted(updatedArea.getIsPromoted());
+//			climbAreaRepository.save(dbArea);
+//			break;
+//		case "user":
+//			User updatedUser = (User) model.getAttribute(dataType);
+//			User dbUser = userService.findById(dataId);
+//			dbUser.setRole(updatedUser.getRole());
+//			result.getFieldValue("role");
+//			userRepository.save(dbUser);
+//			break;
+//		case "topo":
+//			break;
+//		case "comment":
+//			break;
+//		default:
+//			break;
+//		}
+//		
+//		return null;
+//	}
 }

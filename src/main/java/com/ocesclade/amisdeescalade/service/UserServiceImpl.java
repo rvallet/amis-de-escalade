@@ -74,13 +74,4 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findUserById(String.valueOf(id));
 	}
 
-	@Override
-	public User save(User user) {
-		User dbUser = findById(user.getId());
-		if (dbUser != null) {
-
-		}
-		return null;
-	}
-
 }

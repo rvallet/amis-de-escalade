@@ -147,6 +147,5 @@ public class Area implements Serializable {
 				+ shortDescription + ", author=" + author + ", isPromoted=" + isPromoted + ", releaseDate="
 				+ releaseDate + ", sectorList=" + sectorList + ", commentList=" + commentList + "]";
 	}
-
 	
 }

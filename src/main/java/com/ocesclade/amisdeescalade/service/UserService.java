@@ -10,5 +10,5 @@ public interface UserService extends UserDetailsService{
 	User findByEmail (String email);
 	User findById (Long id);
 	User save(UserRegistrationDto userRegistrationDto);
-	User save(User user);
+	
 }
