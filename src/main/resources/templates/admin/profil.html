@@ -51,10 +51,8 @@
 											<div class="text-center">
 												<input class="form-check-input form-check-inline" type="checkbox" th:checked="${area?.isPromoted}" disabled>
 												<span th:text="${area?.isPromoted} ? 'Oui' : 'Non'">Description</span>
-												<form th:action="@{/admin/update}" th:object="${area}" method="post">
+												<form th:action="@{/admin/edit-area}" method="get">
 													<input type="hidden" name="id" th:value="${area?.id}">
-													<input type="hidden" name="name" th:value="${area?.name}">
-													<input type="hidden" name="isPromoted" th:value="${area?.isPromoted}">
 													<button type="submit">Edit</button>
 												</form>
 											</div>

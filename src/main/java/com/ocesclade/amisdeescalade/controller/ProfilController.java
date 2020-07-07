@@ -2,13 +2,18 @@ package com.ocesclade.amisdeescalade.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ocesclade.amisdeescalade.entities.Area;
 import com.ocesclade.amisdeescalade.entities.Comment;
@@ -75,6 +80,30 @@ public class ProfilController {
 		model.addAttribute("userList" , userList );
 		LOGGER.info("chargment du profil {}", adminUser.getEmail());
 		return "admin/profil";
+	}
+	@GetMapping("/admin/edit-area")
+	public String editArea(
+			@RequestParam(name="id", required = false) Long areaId,
+			Model model
+			) {
+		LOGGER.info("EDIT Area id {}", areaId);
+		Area area = climbAreaRepository.findOneById(areaId);
+		model.addAttribute("area", area);
+		return "/admin/edit-area";
+	}
+	
+	@PostMapping("/admin/update-area")
+	public String updateArea(
+			@RequestParam(name="id", required = false) Long areaId,
+			Area areaToUpdate, 
+			Model model
+		) {
+		LOGGER.info("UPDATE Area id {}", areaId);
+		Area area = climbAreaRepository.findOneById(areaId);
+		area.setIsPromoted(areaToUpdate.getIsPromoted());
+		climbAreaRepository.save(area);
+		model.addAttribute("fullAreaList", climbAreaRepository.findAll());
+		return "redirect:/admin/profil";
 	}
 	
 //	@PostMapping("/admin/update")
