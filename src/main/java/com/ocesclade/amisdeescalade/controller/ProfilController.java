@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ocesclade.amisdeescalade.entities.Area;
 import com.ocesclade.amisdeescalade.entities.Comment;
@@ -19,12 +16,8 @@ import com.ocesclade.amisdeescalade.entities.Topo;
 import com.ocesclade.amisdeescalade.entities.User;
 import com.ocesclade.amisdeescalade.repository.ClimbAreaRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbCommentRepository;
-import com.ocesclade.amisdeescalade.repository.ClimbRouteRepository;
-import com.ocesclade.amisdeescalade.repository.ClimbSectorRepository;
-import com.ocesclade.amisdeescalade.repository.TopoLoanRepository;
 import com.ocesclade.amisdeescalade.repository.TopoRepository;
 import com.ocesclade.amisdeescalade.repository.UserRepository;
-import com.ocesclade.amisdeescalade.service.CommentService;
 import com.ocesclade.amisdeescalade.service.UserService;
 
 @Controller
@@ -60,7 +53,7 @@ public class ProfilController {
 		
 		List<Area> userAreaList = climbAreaRepository.findByAuthor(u.getPseudo());
 		model.addAttribute("userAreaList" , userAreaList );
-		
+		LOGGER.info("chargment du profil {}", u.getEmail());
 		return "user/profil";
 	}
 	
@@ -80,7 +73,7 @@ public class ProfilController {
 		
 		List<User> userList = userRepository.findAll(); 
 		model.addAttribute("userList" , userList );
-		
+		LOGGER.info("chargment du profil {}", adminUser.getEmail());
 		return "admin/profil";
 	}
 	
