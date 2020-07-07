@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ocesclade.amisdeescalade.entities.Area;
 import com.ocesclade.amisdeescalade.entities.Comment;
@@ -91,5 +94,38 @@ public class ProfilController {
 		model.addAttribute("userList" , userList );
 		
 		return "admin/profil";
+	}
+	
+	@PostMapping("/admin/update")
+	public String updateData(
+			@RequestParam(name="type", required = false) String dataType,
+			@RequestParam(name="id", required = false) Long dataId,
+			BindingResult result, 
+			Model model
+		) {
+		
+		switch (dataType) {
+		case "area":
+			Area updatedArea = (Area) model.getAttribute(dataType);
+			Area dbArea = climbAreaRepository.findOneById(dataId);
+			dbArea.setIsPromoted(updatedArea.getIsPromoted());
+			climbAreaRepository.save(dbArea);
+			break;
+		case "user":
+			User updatedUser = (User) model.getAttribute(dataType);
+			User dbUser = userService.findById(dataId);
+			dbUser.setRole(updatedUser.getRole());
+			result.getFieldValue("role");
+			userRepository.save(dbUser);
+			break;
+		case "topo":
+			break;
+		case "comment":
+			break;
+		default:
+			break;
+		}
+		
+		return null;
 	}
 }
