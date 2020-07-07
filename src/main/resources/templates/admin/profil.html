@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head"></head>
+	<head>
+		<title>Mon profil de Membre de l'association - LADE</title>
+		<meta name="description" content="Profil Administrateur - Les amis de l'escalade"/>
+	</head>
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="AdminProfile">
+				<div class="container">	
+				
+<!-- 					Mon Profil -->
+					<div class="col-md-12" th:value="${adminUser}">
+						<h2>Profil Administrateur</h2>
+						<span th:text="${adminUser?.pseudo}">Pseudo</span>
+						<span th:text="${adminUser?.lastName}">Nom</span>
+						<span th:text="${adminUser?.firstName}">Prénom</span>
+						<span th:text="${adminUser?.email}">e-Mail</span>				
+					</div>
+					
+<!-- 					Les Sites -->
+					<div class="col-md-12" th:if="${fullAreaList!=null and !fullAreaList.isEmpty()}">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Description</th>
+										<th scope="col">Date</th>
+										<th scope="col">Auteur</th>
+										<th scope="col">Logo LADE</th>								
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="area:${fullAreaList}">
+										<th scope="row"><span th:text="${area?.id}">#</span></th>
+										<td><span th:text="${area?.name}">Nom</span></td>
+										<td><span th:text="${area?.description}">Description</span></td>
+										<td><span th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
+										<td><span th:text="${area?.author}">Auteur</span></td>
+										<td><span th:text="${area?.isPromoted} ? 'Oui' : 'Non'">Description</span></td>								
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+<!-- 					Les Topos -->
+					<div class="col-md-12" th:if="${fullTopoList!=null and !fullTopoList.isEmpty()}">
+						<br />
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Description</th>
+										<th scope="col">Date</th>
+										<th scope="col">Propriétaire</th>
+										<th scope="col">Disponible</th>
+										<th scope="col">Supprimer</th>									
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="topo:${fullTopoList}">
+										<th scope="row"><span th:text="${topo?.id}">#</span></th>
+										<td><span th:text="${topo?.name}">Nom</span></td>
+										<td><span th:text="${topo?.description}">Description</span></td>
+										<td><span th:text="${#dates.format(topo?.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
+										<td><span th:text="${topo?.belongTo}"></span>Proprétaire</td>
+										<td><span th:text="${topo?.isAvailableForLoan} ? 'Oui' : 'Non'">Dispo</span></td>								
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+<!-- 					Les commentaires -->
+					<div class="col-md-12" th:if="${fullCommentList!=null and !fullCommentList.isEmpty()}">
+						<br />
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Titre</th>
+										<th scope="col">Contenu</th>
+										<th scope="col">Date</th>
+										<th scope="col">Auteur</th>
+						
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="comment:${fullCommentList}">
+										<th scope="row"><span th:text="${comment.id}">#</span></th>
+										<td><span th:text="${comment.title}">Titre</span></td>
+										<td><span th:text="${comment.content}">Contenu</span></td>
+										<td><span th:text="${#dates.format(comment.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
+										<td><span th:text="${comment.author}"></span>Auteur</td>			
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+<!-- 					Les utilisateurs -->
+					<div class="col-md-12" th:if="${userList!=null and !userList.isEmpty()}">
+						<br />
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">Id</th>
+										<th scope="col">e-Mail</th>
+										<th scope="col">Pseudo</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Prénom</th>
+										<th scope="col">Date</th>
+										<th scope="col">Accès</th>								
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="user:${userList}">
+										<th scope="row"><span th:text="${user.id}">id</span></th>
+										<td><span th:text="${user.email}">e-Mail</span></td>
+										<td><span th:text="${user.pseudo}">Pseudo</span></td>
+										<td><span th:text="${user.lastName}">Nom</span></td>
+										<td><span th:text="${user.firstName}">Prénom</span></td>
+										<td><span th:text="${#dates.format(user.creationDate, 'dd/MM/yyyy')}">Date</span></td>
+										<td><span th:text="${user.role}">Accès</span></td>								
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
+				
+				</div>
+			</section>
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>					

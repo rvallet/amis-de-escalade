@@ -34,6 +34,9 @@ public class Area implements Serializable {
 	
 	private String shortDescription;
 	
+	@NotNull
+	private String author;
+	
 	private Boolean isPromoted;	
 	
 	private Date releaseDate;
@@ -49,16 +52,19 @@ public class Area implements Serializable {
 		this.name="";
 		this.description="";
 		this.setShortDescription(description);
+		this.author="";
 		this.releaseDate=new Date();
 	}
 	
 	public Area(
 			@NotNull @Size(min = 5, max = 75) String name,
-			@NotNull @Size(min = 5, max = 1000) String description
+			@NotNull @Size(min = 5, max = 1000) String description,
+			@NotNull String author
 			) {
 		this.name = name;
 		this.description = description;
 		this.setShortDescription(description);
+		this.author = author;
 		this.releaseDate=new Date();
 	}
 
@@ -84,6 +90,14 @@ public class Area implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public Boolean getIsPromoted() {
@@ -129,8 +143,9 @@ public class Area implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Area [id=" + id + ", name=" + name + ", description=" + description + ", isPromoted=" + isPromoted
-				+ ", releaseDate=" + releaseDate + "]";
+		return "Area [id=" + id + ", name=" + name + ", description=" + description + ", shortDescription="
+				+ shortDescription + ", author=" + author + ", isPromoted=" + isPromoted + ", releaseDate="
+				+ releaseDate + ", sectorList=" + sectorList + ", commentList=" + commentList + "]";
 	}
 
 	

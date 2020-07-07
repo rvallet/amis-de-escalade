@@ -46,7 +46,7 @@ public class HomeController {
 	return "redirect:/login?logout";
 	}
 	
-	/* Thymeleaf Page content */
+	/* Thymeleaf Page content (test th variables vs properties) */
 	@Value("${welcome.message}")
 	private String message;
 

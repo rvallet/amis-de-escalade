@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head"></head>
+	<head>
+		<title>Mon profil utilisateur - LADE</title>
+		<meta name="description" content="Profil Utilisateur - Les amis de l'escalade"/>
+	</head>
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="UserProfile">
+				<div class="container">				
+					
+<!-- 					Mon Profil -->
+					<div class="col-md-12" th:value="${user}">
+						<h2>Profil Utilisateur</h2>
+						<span th:text="${user?.pseudo}">Pseudo</span>
+						<span th:text="${user?.lastName}">Nom</span>
+						<span th:text="${user?.firstName}">Prénom</span>
+						<span th:text="${user?.email}">e-Mail</span>				
+					</div>
+					
+<!-- 					Mes Sites -->
+					<div class="col-md-12" th:if="${userAreaList!=null and !userAreaList.isEmpty()}">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Description</th>
+										<th scope="col">Date</th>								
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="area:${userAreaList}">
+										<th scope="row"><span th:text="${area?.id}">#</span></th>
+										<td><span th:text="${area?.name}">Nom</span></td>
+										<td><span th:text="${area?.description}">Description</span></td>
+										<td><span th:text="${#dates.format(area..releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+<!-- 					Mes Topos -->
+					<div class="col-md-12" th:if="${userTopoList!=null and !userTopoList.isEmpty()}">
+						<br />
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Description</th>
+										<th scope="col">Date</th>								
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="topo:${userTopoList}">
+										<th scope="row"><span th:text="${topo.id}">#</span></th>
+										<td><span th:text="${topo.name}">Nom</span></td>
+										<td><span th:text="${topo.description}">Description</span></td>
+										<td><span th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+<!-- 					Mes commentaires -->
+					<div class="col-md-12" th:if="${userTopoList!=null and !userTopoList.isEmpty()}">
+						<br />
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Titre</th>
+										<th scope="col">Contenu</th>
+										<th scope="col">Date</th>								
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="comment:${userCommentList}">
+										<th scope="row"><span th:text="${comment.id}">#</span></th>
+										<td><span th:text="${comment.title}">Titre</span></td>
+										<td><span th:text="${comment.content}">Contenu</span></td>
+										<td><span th:text="${#dates.format(comment.releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
+				
+				</div>
+			</section>
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>					
