@@ -131,7 +131,6 @@ public class Area implements Serializable {
 	public void setCommentList(Collection<Comment> commentList) {
 		this.commentList = commentList;
 	}	
-	
 
 	public String getShortDescription() {
 		return shortDescription;
@@ -139,14 +138,13 @@ public class Area implements Serializable {
 
 	public void setShortDescription(String shortDescription) {
 		this.shortDescription = shortDescription.length() > 75 ? shortDescription.substring(0, 72)+"...": shortDescription;
-	}
+	}	
 
 	@Override
 	public String toString() {
 		return "Area [id=" + id + ", name=" + name + ", description=" + description + ", shortDescription="
 				+ shortDescription + ", author=" + author + ", isPromoted=" + isPromoted + ", releaseDate="
-				+ releaseDate + ", sectorList=" + sectorList + ", commentList=" + commentList + "]";
+				+ releaseDate + "]";
 	}
-
 	
 }

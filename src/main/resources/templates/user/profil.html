@@ -43,7 +43,7 @@
 										<th scope="row"><span th:text="${area?.id}">#</span></th>
 										<td><span th:text="${area?.name}">Nom</span></td>
 										<td><span th:text="${area?.description}">Description</span></td>
-										<td><span th:text="${#dates.format(area..releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
+										<td><span th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
 									</tr>
 								</tbody>
 							</table>

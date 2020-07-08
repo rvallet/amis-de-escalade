@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head"></head>
+	<head>
+		<title>Edit Comment - LADE</title>
+		<meta name="description" content="Edit Comment - Les amis de l'escalade"/>
+	</head>
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="EditComment">
+				<div class="container">	
+				
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<form th:action="@{/admin/update-comment}" id="comment-form" th:object="${comment}" method="post">
+								<table class="table table-hover">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Titre</th>
+											<th scope="col">Contenu</th>
+											<th scope="col">Date</th>
+											<th scope="col">Auteur</th>
+											<th scope="col">Action</th>								
+										</tr>
+									</thead>
+									<tbody>										
+										<tr>
+											<th scope="row"><span th:text="${comment.id}">#</span></th>
+											<td><textarea th:field="*{title}" form="comment-form"></textarea></td>
+											<td><textarea th:field="*{content}" form="comment-form"></textarea></td>
+											<td><span th:text="${#dates.format(comment.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
+											<td><span th:text="${comment.author}"></span>Auteur</td>
+											<td>
+												<input type="hidden" name="id" th:value="${comment?.id}">
+												<button class="text-center" type="submit">Update</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+					</div>				
+				
+				
+				
+				</div>
+			</section>
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>					
