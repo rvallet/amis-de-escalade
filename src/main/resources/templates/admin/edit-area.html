@@ -43,7 +43,6 @@
 													<input class="form-check-input form-check-inline" type="checkbox" th:checked="${area?.isPromoted}" th:field="*{isPromoted}">
 													<span th:text="${area?.isPromoted} ? 'Oui' : 'Non'">Description</span>
 													<input type="hidden" name="id" th:value="${area?.id}">
-													<input type="hidden" name="name" th:value="${area?.name}">
 													<button type="submit">Update</button>
 												</form>
 											</div>

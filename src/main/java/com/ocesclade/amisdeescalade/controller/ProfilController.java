@@ -106,6 +106,32 @@ public class ProfilController {
 		return "redirect:/admin/profil";
 	}
 	
+	@GetMapping("/admin/edit-comment")
+	public String editComment(
+			@RequestParam(name="id", required = false) Long commentId,
+			Model model
+			) {
+		LOGGER.info("EDIT Comment id {}", commentId);
+		Comment comment = climbCommentRepository.findOneById(commentId);
+		model.addAttribute("comment", comment);
+		return "/admin/edit-comment";
+	}
+	
+	@PostMapping("/admin/update-comment")
+	public String updateComment(
+			@RequestParam(name="id", required = false) Long commentId,
+			Comment commentToUpdate, 
+			Model model
+		) {
+		LOGGER.info("UPDATE Comment id {}", commentId);
+		Comment comment = climbCommentRepository.findOneById(commentId);
+		comment.setTitle(commentToUpdate.getTitle());
+		comment.setContent(commentToUpdate.getContent());
+		climbCommentRepository.save(comment);
+		model.addAttribute("fullCommentList", climbCommentRepository.findAll());
+		return "redirect:/admin/profil";
+	}
+	
 //	@PostMapping("/admin/update")
 //	public String updateData(
 //			@RequestParam(name="type", required = false) String dataType,
