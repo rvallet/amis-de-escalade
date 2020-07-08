@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head"></head>
+	<head>
+		<title>Edit Topo - LADE</title>
+		<meta name="description" content="Edit Topo - Les amis de l'escalade"/>
+	</head>
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="EditTopo">
+				<div class="container">	
+				
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Description</th>
+										<th scope="col">Lieu</th>
+										<th scope="col">Date</th>
+										<th scope="col">Disponible</th>								
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row"><span th:text="${topo.id}">#</span></th>
+										<td><span th:text="${topo.name}">Nom</span></td>
+										<td><span th:text="${topo.description}">Description</span></td>
+										<td><span th:text="${topo.location}">Lieu</span></td>
+										<td><span th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
+										<td>
+											<div class="text-center">
+												<form th:action="@{/user/update-topo}" th:object="${topo}" method="post">
+													<input class="form-check-input form-check-inline" type="checkbox" th:checked="${topo?.isAvailableForLoan}" th:field="*{isAvailableForLoan}">
+													<span th:text="${topo?.isAvailableForLoan} ? 'Oui' : 'Non'">Dispo</span>
+													<input type="hidden" name="id" th:value="${topo?.id}">
+													<button type="submit">Update</button>
+												</form>
+											</div>
+										</td>								
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
+				
+				</div>
+			</section>
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>					

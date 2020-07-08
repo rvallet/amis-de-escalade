@@ -28,6 +28,8 @@
 					
 <!-- 					Mes Sites -->
 					<div class="col-md-12" th:if="${userAreaList!=null and !userAreaList.isEmpty()}">
+						<hr />
+						<h3>Mes sites</h3>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<thead class="thead-dark">
@@ -52,7 +54,8 @@
 					
 <!-- 					Mes Topos -->
 					<div class="col-md-12" th:if="${userTopoList!=null and !userTopoList.isEmpty()}">
-						<br />
+						<hr />
+						<h3>Mes Topos</h3>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<thead class="thead-dark">
@@ -60,7 +63,9 @@
 										<th scope="col">#</th>
 										<th scope="col">Nom</th>
 										<th scope="col">Description</th>
-										<th scope="col">Date</th>								
+										<th scope="col">Lieu</th>
+										<th scope="col">Date</th>
+										<th scope="col">Disponible</th>								
 									</tr>
 								</thead>
 								<tbody>
@@ -68,16 +73,59 @@
 										<th scope="row"><span th:text="${topo.id}">#</span></th>
 										<td><span th:text="${topo.name}">Nom</span></td>
 										<td><span th:text="${topo.description}">Description</span></td>
-										<td><span th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
+										<td><span th:text="${topo.location}">Lieu</span></td>
+										<td><span th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
+										<td>
+											<div class="text-center">
+												<input class="form-check-input form-check-inline" type="checkbox" th:checked="${topo?.isAvailableForLoan}" disabled>
+												<span th:text="${topo?.isAvailableForLoan} ? 'Oui' : 'Non'">Dispo</span>
+												<form th:action="@{/user/edit-topo}" method="get">
+													<input type="hidden" name="id" th:value="${topo?.id}">
+													<button type="submit">Edit</button>
+												</form>
+											</div>										
+										</td>							
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
+
+<!-- 					Mes demandes de Topos -->
+					<div class="col-md-12" th:if="${userTopoLoanList!=null and !userTopoLoanList.isEmpty()}">
+						<hr />
+						<h3>Mes demandes</h3>
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Description</th>
+										<th scope="col">Propriétaire</th>
+										<th scope="col">Date de la demande</th>
+										<th scope="col">Statut</th>
+																			
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="topoLoan:${userTopoLoanList}">
+										<th scope="row"><span th:text="${topoLoan.id}">#</span></th>
+										<td><span th:text="${topoLoan.topo?.name}">Nom</span></td>
+										<td><span th:text="${topoLoan.topo?.description}">Description</span></td>
+										<td><span th:text="${topoLoan.lender}">Description</span></td>
+										<td><span th:text="${#dates.format(topoLoan.creationDate, 'dd/MM/yyyy')}">Date</span></td>
+										<td><span th:text="${topoLoan.status}">Description</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>				
 					
 <!-- 					Mes commentaires -->
 					<div class="col-md-12" th:if="${userTopoList!=null and !userTopoList.isEmpty()}">
-						<br />
+						<hr />
+						<h3>Mes commentaires</h3>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<thead class="thead-dark">

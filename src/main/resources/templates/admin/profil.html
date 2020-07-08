@@ -28,6 +28,8 @@
 					
 <!-- 					Les Sites -->
 					<div class="col-md-12" th:if="${fullAreaList!=null and !fullAreaList.isEmpty()}">
+						<hr />
+						<h3>Tous les sites</h3>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<thead class="thead-dark">
@@ -65,7 +67,8 @@
 					
 <!-- 					Les Topos -->
 					<div class="col-md-12" th:if="${fullTopoList!=null and !fullTopoList.isEmpty()}">
-						<br />
+						<hr />
+						<h3>Tous les Topos</h3>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<thead class="thead-dark">
@@ -86,7 +89,12 @@
 										<td><span th:text="${topo?.ShortDescription}">Description</span></td>
 										<td><span th:text="${#dates.format(topo?.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
 										<td><span th:text="${topo?.belongTo}"></span>Proprétaire</td>
-										<td><span th:text="${topo?.isAvailableForLoan} ? 'Oui' : 'Non'">Dispo</span></td>
+										<td>
+											<div class="text-center">
+												<input class="form-check-input form-check-inline" type="checkbox" th:checked="${topo?.isAvailableForLoan}" disabled>
+												<span th:text="${topo?.isAvailableForLoan} ? 'Oui' : 'Non'">Dispo</span>
+											</div>
+										</td>
 										<td>
 											<div class="text-center">
 												<form th:action="@{/admin/delete}" th:object="${topo}" method="post">
@@ -104,7 +112,8 @@
 					
 <!-- 					Les commentaires -->
 					<div class="col-md-12" th:if="${fullCommentList!=null and !fullCommentList.isEmpty()}">
-						<br />
+						<hr />
+						<h3>Tous les commentaires</h3>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<thead class="thead-dark">
@@ -131,7 +140,7 @@
 													<button class="text-center" type="submit">Edit</button>
 												</form>
 												<br />
-												<form th:action="@{/admin/delete}" th:object="${comment}" method="post">
+												<form th:action="@{/admin/delete-comment}" th:object="${comment}" method="get">
 													<input type="hidden" name="id" th:value="${comment?.id}">
 													<input type="hidden" name="action" th:value="delete">
 													<button class="text-center" type="submit">Delete</button>
@@ -146,7 +155,8 @@
 					
 <!-- 					Les utilisateurs -->
 					<div class="col-md-12" th:if="${userList!=null and !userList.isEmpty()}">
-						<br />
+						<hr />
+						<h3>Tous les utilisateurs</h3>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<thead class="thead-dark">

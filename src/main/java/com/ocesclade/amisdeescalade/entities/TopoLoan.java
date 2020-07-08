@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ocesclade.amisdeescalade.enumerated.TopoLoanStatusEnum;
+
 @Entity
 @Table(name="topo_loan")
 public class TopoLoan implements Serializable {
@@ -28,6 +30,7 @@ public class TopoLoan implements Serializable {
 	private String lender;
 	private String borrower;
 	private Date creationDate;
+	private String status;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_topo")
@@ -36,6 +39,7 @@ public class TopoLoan implements Serializable {
 	public TopoLoan() {
 		super();
 		this.creationDate= Calendar.getInstance().getTime();
+		this.status = TopoLoanStatusEnum.IN_PROGRESS.toString();
 	}
 
 	public TopoLoan(String lender, String borrower, Topo topo) {
@@ -43,6 +47,7 @@ public class TopoLoan implements Serializable {
 		this.lender = lender;
 		this.borrower = borrower;
 		this.topo = topo;
+		this.status = TopoLoanStatusEnum.IN_PROGRESS.toString();
 		this.creationDate= Calendar.getInstance().getTime();
 	}
 
@@ -85,11 +90,19 @@ public class TopoLoan implements Serializable {
 	public void setTopo(Topo topo) {
 		this.topo = topo;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setTopoLoanStatus(TopoLoanStatusEnum statusEnum) {
+		this.status = statusEnum.toString();
+	}
 
 	@Override
 	public String toString() {
 		return "TopoLoan [id=" + id + ", lender=" + lender + ", borrower=" + borrower + ", creationDate=" + creationDate
-				+ ", topo=" + topo + "]";
+				+ ", status=" + status + ", topo=" + topo + "]";
 	}
 	
 	
