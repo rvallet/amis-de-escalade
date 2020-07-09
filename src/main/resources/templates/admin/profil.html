@@ -83,7 +83,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="topo:${fullTopoList}">
+									<tr th:each="topo:${fullTopoList}" th:if="${topo.isOnline}">
 										<th scope="row"><span th:text="${topo?.id}">#</span></th>
 										<td><span th:text="${topo?.name}">Nom</span></td>
 										<td><span th:text="${topo?.ShortDescription}">Description</span></td>
@@ -97,10 +97,36 @@
 										</td>
 										<td>
 											<div class="text-center">
-												<form th:action="@{/admin/delete}" th:object="${topo}" method="post">
+												<form th:action="@{/admin/delete-topo}" th:object="${topo}" method="get">
 													<input type="hidden" name="id" th:value="${topo?.id}">
-													<input type="hidden" name="name" th:value="${topo?.name}">
-													<button class="text-center" type="submit">Delete</button>
+													<input type="hidden" name="action" th:value="delete">
+													<button type="button" class="text-center" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
+<!-- 													<button class="text-center" type="submit">Delete</button> -->
+<!-- 													Modal de confirmation -->
+													<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+														<div class="modal-dialog modal-dialog-centered" role="document">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title" id="exampleModalLongTitle">DELETE</h5>
+																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																	</button>
+																</div>
+																<div class="modal-body">
+																	<p>Souhaitez-vous supprimer ce Topo ?</p>
+																	<small class="text-muted">
+																		Le topo ne seras plus visible sur le site. 
+																		Il reste cependant dans un état d'archive et peut-être récupéré par l'administarteur de votre site.
+																	</small>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+																	<button type="submit" class="btn btn-primary">Archiver</button>
+																</div>
+															</div>
+														</div>
+													</div>
+<!-- 													End of Modal de confirmation -->
 												</form>
 											</div>
 										</td>							

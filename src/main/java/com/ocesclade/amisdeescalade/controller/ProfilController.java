@@ -182,6 +182,21 @@ public class ProfilController {
 		return "redirect:/admin/profil";
 	}
 	
+	@Transactional
+	@GetMapping("/admin/delete-topo")
+	public String deleteTopo(
+			@RequestParam(name="id", required = false) Long topoId,
+			@RequestParam(name="action", required = false) String action,
+			Model model
+		) {
+		LOGGER.info("DELETE Topo id {}", topoId);
+		Topo topoToDelete = topoRepository.findTopoById(topoId);
+		topoToDelete.setIsOnline(false);
+		topoRepository.save(topoToDelete);
+		model.addAttribute("fullTopoList", topoRepository.findAll());
+		return "redirect:/admin/profil";
+	}
+	
 //	@PostMapping("/admin/update")
 //	public String updateData(
 //			@RequestParam(name="type", required = false) String dataType,
