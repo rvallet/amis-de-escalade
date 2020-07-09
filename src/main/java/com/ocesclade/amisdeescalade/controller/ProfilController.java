@@ -103,7 +103,7 @@ public class ProfilController {
 		User adminUser = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("adminUser" , adminUser );
 		
-		List<Topo> fullTopoList = topoRepository.findAll();
+		List<Topo> fullTopoList = topoRepository.findAllActiveTopos();
 		model.addAttribute("fullTopoList" , fullTopoList );
 		
 		List<Comment> fullCommentList = climbCommentRepository.findAll();
@@ -193,7 +193,7 @@ public class ProfilController {
 		Topo topoToDelete = topoRepository.findTopoById(topoId);
 		topoToDelete.setIsOnline(false);
 		topoRepository.save(topoToDelete);
-		model.addAttribute("fullTopoList", topoRepository.findAll());
+		model.addAttribute("fullTopoList", topoRepository.findAllActiveTopos());
 		return "redirect:/admin/profil";
 	}
 	

@@ -83,7 +83,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="topo:${fullTopoList}" th:if="${topo.isOnline}">
+									<tr th:each="topo:${fullTopoList}">
 										<th scope="row"><span th:text="${topo?.id}">#</span></th>
 										<td><span th:text="${topo?.name}">Nom</span></td>
 										<td><span th:text="${topo?.ShortDescription}">Description</span></td>
