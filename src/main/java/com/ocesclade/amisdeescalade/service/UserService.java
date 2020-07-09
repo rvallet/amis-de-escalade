@@ -8,6 +8,7 @@ import com.ocesclade.amisdeescalade.entities.User;
 public interface UserService extends UserDetailsService{
 	
 	User findByEmail (String email);
+	User findByPseudo (String pseudo);
 	User findById (Long id);
 	User save(UserRegistrationDto userRegistrationDto);
 	

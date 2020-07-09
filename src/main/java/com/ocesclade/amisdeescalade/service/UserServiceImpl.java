@@ -74,4 +74,9 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findUserById(String.valueOf(id));
 	}
 
+	@Override
+	public User findByPseudo(String pseudo) {
+		return userRepository.findOneByPseudo(pseudo);
+	}	
+
 }

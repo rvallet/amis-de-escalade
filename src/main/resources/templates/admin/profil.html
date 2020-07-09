@@ -6,8 +6,16 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{base}">
 
-	<head th:insert="base :: head"></head>
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<link rel="stylesheet" type="text/css" 
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+		crossorigin="anonymous" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
+		<link rel="icon" href="img/icon.png">
+		<link rel="shortcut icon" href="img/favicon.ico"/>
+		<base href="/">
 		<title>Mon profil de Membre de l'association - LADE</title>
 		<meta name="description" content="Profil Administrateur - Les amis de l'escalade"/>
 	</head>
