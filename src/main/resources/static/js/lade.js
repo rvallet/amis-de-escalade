@@ -5,6 +5,6 @@ if (url.match('#')) {
 }
 
 //Focus Modal
-$('#myModal').on('shown.bs.modal', function () {
-	  $('#myInput').trigger('focus')
-	})
+//$('#topoModalCenter').on('shown.bs.modal', function () {
+//	  $('#id').trigger('focus')
+//	})

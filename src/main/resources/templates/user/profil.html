@@ -23,138 +23,203 @@
 		<th:block th:insert="base :: header">...</th:block>
 		<main layout:fragment="main" role="main" th:remove="tag">
 			<section id="UserProfile">
-				<div class="container">				
+				<div class="container">	
+				
+<!-- 					Menu -->
+					<nav>
+						<div class="nav nav-tabs anchor" id="nav-tab" role="tablist">
+							<a class="nav-item nav-link active" id="nav-profil-tab" 
+								data-toggle="tab" href="#nav-profil" 
+								role="tab" aria-controls="nav-profil" 
+								aria-selected="true">Mon Profil
+							</a>
+							<a class="nav-item nav-link" id="nav-area-tab" 
+								data-toggle="tab" href="#nav-area" 
+								role="tab" aria-controls="nav-area" 
+								aria-selected="false">Mes Sites
+							</a>
+							<a class="nav-item nav-link" id="nav-topos-tab" 
+								data-toggle="tab" href="#nav-topos" 
+								role="tab" aria-controls="nav-topos" 
+								aria-selected="false">Mes Topos
+							</a>
+							<a class="nav-item nav-link" id="nav-toposloan-tab" 
+								data-toggle="tab" href="#nav-toposloan" 
+								role="tab" aria-controls="nav-toposloan" 
+								aria-selected="false">Mes Demandes
+							</a>
+							<a class="nav-item nav-link" id="nav-comments-tab" 
+								data-toggle="tab" href="#nav-comments" 
+								role="tab" aria-controls="nav-comments" 
+								aria-selected="false">Mes Commentaires
+							</a>
+						</div>
+					</nav>
+					
+					<div class="tab-content" id="nav-tabContent">			
 					
 <!-- 					Mon Profil -->
-					<div class="col-md-12" th:value="${user}">
-						<h2>Profil Utilisateur</h2>
-						<span th:text="${user?.pseudo}">Pseudo</span>
-						<span th:text="${user?.lastName}">Nom</span>
-						<span th:text="${user?.firstName}">Prénom</span>
-						<span th:text="${user?.email}">e-Mail</span>				
+					<div class="tab-pane fade show active" id="nav-profil" role="tabpanel" aria-labelledby="nav-profil-tab">
+						<div class="col-md-12" th:value="${user}">
+							<br />
+							<h2>Profil Utilisateur</h2>
+							<span th:text="${user?.pseudo}">Pseudo</span>
+							<span th:text="${user?.lastName}">Nom</span>
+							<span th:text="${user?.firstName}">Prénom</span>
+							<span th:text="${user?.email}">e-Mail</span>				
+						</div>
 					</div>
 					
 <!-- 					Mes Sites -->
-					<div class="col-md-12" th:if="${userAreaList!=null and !userAreaList.isEmpty()}">
-						<hr />
-						<h3>Mes sites</h3>
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Nom</th>
-										<th scope="col">Description</th>
-										<th scope="col">Date</th>								
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="area:${userAreaList}">
-										<th scope="row"><span th:text="${area?.id}">#</span></th>
-										<td><span th:text="${area?.name}">Nom</span></td>
-										<td><span th:text="${area?.description}">Description</span></td>
-										<td><span th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
-									</tr>
-								</tbody>
-							</table>
+					<div class="tab-pane fade show active" id="nav-area" role="tabpanel" aria-labelledby="nav-area-tab">
+						<div class="col-md-12" th:if="${userAreaList==null or userAreaList.isEmpty()}">
+							<br />
+							<h3>Mes Sites</h3>
+							<p>Vous n'avez pas encore partagé un site d'escalade</p>						
+						</div>
+						<div class="col-md-12" th:if="${userAreaList!=null and !userAreaList.isEmpty()}">
+							<br />
+							<h3>Mes Sites</h3>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Nom</th>
+											<th scope="col">Description</th>
+											<th scope="col">Date</th>								
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="area:${userAreaList}">
+											<th scope="row"><span th:text="${area?.id}">#</span></th>
+											<td><span th:text="${area?.name}">Nom</span></td>
+											<td><span th:text="${area?.description}">Description</span></td>
+											<td><span th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 					
 <!-- 					Mes Topos -->
-					<div class="col-md-12" th:if="${userTopoList!=null and !userTopoList.isEmpty()}">
-						<hr />
-						<h3>Mes Topos</h3>
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Nom</th>
-										<th scope="col">Description</th>
-										<th scope="col">Lieu</th>
-										<th scope="col">Date</th>
-										<th scope="col">Disponible</th>								
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="topo:${userTopoList}" th:if="${topo.isOnline}">
-										<th scope="row"><span th:text="${topo.id}">#</span></th>
-										<td><span th:text="${topo.name}">Nom</span></td>
-										<td><span th:text="${topo.description}">Description</span></td>
-										<td><span th:text="${topo.location}">Lieu</span></td>
-										<td><span th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
-										<td>
-											<div class="text-center">
-												<input class="form-check-input form-check-inline" type="checkbox" th:checked="${topo?.isAvailableForLoan}" disabled>
-												<span th:text="${topo?.isAvailableForLoan} ? 'Oui' : 'Non'">Dispo</span>
-												<form th:action="@{/user/edit-topo}" method="get">
-													<input type="hidden" name="id" th:value="${topo?.id}">
-													<button type="submit">Edit</button>
-												</form>
-											</div>										
-										</td>							
-									</tr>
-								</tbody>
-							</table>
+					<div class="tab-pane fade show active" id="nav-topos" role="tabpanel" aria-labelledby="nav-topos-tab">
+						<div class="col-md-12" th:if="${userTopoList==null or userTopoList.isEmpty()}">
+							<br />
+							<h3>Mes Topos</h3>
+							<p>Vous n'avez pas encore créé de topos</p>						
+						</div>
+						<div class="col-md-12" th:if="${userTopoList!=null and !userTopoList.isEmpty()}">
+							<br />
+							<h3>Mes Topos</h3>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Nom</th>
+											<th scope="col">Description</th>
+											<th scope="col">Lieu</th>
+											<th scope="col">Date</th>
+											<th scope="col">Disponible</th>								
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="topo:${userTopoList}" th:if="${topo.isOnline}">
+											<th scope="row"><span th:text="${topo.id}">#</span></th>
+											<td><span th:text="${topo.name}">Nom</span></td>
+											<td><span th:text="${topo.description}">Description</span></td>
+											<td><span th:text="${topo.location}">Lieu</span></td>
+											<td><span th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
+											<td>
+												<div class="text-center">
+													<input class="form-check-input form-check-inline" type="checkbox" th:checked="${topo?.isAvailableForLoan}" disabled>
+													<span th:text="${topo?.isAvailableForLoan} ? 'Oui' : 'Non'">Dispo</span>
+													<form th:action="@{/user/edit-topo}" method="get">
+														<input type="hidden" name="id" th:value="${topo?.id}">
+														<button type="submit">Edit</button>
+													</form>
+												</div>										
+											</td>							
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 
 <!-- 					Mes demandes de Topos -->
-					<div class="col-md-12" th:if="${userTopoLoanList!=null and !userTopoLoanList.isEmpty()}">
-						<hr />
-						<h3>Mes demandes</h3>
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Nom</th>
-										<th scope="col">Description</th>
-										<th scope="col">Propriétaire</th>
-										<th scope="col">Date de la demande</th>
-										<th scope="col">Statut</th>
-																			
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="topoLoan:${userTopoLoanList}">
-										<th scope="row"><span th:text="${topoLoan.id}">#</span></th>
-										<td><span th:text="${topoLoan.topo?.name}">Nom</span></td>
-										<td><span th:text="${topoLoan.topo?.description}">Description</span></td>
-										<td><span th:text="${topoLoan.lender}">Description</span></td>
-										<td><span th:text="${#dates.format(topoLoan.creationDate, 'dd/MM/yyyy')}">Date</span></td>
-										<td><span th:text="${topoLoan.status}">Description</span></td>
-									</tr>
-								</tbody>
-							</table>
+					<div class="tab-pane fade show active" id="nav-toposloan" role="tabpanel" aria-labelledby="nav-toposloan-tab">
+						<div class="col-md-12" th:if="${userTopoLoanList==null or userTopoLoanList.isEmpty()}">
+							<br />
+							<h3>Mes Demandes</h3>
+							<p>Vous n'avez pas reçus de demande de topos</p>						
+						</div>
+						<div class="col-md-12" th:if="${userTopoLoanList!=null and !userTopoLoanList.isEmpty()}">
+							<br />
+							<h3>Mes Demandes</h3>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Nom</th>
+											<th scope="col">Description</th>
+											<th scope="col">Propriétaire</th>
+											<th scope="col">Date de la demande</th>
+											<th scope="col">Statut</th>
+																				
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="topoLoan:${userTopoLoanList}">
+											<th scope="row"><span th:text="${topoLoan.id}">#</span></th>
+											<td><span th:text="${topoLoan.topo?.name}">Nom</span></td>
+											<td><span th:text="${topoLoan.topo?.description}">Description</span></td>
+											<td><span th:text="${topoLoan.lender}">Description</span></td>
+											<td><span th:text="${#dates.format(topoLoan.creationDate, 'dd/MM/yyyy')}">Date</span></td>
+											<td><span th:text="${topoLoan.status}">Description</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>				
 					
 <!-- 					Mes commentaires -->
-					<div class="col-md-12" th:if="${userTopoList!=null and !userTopoList.isEmpty()}">
-						<hr />
-						<h3>Mes commentaires</h3>
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Titre</th>
-										<th scope="col">Contenu</th>
-										<th scope="col">Date</th>								
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="comment:${userCommentList}">
-										<th scope="row"><span th:text="${comment.id}">#</span></th>
-										<td><span th:text="${comment.title}">Titre</span></td>
-										<td><span th:text="${comment.content}">Contenu</span></td>
-										<td><span th:text="${#dates.format(comment.releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
-									</tr>
-								</tbody>
-							</table>
+					<div class="tab-pane fade show active" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+						<div class="col-md-12" th:if="${userCommentList==null or userCommentList.isEmpty()}">
+							<br />
+							<h3>Mes Commentaires</h3>
+							<p>Vous n'avez pas encore posté de commentaire</p>						
+						</div>
+						<div class="col-md-12" th:if="${userCommentList!=null and !userCommentList.isEmpty()}">
+							<br />
+							<h3>Mes Commentaires</h3>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Titre</th>
+											<th scope="col">Contenu</th>
+											<th scope="col">Date</th>								
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="comment:${userCommentList}">
+											<th scope="row"><span th:text="${comment.id}">#</span></th>
+											<td><span th:text="${comment.title}">Titre</span></td>
+											<td><span th:text="${comment.content}">Contenu</span></td>
+											<td><span th:text="${#dates.format(comment.releaseDate, 'dd/MM/yyyy')}">Date</span></td>								
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
+				</div>
 				
 				
 				</div>

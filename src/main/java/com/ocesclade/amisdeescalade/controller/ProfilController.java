@@ -2,8 +2,6 @@ package com.ocesclade.amisdeescalade.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -140,7 +137,7 @@ public class ProfilController {
 		area.setIsPromoted(areaToUpdate.getIsPromoted());
 		climbAreaRepository.save(area);
 		model.addAttribute("fullAreaList", climbAreaRepository.findAll());
-		return "redirect:/admin/profil";
+		return "redirect:/admin/profil#nav-area";
 	}
 	
 	@GetMapping("/admin/edit-comment")
@@ -166,7 +163,7 @@ public class ProfilController {
 		comment.setContent(commentToUpdate.getContent());
 		climbCommentRepository.save(comment);
 		model.addAttribute("fullCommentList", climbCommentRepository.findAll());
-		return "redirect:/admin/profil";
+		return "redirect:/admin/profil#nav-comments";
 	}
 	
 	@GetMapping("/admin/delete-comment")
@@ -179,7 +176,7 @@ public class ProfilController {
 		Comment commentToDelete = climbCommentRepository.findOneById(commentId);
 		climbCommentRepository.delete(commentToDelete);
 		model.addAttribute("fullCommentList", climbCommentRepository.findAll());
-		return "redirect:/admin/profil";
+		return "redirect:/admin/profil#nav-comments";
 	}
 	
 	@Transactional
@@ -194,7 +191,7 @@ public class ProfilController {
 		topoToDelete.setIsOnline(false);
 		topoRepository.save(topoToDelete);
 		model.addAttribute("fullTopoList", topoRepository.findAllActiveTopos());
-		return "redirect:/admin/profil";
+		return "redirect:/admin/profil#nav-topos";
 	}
 	
 //	@PostMapping("/admin/update")
