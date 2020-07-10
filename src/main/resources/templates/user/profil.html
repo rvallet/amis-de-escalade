@@ -12,9 +12,10 @@
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
 		crossorigin="anonymous" />
-		<link rel="stylesheet" type="text/css" href="../css/style.css" th:href="@{css/style.css}" />
-		<link rel="icon" href="../img/icon.png" th:href="@{img/icon.png}" />
-		<link rel="shortcut icon" href="../img/favicon.ico" th:href="@{img/favicon.ico}" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}" />
+		<link rel="icon" href="img/icon.png" th:href="@{img/icon.png}" />
+		<link rel="shortcut icon" th:href="@{img/favicon.ico}" />
+		<base href="/">
 		<title>Mon profil utilisateur - LADE</title>
 		<meta name="description" content="Profil Utilisateur - Les amis de l'escalade"/>
 	</head>
@@ -62,10 +63,11 @@
 						<div class="col-md-12" th:value="${user}">
 							<br />
 							<h2>Profil Utilisateur</h2>
-							<span th:text="${user?.pseudo}">Pseudo</span>
-							<span th:text="${user?.lastName}">Nom</span>
-							<span th:text="${user?.firstName}">Prénom</span>
-							<span th:text="${user?.email}">e-Mail</span>				
+							</br >
+							<p>Pseudo : <span th:text="${user?.pseudo}">Pseudo</span></p>
+							<p>Nom : <span th:text="${user?.lastName}">Nom</span></p>
+							<p>Prénom : <span th:text="${user?.firstName}">Prénom</span></p>
+							<p>Adresse e-mail : <span th:text="${user?.email}">e-Mail</span></p>				
 						</div>
 					</div>
 					

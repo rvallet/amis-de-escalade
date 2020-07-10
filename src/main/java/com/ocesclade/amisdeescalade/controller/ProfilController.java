@@ -128,12 +128,12 @@ public class ProfilController {
 		topoloan.setTopoLoanStatus(TopoLoanStatusEnum.CLOSED);
 		topoLoanRepository.save(topoloan);
 		model.addAttribute("myTopoLoanList", topoLoanRepository.findAllByBorrower(u.getEmail()));
-		return "redirect:/user/profil#nav-topos";		
+		return "redirect:/user/profil#nav-toposloan";
 		}
 		
 		topoLoanRepository.save(topoloan);
 		model.addAttribute("userTopoLoanList", topoLoanRepository.findAllByLender(u.getEmail()));
-		return "redirect:/user/profil#nav-toposloan";
+		return "redirect:/user/profil#nav-topos";
 	}
 	
 	@GetMapping("/admin/profil")

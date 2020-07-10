@@ -63,10 +63,11 @@
 						<div class="col-md-12" th:value="${adminUser}">
 							<br />
 							<h2>Profil Administrateur</h2>
-							<span th:text="${adminUser?.pseudo}">Pseudo</span>
-							<span th:text="${adminUser?.lastName}">Nom</span>
-							<span th:text="${adminUser?.firstName}">Prénom</span>
-							<span th:text="${adminUser?.email}">e-Mail</span>				
+							<br />
+							<p>Pseudo : <span th:text="${adminUser?.pseudo}">Pseudo</span></p>
+							<p>Nom : <span th:text="${adminUser?.lastName}">Nom</span></p>
+							<p>Prénom : <span th:text="${adminUser?.firstName}">Prénom</span></p>
+							<p>Adresse e-mail : <span th:text="${adminUser?.email}">e-Mail</span></p>				
 						</div>
 					</div>
 					
