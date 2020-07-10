@@ -13,8 +13,8 @@
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
 		crossorigin="anonymous" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
-		<link rel="icon" href="img/icon.png">
-		<link rel="shortcut icon" href="img/favicon.ico"/>
+		<link rel="icon" href="img/icon.png" th:href="@{img/icon.png}"/>
+		<link rel="shortcut icon" href="img/favicon.ico" th:href="@{img/favicon.ico}"/>
 		<base href="/">
 		<title>Mon profil de Membre de l'association - LADE</title>
 		<meta name="description" content="Profil Administrateur - Les amis de l'escalade"/>
@@ -289,8 +289,6 @@
 														<span th:text="${user.role}">Accès</span>
 														<form th:action="@{/admin/update}" th:object="${user}" method="post">
 															<input type="hidden" name="id" th:value="${user?.id}">
-															<input type="hidden" name="email" th:value="${user?.email}">
-															<input type="hidden" name="pseudo" th:value="${user?.pseudo}">
 															<input type="hidden" name="role" th:value="${user?.role}">
 															<button class="text-center" type="submit">Edit</button>
 														</form>	

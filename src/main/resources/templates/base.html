@@ -10,25 +10,25 @@
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
 		crossorigin="anonymous" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
-		<link rel="icon" href="img/icon.png">
-		<link rel="shortcut icon" href="img/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" th:href="@{css/style.css}"/>
+		<link rel="icon" th:href="@{img/icon.png}" />
+		<link rel="shortcut icon" th:href="@{img/favicon.ico}" />
 	</head>
 
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-sm navbar-dark bg-dark" role="navigation" aria-label="Menu principal">
 				<a class="navbar-brand" href="/">
-					<img src="img/icon.png" alt="Logo LADE" style="width:40px;">
+					<img th:src="@{img/icon.png}" alt="Logo LADE" style="width:40px;">
 				</a>
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" th:href="@{/accueil}"> Accueil </a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/sites}"> Sites d'escalade</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/topos}"> Topos </a></li>
-					<li class="nav-item"sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/user/profil}"> Mon Profil </a></li>
-					<li class="nav-item"sec:authorize="isAuthenticated() AND hasAuthority('ADMIN')"><a class="nav-link" th:href="@{/admin/profil}"> Admin </a></li>
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/user/profil}"> Mon Profil </a></li>
+					<li class="nav-item" sec:authorize="isAuthenticated() AND hasAuthority('ADMIN')"><a class="nav-link" th:href="@{/admin/profil}"> Admin </a></li>
 					<li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/login}"> Connection </a></li>
-					<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" href="#" th:href="@{/logout}"> Se déconnecter </a></li>
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}"> Se déconnecter </a></li>
 				</ul>
 			</nav>
 			<div class="container-fluid">

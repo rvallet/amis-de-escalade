@@ -18,6 +18,7 @@ import com.ocesclade.amisdeescalade.entities.Comment;
 import com.ocesclade.amisdeescalade.entities.Topo;
 import com.ocesclade.amisdeescalade.entities.TopoLoan;
 import com.ocesclade.amisdeescalade.entities.User;
+import com.ocesclade.amisdeescalade.enumerated.TopoLoanStatusEnum;
 import com.ocesclade.amisdeescalade.repository.ClimbAreaRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbCommentRepository;
 import com.ocesclade.amisdeescalade.repository.TopoLoanRepository;
@@ -65,6 +66,9 @@ public class ProfilController {
 		List<TopoLoan> userTopoLoanList = topoLoanRepository.findAllByBorrower(u.getEmail());
 		model.addAttribute("userTopoLoanList" , userTopoLoanList );
 		
+		List<TopoLoan> myTopoLoanList = topoLoanRepository.findAllByLender(u.getEmail());
+		model.addAttribute("myTopoLoanList" , myTopoLoanList );
+		
 		LOGGER.info("chargment du profil {}", u.getEmail());
 		return "user/profil";
 	}
@@ -92,7 +96,44 @@ public class ProfilController {
 		topo.setIsAvailableForLoan(topoToUpdate.getIsAvailableForLoan());
 		topoRepository.save(topo);
 		model.addAttribute("userTopoList", topoRepository.findToposByUser_Id(u.getId()));
-		return "redirect:/user/profil";
+		return "redirect:/user/profil#nav-topos";
+	}
+	
+	@GetMapping("/user/update-topoloan")
+	public String updateUserTopoLoan(
+			@RequestParam(name="id", required = false) Long topoloanId,
+			@RequestParam(name="action", required = false) String action,
+			Model model
+		) {
+		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		LOGGER.info("user UPDATE TopoLoan id {}", topoloanId);
+		TopoLoan topoloan = topoLoanRepository.findTopoLoanById(topoloanId);
+		Topo topo = topoloan.getTopo();
+		
+		if (action.equalsIgnoreCase("accept")) {
+		topo.setIsAvailableForLoan(false);
+		topoloan.setTopoLoanStatus(TopoLoanStatusEnum.ACCEPTED);
+		topoRepository.save(topo);
+		}
+		
+		if (action.equalsIgnoreCase("close")) {		
+		topoloan.setTopoLoanStatus(TopoLoanStatusEnum.REFUSED);
+		}
+		
+		if (action.equalsIgnoreCase("delete")) {		
+		topoloan.setTopoLoanStatus(TopoLoanStatusEnum.CLOSED);
+		}
+		
+		if (action.equalsIgnoreCase("deletedmyself")) {		
+		topoloan.setTopoLoanStatus(TopoLoanStatusEnum.CLOSED);
+		topoLoanRepository.save(topoloan);
+		model.addAttribute("myTopoLoanList", topoLoanRepository.findAllByBorrower(u.getEmail()));
+		return "redirect:/user/profil#nav-topos";		
+		}
+		
+		topoLoanRepository.save(topoloan);
+		model.addAttribute("userTopoLoanList", topoLoanRepository.findAllByLender(u.getEmail()));
+		return "redirect:/user/profil#nav-toposloan";
 	}
 	
 	@GetMapping("/admin/profil")
