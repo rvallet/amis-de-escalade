@@ -16,8 +16,18 @@
 		<main layout:fragment="main" role="main" th:remove="tag">
 			<section id="ClimbAreas">
 				<div class="container">				
-				
-					<H2>Nos Sites d'escalade</H2>
+					
+					<div class="col-md-12">
+					<form th:action="@{create-area}" sec:authorize="isAuthenticated()" method="get">
+						<button class="btn btn-outline-default btn-lg btn-block" type="submit" >Ajouter un Site</button>
+						<br />
+					</form>
+					<form th:action="@{create-area}" sec:authorize="!isAuthenticated()" method="get">
+						<button class="btn btn-outline-default btn-lg btn-block" type="submit" disabled>Ajouter un Site</button>
+						<p class="text-center"><small class="text-muted">Vous devez être connecté pour ajouter un Site</small></p>
+						<br />
+					</form>				
+					<H2>Rechercher un site</H2>
 					<form th:action="@{sites}" method="get">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -123,6 +133,7 @@
 							</li>
 						</ul>
 					</nav>
+				</div>
 			
 				</div>
 			</section>

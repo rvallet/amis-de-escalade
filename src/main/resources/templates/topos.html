@@ -18,6 +18,15 @@
 				<div class="container">
 					
 					<div class="col-md-12">
+						<form th:action="@{create-topo}" sec:authorize="isAuthenticated()" method="get">
+							<button class="btn btn-outline-default btn-lg btn-block" type="submit" >Ajouter un Topo</button>
+							<br />
+						</form>
+						<form th:action="@{create-topo}" sec:authorize="!isAuthenticated()" method="get">
+							<button class="btn btn-outline-default btn-lg btn-block" type="submit" disabled>Ajouter un Topo</button>
+							<p class="text-center"><small class="text-muted">Vous devez être connecté pour ajouter un Topo</small></p>
+							<br />
+						</form>
 						<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 							<div class="col mb-4" id="topoList" th:each="topo:${topoList}" th:if="${topo.isOnline}">
 								<div class="card">
@@ -32,10 +41,40 @@
 									</div>
 									<div class="card-footer">
 										<p class="card-text"><small class="text-muted" th:text="${topo.belongTo}">Pseudo</small></p>
-										<form th:action="@{topo-pret}" method="get">
-											<input type="hidden" name="idTopo" th:value="${topo.id}"/>
-											<button type="submit" th:disabled="${!topo.isAvailableForLoan}" class="btn btn-secondary btn-block">Demande de Prêt</button>
-										</form>
+										<button type="button" th:disabled="${!topo.isAvailableForLoan}" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#topoModalCenter" th:attr="data-target='#topoModalCenter'+${topo?.id}">
+											Demande de Prêt
+										</button>
+
+<!-- 													Modal de confirmation -->										
+										<div class="modal fade" th:id="topoModalCenter+${topo?.id}" tabindex="-1" role="dialog" aria-labelledby="topoModalCenterTitle" aria-hidden="true">
+															<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="topoModalLongTitle">Demande de prêt</h5>
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																			<span aria-hidden="true">&times;</span>
+																		</button>
+																	</div>
+																	<div class="modal-body">
+																		<p>Souhaitez-vous envoyer un demande de prêt ?</p>
+																		<small class="text-muted">
+																			Votre demande seras envoyée au propriétaire du topos. 
+																			Vous pouvez suivre l'évolution de vos demandes en cours dans votre profil.
+																		</small>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+																		<form th:action="@{topo-pret}" method="post">
+																			<input type="hidden" name="idTopo" th:value="${topo?.id}">
+																			<button type="submit" class="btn btn-primary">Envoyer</button>
+																		</form>
+																	</div>
+																</div>
+															</div>
+														</div>
+<!-- 													End of Modal de confirmation -->										
+										
+										
 									</div>
 								</div>							
 							</div>							

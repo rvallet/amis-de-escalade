@@ -45,16 +45,7 @@ public class TopoController {
 		return "topos";
 	}
 	
-	@GetMapping(value="/topo-pret")
-	public String topoLoan (@RequestParam(name="idTopo") Long id, Model model) {
-		model.addAttribute("idTopo", id);
-		Topo topo = topoRepository.findTopoById(id);
-		model.addAttribute("topo", topo);
-		model.addAttribute("topoLoan", new TopoLoan());
-		return "topo-pret";
-	}
-	
-	@PostMapping(value="/topo-pret-confirmation")
+	@PostMapping(value="/topo-pret")
 	public String topoLoanConfirmation (
 			@RequestParam(name="idTopo") Long id, 
 			TopoLoan topoLoan,
@@ -69,7 +60,7 @@ public class TopoController {
 		topoLoan.setTopo(topo);
 		topoLoanRepository.save(topoLoan);
 		model.addAttribute("topoLoan", topoLoan);
-		return "topo-pret-confirmation";
+		return "redirect:/user/profil#nav-toposloan";
 	}
 	
 	@GetMapping(value="/create-topo")
