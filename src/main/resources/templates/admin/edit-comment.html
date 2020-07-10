@@ -34,18 +34,14 @@
 											<th scope="col">#</th>
 											<th scope="col">Titre</th>
 											<th scope="col">Contenu</th>
-											<th scope="col">Date</th>
-											<th scope="col">Auteur</th>
 											<th scope="col">Action</th>								
 										</tr>
 									</thead>
 									<tbody>										
 										<tr>
 											<th scope="row"><span th:text="${comment.id}">#</span></th>
-											<td><textarea th:field="*{title}" form="comment-form"></textarea></td>
-											<td><textarea th:field="*{content}" form="comment-form"></textarea></td>
-											<td><span th:text="${#dates.format(comment.releaseDate, 'dd/MM/yyyy')}">Date</span></td>
-											<td><span th:text="${comment.author}"></span>Auteur</td>
+											<td><textarea th:field="*{title}" form="comment-form" rows="4" cols="30"></textarea></td>
+											<td><textarea th:field="*{content}" form="comment-form" rows="4" cols="60"></textarea></td>
 											<td>
 												<input type="hidden" name="id" th:value="${comment?.id}">
 												<button class="text-center" type="submit">Update</button>
