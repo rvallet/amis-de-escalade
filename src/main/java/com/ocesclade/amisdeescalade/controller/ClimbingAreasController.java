@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ocesclade.amisdeescalade.dto.CommentDto;
+import com.ocesclade.amisdeescalade.dto.UserRegistrationDto;
 import com.ocesclade.amisdeescalade.entities.Area;
 import com.ocesclade.amisdeescalade.entities.Comment;
 import com.ocesclade.amisdeescalade.entities.Route;
 import com.ocesclade.amisdeescalade.entities.Sector;
+import com.ocesclade.amisdeescalade.entities.Topo;
 import com.ocesclade.amisdeescalade.entities.User;
 import com.ocesclade.amisdeescalade.repository.ClimbAreaRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbCommentRepository;
@@ -150,4 +153,27 @@ public class ClimbingAreasController {
 		return "redirect:/site?id_area="+idArea+"#nav-comments";
 	}
 	
+	@GetMapping(value="/create-area")
+	public String areaForm(
+			Model model
+			){
+		return "create-area";
+	}
+	
+	@PostMapping(value="/create-area")
+	public String createArea(
+			Area areaToCreate, 
+			BindingResult result
+			){
+		
+		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		Area area = new Area(
+				areaToCreate.getName(), 
+				areaToCreate.getDescription(), 
+				u.getPseudo());
+		LOGGER.info("user {} create a new Area {}", u.getEmail(), area.getName());		
+	
+		climbAreaRepository.save(area);
+		return "redirect:/sites";
+	}
 }

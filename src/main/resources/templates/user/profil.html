@@ -12,9 +12,9 @@
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
 		crossorigin="anonymous" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
-		<link rel="icon" href="img/icon.png">
-		<link rel="shortcut icon" href="img/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}" />
+		<link rel="icon" href="img/icon.png" th:href="@{img/icon.png}" />
+		<link rel="shortcut icon" th:href="@{img/favicon.ico}" />
 		<base href="/">
 		<title>Mon profil utilisateur - LADE</title>
 		<meta name="description" content="Profil Utilisateur - Les amis de l'escalade"/>
@@ -63,15 +63,16 @@
 						<div class="col-md-12" th:value="${user}">
 							<br />
 							<h2>Profil Utilisateur</h2>
-							<span th:text="${user?.pseudo}">Pseudo</span>
-							<span th:text="${user?.lastName}">Nom</span>
-							<span th:text="${user?.firstName}">Prénom</span>
-							<span th:text="${user?.email}">e-Mail</span>				
+							</br >
+							<p>Pseudo : <span th:text="${user?.pseudo}">Pseudo</span></p>
+							<p>Nom : <span th:text="${user?.lastName}">Nom</span></p>
+							<p>Prénom : <span th:text="${user?.firstName}">Prénom</span></p>
+							<p>Adresse e-mail : <span th:text="${user?.email}">e-Mail</span></p>				
 						</div>
 					</div>
 					
 <!-- 					Mes Sites -->
-					<div class="tab-pane fade show active" id="nav-area" role="tabpanel" aria-labelledby="nav-area-tab">
+					<div class="tab-pane" id="nav-area" role="tabpanel" aria-labelledby="nav-area-tab">
 						<div class="col-md-12" th:if="${userAreaList==null or userAreaList.isEmpty()}">
 							<br />
 							<h3>Mes Sites</h3>
@@ -104,7 +105,7 @@
 					</div>
 					
 <!-- 					Mes Topos -->
-					<div class="tab-pane fade show active" id="nav-topos" role="tabpanel" aria-labelledby="nav-topos-tab">
+					<div class="tab-pane fade" id="nav-topos" role="tabpanel" aria-labelledby="nav-topos-tab">
 						<div class="col-md-12" th:if="${userTopoList==null or userTopoList.isEmpty()}">
 							<br />
 							<h3>Mes Topos</h3>
@@ -146,15 +147,70 @@
 									</tbody>
 								</table>
 							</div>
+						
+<!-- 							Mes demandes de topos en attente -->							
+							<br />
+							<h3>Répondre à mes demandes de prêt</h3>
+							<div th:if="${myTopoLoanList==null or myTopoLoanList.isEmpty()}">
+								Aucune demande n'a été faite sur mes topos
+							</div>
+							<div th:if="${myTopoLoanList!=null and !myTopoLoanList.isEmpty()}">
+								<div class="table-responsive">
+									<table class="table table-hover">
+										<thead class="thead-dark">
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Nom</th>
+												<th scope="col">Description</th>
+												<th scope="col">Demandeur</th>
+												<th scope="col">Date de la demande</th>
+												<th scope="col">Statut</th>
+																					
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="topoLoan:${myTopoLoanList}" th:if="${topoLoan.status != 'Fermée'}">
+												<th scope="row"><span th:text="${topoLoan.id}">#</span></th>
+												<td><span th:text="${topoLoan.topo?.name}">Nom</span></td>
+												<td><span th:text="${topoLoan.topo?.description}">Description</span></td>
+												<td><span th:text="${topoLoan.borrower}">Demandeur</span></td>
+												<td><span th:text="${#dates.format(topoLoan.creationDate, 'dd/MM/yyyy')}">Date de la demande</span></td>
+												<td>
+													<div class="text-center">
+														<span th:text="${topoLoan.status}">statut</span>
+														<div th:if="${topoLoan.status != 'Fermée'}">
+															<form th:action="@{/user/update-topoloan}" th:if="${topoLoan.status == 'En cours'}" th:object="${topoLoan}" method="get">
+																<input type="hidden" name="id" th:value="${topoLoan?.id}">
+																<input type="hidden" name="action" th:value="accept">
+																<button class="text-center" type="submit">Accepter</button>
+															</form>
+															<form th:action="@{/user/update-topoloan}" th:if="${topoLoan.status == 'En cours'}" th:object="${topoLoan}" method="get">
+																<input type="hidden" name="id" th:value="${topoLoan?.id}">
+																<input type="hidden" name="action" th:value="close">
+																<button class="text-center" type="submit">Refuser</button>
+															</form>
+															<form th:action="@{/user/update-topoloan}" th:if="${topoLoan.status == 'Refusée' or topoLoan.status == 'Acceptée'}" th:object="${topoLoan}" method="get">
+																<input type="hidden" name="id" th:value="${topoLoan?.id}">
+																<input type="hidden" name="action" th:value="delete">
+																<button class="text-center" type="submit">Archiver</button>
+															</form>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 
 <!-- 					Mes demandes de Topos -->
-					<div class="tab-pane fade show active" id="nav-toposloan" role="tabpanel" aria-labelledby="nav-toposloan-tab">
+					<div class="tab-pane fade" id="nav-toposloan" role="tabpanel" aria-labelledby="nav-toposloan-tab">
 						<div class="col-md-12" th:if="${userTopoLoanList==null or userTopoLoanList.isEmpty()}">
 							<br />
 							<h3>Mes Demandes</h3>
-							<p>Vous n'avez pas reçus de demande de topos</p>						
+							<p>Vous n'avez aucune demande de topos en cours</p>						
 						</div>
 						<div class="col-md-12" th:if="${userTopoLoanList!=null and !userTopoLoanList.isEmpty()}">
 							<br />
@@ -168,18 +224,28 @@
 											<th scope="col">Description</th>
 											<th scope="col">Propriétaire</th>
 											<th scope="col">Date de la demande</th>
-											<th scope="col">Statut</th>
-																				
+											<th scope="col">Statut</th>																				
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="topoLoan:${userTopoLoanList}">
+										<tr th:each="topoLoan:${userTopoLoanList}" th:if="${topoLoan.status != 'Fermée'}">
 											<th scope="row"><span th:text="${topoLoan.id}">#</span></th>
 											<td><span th:text="${topoLoan.topo?.name}">Nom</span></td>
 											<td><span th:text="${topoLoan.topo?.description}">Description</span></td>
-											<td><span th:text="${topoLoan.lender}">Description</span></td>
-											<td><span th:text="${#dates.format(topoLoan.creationDate, 'dd/MM/yyyy')}">Date</span></td>
-											<td><span th:text="${topoLoan.status}">Description</span></td>
+											<td><span th:text="${topoLoan.lender}">Propriétéaire</span></td>
+											<td><span th:text="${#dates.format(topoLoan.creationDate, 'dd/MM/yyyy')}">Date de la demande</span></td>
+											<td>
+												<div class="text-center">
+													<span th:text="${topoLoan.status}">statut</span>
+													<div th:if="${topoLoan.status != 'Fermée'}">
+														<form th:action="@{/user/update-topoloan}" th:object="${topoLoan}" method="get">
+															<input type="hidden" name="id" th:value="${topoLoan?.id}">
+															<input type="hidden" name="action" th:value="deletedmyself">
+															<button class="text-center" type="submit">Archiver</button>
+														</form>
+													</div>
+												</div>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -188,7 +254,7 @@
 					</div>				
 					
 <!-- 					Mes commentaires -->
-					<div class="tab-pane fade show active" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+					<div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
 						<div class="col-md-12" th:if="${userCommentList==null or userCommentList.isEmpty()}">
 							<br />
 							<h3>Mes Commentaires</h3>

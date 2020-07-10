@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{base}">
+
+	<head th:insert="base :: head"></head>
+	<head>
+		<title>Formulaire de création de site d'escalade - LADE</title>
+		<meta name="description" content="Page de création de site des amis de l'escalade"/>
+	</head>
+	<body>
+		<th:block th:insert="base :: header">...</th:block>
+		<main layout:fragment="main" role="main" th:remove="tag">
+			<section id="AreaForm">
+				<div class="container">	
+				
+				<form>
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-2 col-form-label">
+							Nom
+						</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inputName" placeholder="Nom du site">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputDescription" class="col-sm-2 col-form-label">
+							Description
+						</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" id="inputDescription" rows="3" placeholder="Description du site d'escalade"></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary">Créer le site</button>
+						</div>
+					</div>
+				</form>				
+				
+				
+				</div>
+			</section>
+		</main>
+		<th:block th:insert="base :: footer">...</th:block>
+		<th:block th:insert="base :: script">...</th:block>
+	</body>
+</html>
