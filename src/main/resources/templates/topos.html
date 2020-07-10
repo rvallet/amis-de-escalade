@@ -18,7 +18,7 @@
 				<div class="container">
 				
 					<div class="card-deck">
-						<div class="card" id="topoList" th:each="topo:${topoList}">
+						<div class="card" id="topoList" th:each="topo:${topoList}" th:if="${topo.isOnline}">
 							<img class="card-img-top img-fluid" th:src="@{/img/area1_200x100.jpg}" alt="...">
 							<div class="card-body">
 								<div class="card-header">

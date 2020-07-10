@@ -40,12 +40,19 @@ public class UserRegistrationController {
 	@PostMapping
 	public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto, BindingResult result){
 		LOGGER.info("AccountCreation for {}", userDto.getEmail());
-		User existing = userService.findByEmail(userDto.getEmail());
+		User isEmailExist = userService.findByEmail(userDto.getEmail());
+		User isPseudoExist = userService.findByPseudo(userDto.getPseudo());
 		
-			if (existing != null){
-				LOGGER.warn("This email already exist");
-				result.rejectValue("email", null, "There is already an account registered with that email");
+			if (isEmailExist != null){
+				LOGGER.warn("Cet email existe déjà en BDD");
+				result.rejectValue("email", null, "Le compte "+userDto.getEmail()+" existe déjà. Identifiez-vous ou réinitialisez votre mot de passe");
 			}
+			
+			if (isPseudoExist != null){
+				LOGGER.warn("Ce pseudo existe déjà en BDD");
+				result.rejectValue("pseudo", null, "Ce pseudo est déjà utilisé");
+			}
+			
 	
 			if (result.hasErrors()){
 				LOGGER.debug("form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());

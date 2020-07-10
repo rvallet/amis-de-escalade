@@ -2,13 +2,19 @@ package com.ocesclade.amisdeescalade.repository;
 
 import java.util.List;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.ocesclade.amisdeescalade.entities.Topo;
 
 public interface TopoRepository extends JpaRepository<Topo,Integer>{
 
+	@Query("SELECT t FROM Topo t WHERE t.isOnline = 1")
+	List<Topo> findAllActiveTopos();
+	
 	List<Topo> findAll();
+	
 	List<Topo> findToposByUser_Id (Long id);
 	List<Topo> findToposByUser_Email (String email);
 	Topo findTopoById(long id);

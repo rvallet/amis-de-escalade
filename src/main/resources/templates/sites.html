@@ -24,10 +24,9 @@
 								<button class="btn btn-outline-secondary">Filtrer</button>
 							</div>
 							<input type="text" id="param1" name="param1" th:value="${param1}" class="form-control" placeholder="par nom de sites" />
-							<div class="input-group-append">
+							<div class="input-group-append">	
 								<button class="btn btn-default btn-sm" onclick="document.getElementById('param1').value = ''">
-<!-- 									<span class="glyphicon glyphicon-trash"></span> -->
-									<span class="glyphicon glyphicon-remove"></span> Supprimer 
+									<span class="glyphicon glyphicon-remove">Supprimer</span>
 								</button>
 							</div>
 						</div>
@@ -38,9 +37,7 @@
 							<input type="text" id="param2" name="param2" th:value="${param2}" class="form-control" placeholder="par description de sites" />
 							<div class="input-group-append">								
 								<button class="btn btn-default btn-sm" onclick="document.getElementById('param2').value = ''">
-<!-- 									<span class="glyphicon glyphicon-trash"></span> -->
-									<span class="glyphicon glyphicon-remove"></span>
-									Supprimer 
+									<span class="glyphicon glyphicon-remove">Supprimer</span>
 								</button>
 							</div>
 						</div>
@@ -96,7 +93,7 @@
 							<div class="logo" th:if="${area.isPromoted}">
 								<img class="img-fluid" width="40" height="40" th:src="@{/img/officiel-LADE_150x150.png}" alt="Sélection officiel LADE">
 							</div>
-							<img class="card-img-top img-fluid" th:src="@{/img/area1_200x100.jpg}" alt="...">
+							<img class="card-img-top img-fluid" th:src="@{/img/area1_200x100.jpg}" alt="site d'escalade">
 							<div class="card-body">
 								<div class="card-header">
 									<p class="card-title text-center" th:text="${area.name}">Nom</p>

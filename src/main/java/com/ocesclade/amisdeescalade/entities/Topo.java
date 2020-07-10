@@ -46,6 +46,8 @@ public class Topo implements Serializable {
 	
 	private String belongTo;
 	
+	private Boolean isOnline;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_user")
 	private User user;
@@ -57,6 +59,7 @@ public class Topo implements Serializable {
 		super();
 		this.name="";
 		this.description="";
+		this.isOnline=false;
 		this.releaseDate = new Date();
 	}
 
@@ -72,6 +75,7 @@ public class Topo implements Serializable {
 		this.location = location;
 		this.releaseDate = new Date();
 		this.isAvailableForLoan = isAvailableForLoan;
+		this.isOnline=true;
 		this.belongTo = belongTo;
 		this.user = user;
 		this.setShortDescription(description);
@@ -172,12 +176,20 @@ public class Topo implements Serializable {
 		this.topoLoan = topoLoan;
 	}
 
+	
+	public Boolean getIsOnline() {
+		return isOnline;
+	}
+
+	public void setIsOnline(Boolean isOnline) {
+		this.isOnline = isOnline;
+	}
+
 	@Override
 	public String toString() {
 		return "Topo [id=" + id + ", name=" + name + ", description=" + description + ", shortDescription="
 				+ shortDescription + ", location=" + location + ", releaseDate=" + releaseDate + ", isAvailableForLoan="
-				+ isAvailableForLoan + ", belongTo=" + belongTo + ", user=" + user + ", topoLoan=" + topoLoan + "]";
+				+ isAvailableForLoan + ", belongTo=" + belongTo + ", isOnline=" + isOnline + "]";
 	}
-
 	
 }
