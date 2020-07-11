@@ -154,26 +154,82 @@ public class ClimbingAreasController {
 	}
 	
 	@GetMapping(value="/create-area")
-	public String areaForm(
-			Model model
-			){
+	public String createAreaForm(Model model){
+		Area area = new Area();
+		model.addAttribute("area", area);
 		return "create-area";
 	}
 	
 	@PostMapping(value="/create-area")
 	public String createArea(
-			Area areaToCreate, 
+			@ModelAttribute("area") Area areaToCreate, 
 			BindingResult result
 			){
-		
+		if (result.hasErrors()){
+			LOGGER.debug("Area form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+			return "create-area";
+		}		
 		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		Area area = new Area(
 				areaToCreate.getName(), 
 				areaToCreate.getDescription(), 
 				u.getPseudo());
+		
 		LOGGER.info("user {} create a new Area {}", u.getEmail(), area.getName());		
 	
-		climbAreaRepository.save(area);
+		climbAreaRepository.save(area);		
 		return "redirect:/sites";
+	}
+	
+	@PostMapping(value="/create-sector")
+	public String formCreateSector(
+			Model model, 
+			@RequestParam(name="id_area", required = false) Long idArea
+			) {
+		Sector sector = new Sector();
+		model.addAttribute("id_area", idArea);
+		model.addAttribute("sector", sector);
+		return "create-sector";
+	}
+	
+	@PostMapping(value="/send-sector")
+	public String createSector(
+			@RequestParam(name="id_area", required = false) Long idArea,
+			@ModelAttribute("sector") @Valid Sector sectorToAdd,
+			BindingResult result,
+			Model model
+			) {
+		if (idArea==null) {
+			LOGGER.info("Echec d'ajout du secteur {} (id_area={}", sectorToAdd.getName(), idArea);
+			return "sites";
+			}
+		
+		Area area = climbAreaRepository.findOneById(idArea);
+		int initSectorListSize = area.getSectorList().size();
+		Sector sector = new Sector(
+				sectorToAdd.getName(),
+				sectorToAdd.getDescription(),
+				area
+				);
+		climbSectorRepository.save(sector);
+		area.getSectorList().add(sectorToAdd);
+		
+		if(result.hasErrors()){
+			LOGGER.debug("Sector form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+			model.addAttribute("area" , area );
+			List<Sector> sectorList = climbSectorRepository.findSectorsByAreaId(idArea);
+			model.addAttribute("sectorList" , sectorList );
+			List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
+			model.addAttribute("routeList", routeList);
+			List<Comment> commentList = climbCommentRepository.findByAreaIdOrderByIdDesc(idArea);
+			model.addAttribute("commentList", commentList);
+			return "site";
+		}
+		
+		
+		LOGGER.info("Ajout d'un secteur sur le site id_area={} (Nb Secteurs {} --> {}", idArea, initSectorListSize, area.getSectorList().size());
+		climbAreaRepository.save(area);
+		model.addAttribute("area", area);		
+		return "redirect:/site?id_area="+idArea+"#nav-sectors";
 	}
 }

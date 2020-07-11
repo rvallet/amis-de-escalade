@@ -64,20 +64,20 @@ public class TopoController {
 	}
 	
 	@GetMapping(value="/create-topo")
-	public String createTopo (Model model) {
+	public String createTopoForm (Model model) {
 		Topo topo = new Topo();
 		model.addAttribute("topo", topo);
 		return "create-topo";
 	}
 	
 	@PostMapping(value="/create-topo")
-	public String createArea(
+	public String createTopo(
 			@ModelAttribute("topo") Topo topoToCreate, 
 			BindingResult result
 			){
 		if (result.hasErrors()){
-			LOGGER.debug("form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
-			return "creation-topo";
+			LOGGER.debug("Topo form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+			return "create-topo";
 		}
 		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		Topo topo = new Topo(
