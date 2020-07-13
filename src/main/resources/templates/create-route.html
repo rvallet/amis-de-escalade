@@ -24,7 +24,7 @@
 							Nom
 						</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nom de la voie">
+							<input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nom de la voie" autofocus="autofocus" required>
 							<p class="error-message" th:each="error : ${#fields.errors('name')}" th:text="${error}">Validation error</p>
 						</div>
 					</div>
@@ -33,31 +33,29 @@
 							Description
 						</label>
 						<div class="col-sm-10">
-							<textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Description de la voie"></textarea>
+							<textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Description de la voie" required></textarea>
 							<p class="error-message" th:each="error : ${#fields.errors('description')}" th:text="${error}">Validation error</p>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="description" class="col-sm-2 col-form-label">
+						<label for="*{climbingGrade}" class="col-sm-2 col-form-label">
 							Cotation
 						</label>
 						<div class="col-sm-10">
-							<select class="form-control" id="*{climbingGrade}" th:field="*{climbingGrade}">
+							<select class="form-control" id="*{climbingGrade}" th:field="*{climbingGrade}" required>
 								<option value=""> -- </option>
 								<option th:each="climbingGrade : ${T(com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum).values()}"
 									th:value="${climbingGrade}"
-									th:utext="${climbingGrade}"/>
+									th:utext="${climbingGrade}" />
 							</select>							
 							<p class="error-message" th:each="error : ${#fields.errors('climbingGrade')}" th:text="${error}">Validation error</p>
 						</div>
 					</div>
 					<div class="form-group row">
-						<div class="col-sm-10">
+						<div class="col-sm-10 text-center">
 							<input type="hidden" name="id_sector" th:value="${id_sector}">
 							<input type="hidden" name="id_area" th:value="${id_area}">
 							<button type="submit" class="btn btn-primary">Partager cette voie</button>
-<!-- 							TODO: remove this control -->
-							<span th:text="${id_area}"></span> - <span th:text="${id_sector}"></span>
 						</div>
 					</div>
 				</form>				

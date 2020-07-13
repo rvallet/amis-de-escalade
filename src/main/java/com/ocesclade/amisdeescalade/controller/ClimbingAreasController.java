@@ -63,9 +63,11 @@ public class ClimbingAreasController {
 	public String climbAreas(
 			Model model,
 			@RequestParam(name="param1", required = false) String param1,
-			@RequestParam(name="param2", required = false) String param2){
+			@RequestParam(name="param2", required = false) String param2,
+			@RequestParam(name="param3", required = false) String param3
+			){
 		List<Area> areaList = climbAreaRepository.findAll();
-
+				
 		if (param1!=null && param2!=null) {
 			LOGGER.info("Chargement des sites (Nom {} - Description {})",param1, param2);
 			

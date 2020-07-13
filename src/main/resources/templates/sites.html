@@ -66,44 +66,45 @@
 						</span>
 					</button>
 					<div class="collapse" id="searchCriteria">
-						<br />	
+						<br />							
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelect01">Lieu</label>
+								<button class="btn btn-outline-secondary">Filtrer</button>
 							</div>
-							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Choisir...</option>
-								<option value="1">Lieu 1</option>
-								<option value="2">Lieu 2</option>
-								<option value="3">Lieu 3</option>
-							</select>
+							<input type="text" id="param3" name="param3" th:value="${param2}" class="form-control" placeholder="par lieu" />
+							<div class="input-group-append">								
+								<button class="btn btn-default btn-sm" onclick="document.getElementById('param3').value = ''">
+									<span class="glyphicon glyphicon-remove">Supprimer</span>
+								</button>
+							</div>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelect01">Cotation</label>
+								<label class="input-group-text">Cotation</label>
 							</div>
-							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Choisir...</option>
-								<option value="1">Lieu 1</option>
-								<option value="2">Lieu 2</option>
-								<option value="3">Lieu 3</option>
-							</select>
+							<select class="form-control">
+								<option value=""> -Sélectionner une cotation- </option>
+								<option th:each="climbingGrade : ${T(com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum).values()}"
+									th:value="${climbingGrade}"
+									th:utext="${climbingGrade}"/>
+							</select>	
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelect01">Nombre de secteurs</label>
+								<label class="input-group-text">Nb secteurs</label>
 							</div>
-							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Choisir...</option>
-								<option value="1">Lieu 1</option>
-								<option value="2">Lieu 2</option>
-								<option value="3">Lieu 3</option>
-							</select>
+							<select class="form-control">
+								<option value=""> -Sélectionner un Nb Secteur- </option>
+								<option th:each="climbingGrade : ${T(com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum).values()}"
+									th:value="${climbingGrade}"
+									th:utext="${climbingGrade}"/>
+							</select>	
 						</div>
 					</div>
 
 <!-- 					Sites Cards -->
 					<div class="card-deck">
+						<br />
 						<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 						<div class="col mb-4" id="areaList" th:each="area:${areaList}">
 							<div class="card col">
