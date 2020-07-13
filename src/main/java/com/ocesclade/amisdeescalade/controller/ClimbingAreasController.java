@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ocesclade.amisdeescalade.dto.CommentDto;
-import com.ocesclade.amisdeescalade.dto.UserRegistrationDto;
 import com.ocesclade.amisdeescalade.entities.Area;
 import com.ocesclade.amisdeescalade.entities.Comment;
 import com.ocesclade.amisdeescalade.entities.Route;
 import com.ocesclade.amisdeescalade.entities.Sector;
-import com.ocesclade.amisdeescalade.entities.Topo;
 import com.ocesclade.amisdeescalade.entities.User;
+import com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum;
 import com.ocesclade.amisdeescalade.repository.ClimbAreaRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbCommentRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbRouteRepository;
@@ -64,9 +63,11 @@ public class ClimbingAreasController {
 	public String climbAreas(
 			Model model,
 			@RequestParam(name="param1", required = false) String param1,
-			@RequestParam(name="param2", required = false) String param2){
+			@RequestParam(name="param2", required = false) String param2,
+			@RequestParam(name="param3", required = false) String param3
+			){
 		List<Area> areaList = climbAreaRepository.findAll();
-
+				
 		if (param1!=null && param2!=null) {
 			LOGGER.info("Chargement des sites (Nom {} - Description {})",param1, param2);
 			
@@ -111,7 +112,7 @@ public class ClimbingAreasController {
 		model.addAttribute("area" , area );		
 		List<Sector> sectorList = climbSectorRepository.findSectorsByAreaId(idArea);
 		model.addAttribute("sectorList" , sectorList );
-		List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
+		List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaIdOrderBySectorIdDesc(idArea);
 		model.addAttribute("routeList", routeList);
 		List<Comment> commentList = climbCommentRepository.findByAreaIdOrderByIdDesc(idArea);
 		model.addAttribute("commentList", commentList);
@@ -133,6 +134,7 @@ public class ClimbingAreasController {
 		LOGGER.info("Ajout d'un commentaire sur le site id_area={}", idArea);
 		model.addAttribute("id_area", idArea);
 		Area area = climbAreaRepository.findOneById(idArea);
+		
 		commentDto.setArea(area);
 		if(result.hasErrors()){
 			LOGGER.debug("form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
@@ -154,26 +156,142 @@ public class ClimbingAreasController {
 	}
 	
 	@GetMapping(value="/create-area")
-	public String areaForm(
-			Model model
-			){
+	public String createAreaForm(Model model){
+		Area area = new Area();
+		model.addAttribute("area", area);
 		return "create-area";
 	}
 	
 	@PostMapping(value="/create-area")
 	public String createArea(
-			Area areaToCreate, 
+			@ModelAttribute("area") Area areaToCreate, 
 			BindingResult result
 			){
-		
+		if (result.hasErrors()){
+			LOGGER.debug("Area form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+			return "create-area";
+		}		
 		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		Area area = new Area(
 				areaToCreate.getName(), 
 				areaToCreate.getDescription(), 
 				u.getPseudo());
+		
 		LOGGER.info("user {} create a new Area {}", u.getEmail(), area.getName());		
 	
-		climbAreaRepository.save(area);
+		climbAreaRepository.save(area);		
 		return "redirect:/sites";
+	}
+	
+	@PostMapping(value="/create-sector")
+	public String formCreateSector(
+			Model model, 
+			@RequestParam(name="id_area", required = false) Long idArea
+			) {
+		Sector sector = new Sector();
+		model.addAttribute("id_area", idArea);
+		model.addAttribute("sector", sector);
+		return "create-sector";
+	}
+	
+	@PostMapping(value="/send-sector")
+	public String createSector(
+			@RequestParam(name="id_area", required = false) Long idArea,
+			@ModelAttribute("sector") @Valid Sector sectorToAdd,
+			BindingResult result,
+			Model model
+			) {
+		if (idArea==null) {
+			LOGGER.info("Echec d'ajout du secteur {} (id_area={}", sectorToAdd.getName(), idArea);
+			return "sites";
+			}
+		
+		Area area = climbAreaRepository.findOneById(idArea);
+		int initSectorListSize = area.getSectorList().size();
+		Sector sector = new Sector(
+				sectorToAdd.getName(),
+				sectorToAdd.getDescription(),
+				area
+				);
+		climbSectorRepository.save(sector);
+		area.getSectorList().add(sectorToAdd);
+		
+		if(result.hasErrors()){
+			LOGGER.debug("Sector form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+			model.addAttribute("area" , area );
+			List<Sector> sectorList = climbSectorRepository.findSectorsByAreaId(idArea);
+			model.addAttribute("sectorList" , sectorList );
+			List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
+			model.addAttribute("routeList", routeList);
+			List<Comment> commentList = climbCommentRepository.findByAreaIdOrderByIdDesc(idArea);
+			model.addAttribute("commentList", commentList);
+			return "site";
+		}		
+		
+		LOGGER.info("Ajout d'un secteur sur le site id_area={} (Nb Secteurs {} --> {}", idArea, initSectorListSize, area.getSectorList().size());
+		climbAreaRepository.save(area);
+		model.addAttribute("area", area);		
+		return "redirect:/site?id_area="+idArea+"#nav-sectors";
+	}
+	
+	@PostMapping(value="/create-route")
+	public String formCreateRoute(
+			Model model, 
+			@RequestParam(name="id_sector", required = false) Long idSector,
+			@RequestParam(name="id_area", required = false) Long idArea
+			) {
+		Route route = new Route();
+		model.addAttribute("id_sector", idSector);
+		model.addAttribute("id_area", idArea);
+		model.addAttribute("route", route);
+		return "create-route";
+	}
+	
+	@PostMapping(value="/send-route")
+	public String createRoute(
+			@RequestParam(name="id_sector", required = false) Long idSector,
+			@RequestParam(name="id_area", required = false) Long idArea,
+			@ModelAttribute("route") @Valid Route routeToAdd,
+			BindingResult result,
+			Model model
+			) {
+		
+		if (idArea==null) {
+			LOGGER.info("Echec d'ajout du secteur {} (id_area={}", routeToAdd.getName(), idArea);
+			return "sites";
+			}
+		
+		if (idSector==null) {
+			LOGGER.info("Echec d'ajout du secteur {} (id_sector={}", routeToAdd.getName(), idSector);
+			return "sites";
+			}
+		
+		Sector sector = climbSectorRepository.findOneById(idSector);
+		int initRouteListSize = sector.getRouteList().size();
+		Route route = new Route(
+				routeToAdd.getName(),
+				routeToAdd.getDescription(),
+				ClimbingGradeEnum.of(routeToAdd.getClimbingGrade()),
+				sector
+				);
+		climbRouteRepository.save(route);
+		sector.getRouteList().add(routeToAdd);
+		
+		if(result.hasErrors()){
+			LOGGER.debug("Route form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+			model.addAttribute("route" , route );
+			List<Sector> sectorList = climbSectorRepository.findSectorsByAreaId(idArea);
+			model.addAttribute("sectorList" , sectorList );
+			List<Route> routeList = climbRouteRepository.findRoutesBySectorAreaId(idArea);
+			model.addAttribute("routeList", routeList);
+			List<Comment> commentList = climbCommentRepository.findByAreaIdOrderByIdDesc(idArea);
+			model.addAttribute("commentList", commentList);
+			return "site";
+		}
+				
+		LOGGER.info("Ajout d'une voie le site id_area={} (Nb voie {} --> {}", idArea, initRouteListSize, sector.getRouteList().size());
+		climbSectorRepository.save(sector);
+		model.addAttribute("sector", sector);		
+		return "redirect:/site?id_area="+idArea+"#nav-routes";
 	}
 }

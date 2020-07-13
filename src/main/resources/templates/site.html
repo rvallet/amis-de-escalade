@@ -47,8 +47,45 @@
 						</div>
 					</nav>
 					<div class="tab-content" id="nav-tabContent">
-						<div class="tab-pane fade show active" id="nav-sectors" role="tabpanel" aria-labelledby="nav-sectors-tab">
+					
+						<div class="tab-pane fade show active" id="nav-sectors" role="tabpanel" aria-labelledby="nav-sectors-tab">						
+<!-- 							Ajout d'un Secteur -->
 							<br />
+							<div class="col-md-12">
+								<button class="btn btn-outline-default btn-lg btn-block" type="button" data-toggle="collapse" data-target="#addSector" aria-expanded="false" aria-controls="addSector">
+									<span class="collapsed">
+										Ajouter un secteur
+									</span>
+									<span class="expanded">
+										Replier
+									</span>
+								</button>							
+								<div class="collapse" id="addSector">
+<!-- 									Affichage visiteurs non identifiés -->
+									<div class="container text-center" sec:authorize="!isAuthenticated()">
+										<br />
+										<p>Vous devez être connecté pour ajouter un secteur.</p>
+										<ul class="list-inline">
+											<li>
+												<button type="button" class="btn btn-success" onclick="window.location.href='/login'">
+													S'identifier
+												</button>
+											</li>
+											<li class="list-inline-item">
+												<p>Pas encore de compte ? <a th:href="@{/creation-compte}">créer un compte</a></p>
+											</li>
+										</ul>											
+									</div>
+<!-- 									Affichage visiteurs identifiés -->
+									<div class="container text-center" sec:authorize="isAuthenticated()">
+										<br />
+										<form th:action="@{create-sector}" th:object="${area}" sec:authorize="isAuthenticated()" method="post">
+											<input type="hidden" name="id_area" th:value="${area.id}">
+											<button class="btn btn-success" type="submit">Ajouter un secteur</button>
+										</form>
+									</div>
+								</div>
+								<br />
 							<div class="col-md-12" th:each="sector:${sectorList}">
 								<dl class="row">
 									<dt class="col-sm-3">
@@ -60,123 +97,185 @@
 								</dl>
 							</div>
 						</div>
-						<div class="tab-pane fade" id="nav-routes" role="tabpanel" aria-labelledby="nav-routes-tab">
-							<br />
-							<div class="col-md-12" th:each="route:${routeList}">
-								<dl class="row">
-									<dt class="col-sm-3">
-										<span th:text="${route.name}">Nom</span>
-									</dt>
-									<dd class="col-sm-9">
-										<dl class="row">
-											<dt class="col-sm-3">
-												Niveau <span th:text="${route.climbingGrade}">Niveau</span>
-											</dt>
-											<dd class="col-sm-9">
-												<span th:text="${route.description}">Description</span>
-											</dd>
-										</dl>
-									</dd>
-								</dl>
-							</div>
-						</div>
-						<div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
-							
-<!-- 							Ajout d'un commentaire -->
-							<br />
+					</div>
+<!-- 					End Nav Sector						 -->
+						
+<!-- 						Start Nav Routes -->
+					<div class="tab-pane fade" id="nav-routes" role="tabpanel" aria-labelledby="nav-routes-tab">
+						<br />
 							<div class="col-md-12">
-									<button class="btn btn-outline-default btn-lg btn-block" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="addComment">
-										<span class="collapsed">
-											Ajouter un commentaire
-										</span>
-										<span class="expanded">
-											Replier
-										</span>
-									</button>							
-									<div class="collapse" id="addComment">
+								<button class="btn btn-outline-default btn-lg btn-block" type="button" data-toggle="collapse" data-target="#addRoute" aria-expanded="false" aria-controls="addRoute">
+									<span class="collapsed">
+										Ajouter une voie
+									</span>
+									<span class="expanded">
+										Replier
+									</span>
+								</button>							
+								<div class="collapse" id="addRoute">
 <!-- 									Affichage visiteurs non identifiés -->
-										<div class="container text-center" sec:authorize="!isAuthenticated()">
-											<br />
-											<p>Vous devez être connecté pour ajouter un commentaire.</p>
-											<ul class="list-inline">
-												<li>
-													<button type="button" class="btn btn-success" onclick="window.location.href='/login'">
+									<div class="container text-center" sec:authorize="!isAuthenticated()">
+										<br />
+										<p>Vous devez être connecté pour ajouter une voie.</p>
+										<ul class="list-inline">
+											<li>
+												<button type="button" class="btn btn-success" onclick="window.location.href='/login'">
 													S'identifier
-													</button>
-												</li>
-												<li class="list-inline-item">
-													<p>Pas encore de compte ? <a th:href="@{/creation-compte}">créer un compte</a></p>
-												</li>
-											</ul>											
-										</div>
+												</button>
+											</li>
+											<li class="list-inline-item">
+												<p>Pas encore de compte ? <a th:href="@{/creation-compte}">créer un compte</a></p>
+											</li>
+										</ul>											
+									</div>
 <!-- 									Affichage visiteurs identifiés -->
-										<div class="container" sec:authorize="isAuthenticated()">
-											<form th:action="@{site}" th:object="${newComment}" method="post">
-											
-												<p class="error-message" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
-												<br />
-												<div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error':''">
-													<div class="input-group">
-														<div class="input-group-prepend">
-															<span class="input-group-text">Titre </span>
-														</div>
-														<input id="title" class="form-control" 
-															type="text" th:field="*{title}" 
-															name="title" th:value="${newComment.title}" 
-															placeholder="Titre de votre commentaire" autofocus="autofocus" required />
-														<p class="error-message" th:each="error : ${#fields.errors('title')}" th:text="${error}">Validation error</p>
-													
-													</div>
+									<div class="container text-center" sec:authorize="isAuthenticated()">
+										<br />
+										<form th:action="@{create-route}" sec:authorize="isAuthenticated()" th:object="${sector}" method="post">
+											<div class="form-group row">
+												<label for="description" class="col-sm-2 col-form-label">
+													Sélection du secteur concerné 
+												</label>
+												<div class="col-sm-10">
+													<select class="form-control" id="id_sector" name="id_sector">
+														<option value=""> -- </option>
+														<option th:each="sector:${sectorList}"
+															th:value="${sector.id}"
+															th:utext="${sector.name}"/>
+													</select>
 												</div>
-												<div class="form-group" th:classappend="${#fields.hasErrors('content')}? 'has-error':''">
-													<div class="input-group">
-														<div class="input-group-prepend">
-															<span class="input-group-text">Message </span>
-														</div>
-														<textarea id="content" class="form-control" 
-														th:field="*{content}" 
-														name="content" th:value="${newComment.content}" 
-														placeholder="Contenu de votre commentaire" required>
-														</textarea>
-													<p class="error-message" th:each="error : ${#fields.errors('content')}" th:text="${error}">Validation error</p>
-													</div>
-												</div>
-												<input type="hidden" name="id_area" th:value="${area.id}"/>
-												<input type="hidden" name="author" th:value="${#httpServletRequest.remoteUser}"/>
-												<div class="form-group">
-													<button type="submit" class="btn btn-primary btn-lg btn-block">Envoyer</button>
-												</div>
-											</form>
-										</div>
+											</div>
+											<input type="hidden" name="id_area" th:value="${area.id}">
+											<button class="btn btn-success" type="submit">Ajouter une voie</button>
+										</form>
 									</div>
-							
-<!-- 							Liste de commentaires -->
-							<div class="col-md-12" th:each="comment:${commentList}">
+								</div>
 								<br />
-								<div class="card">
-									<div class="card-header">
-										<span th:text="${comment.title}">Titre</span>
-									</div>
-									<div class="card-body">
-										<blockquote class="blockquote">
-											<p class="mb-0">
-												
-												<span th:text="${comment.content}">Contenu</span>
-											</p>
-											<footer class="blockquote-footer">
-												<cite title="Source Title">
-													<span th:text="${comment.author}">Auteur </span>, 
-												</cite>
-												le <small class="text-muted" th:text="${#dates.format(comment.releaseDate, 'dd/MM/yyyy')}">Date</small>.
-											</footer>
-										</blockquote>
-									</div>
+								
+								<div class="col-md-12" th:each="sector:${sectorList}">
+									<fieldset>
+										<legend th:text="${sector.name}"></legend> 
+										<div class="col-md-12" th:each="route:${routeList}" th:if="${route.sector?.id == sector.id}">
+											<dl class="row">
+												<dt class="col-sm-3">
+													<span th:text="${route.name}">Nom</span>
+												</dt>
+												<dd class="col-sm-9">
+													<dl class="row">
+														<dt class="col-sm-3">
+															Niveau <span th:text="${route.climbingGrade}">Niveau</span>
+														</dt>
+														<dd class="col-sm-9">
+															<span th:text="${route.description}">Description</span>
+														</dd>
+													</dl>
+												</dd>
+											</dl>
+										</div>					
+									</fieldset>
 								</div>
 							</div>
 						</div>
+<!-- 					End Nav Routes	 -->
+						
+<!-- 						Start Nav Comments -->
+						<div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">							
+<!-- 							Ajout d'un commentaire -->
+							<br />
+							<div class="col-md-12">
+								<button class="btn btn-outline-default btn-lg btn-block" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="addComment">
+								<span class="collapsed">
+									Ajouter un commentaire
+								</span>
+								<span class="expanded">
+									Replier
+								</span>
+								</button>							
+								<div class="collapse" id="addComment">
+<!-- 									Affichage visiteurs non identifiés -->
+									<div class="container text-center" sec:authorize="!isAuthenticated()">
+										<br />
+										<p>Vous devez être connecté pour ajouter un commentaire.</p>
+										<ul class="list-inline">
+											<li>
+												<button type="button" class="btn btn-success" onclick="window.location.href='/login'">
+													S'identifier
+												</button>
+											</li>
+											<li class="list-inline-item">
+												<p>Pas encore de compte ? <a th:href="@{/creation-compte}">créer un compte</a></p>
+											</li>
+										</ul>											
+									</div>
+<!-- 									Affichage visiteurs identifiés -->
+									<div class="container" sec:authorize="isAuthenticated()">
+										<form th:action="@{site}" th:object="${newComment}" method="post">
+										
+											<p class="error-message" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
+											<br />
+											<div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error':''">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Titre </span>
+													</div>
+													<input id="title" class="form-control" 
+														type="text" th:field="*{title}" 
+														name="title" th:value="${newComment.title}" 
+														placeholder="Titre de votre commentaire" autofocus="autofocus" required />
+													<p class="error-message" th:each="error : ${#fields.errors('title')}" th:text="${error}">Validation error</p>
+												
+												</div>
+											</div>
+											<div class="form-group" th:classappend="${#fields.hasErrors('content')}? 'has-error':''">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Message </span>
+													</div>
+													<textarea id="content" class="form-control" 
+													th:field="*{content}" 
+													name="content" th:value="${newComment.content}" 
+													placeholder="Contenu de votre commentaire" required>
+													</textarea>
+												<p class="error-message" th:each="error : ${#fields.errors('content')}" th:text="${error}">Validation error</p>
+												</div>
+											</div>
+											<input type="hidden" name="id_area" th:value="${area.id}"/>
+											<input type="hidden" name="author" th:value="${#httpServletRequest.remoteUser}"/>
+											<div class="form-group">
+												<button type="submit" class="btn btn-primary btn-lg btn-block">Envoyer</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							
+<!-- 							Liste de commentaires -->
+								<div class="col-md-12" th:each="comment:${commentList}">
+									<br />
+									<div class="card">
+										<div class="card-header">
+											<span th:text="${comment.title}">Titre</span>
+										</div>
+										<div class="card-body">
+											<blockquote class="blockquote">
+												<p class="mb-0">
+													
+													<span th:text="${comment.content}">Contenu</span>
+												</p>
+												<footer class="blockquote-footer">
+													<cite title="Source Title">
+														<span th:text="${comment.author}">Auteur </span>, 
+													</cite>
+													le <small class="text-muted" th:text="${#dates.format(comment.releaseDate, 'dd/MM/yyyy')}">Date</small>.
+												</footer>
+											</blockquote>
+										</div>
+									</div>
+								</div>
+							</div>
+<!-- 						End Nav-Comments -->
+						</div>
+<!-- 					End Nav Bar -->
 					</div>
-				</div>
-
 		
 					
 				</div>

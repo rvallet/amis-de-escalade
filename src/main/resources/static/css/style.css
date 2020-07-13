@@ -74,4 +74,18 @@ html {
 @media (min-width: 1200px) {  
     .xl {color:red;font-weight:bold;}
 }
+
+legend {
+	background-color: #000;
+	color: #fff;
+	padding: 3px 6px;
+}
+
+fieldset.myfieldset {
+	min-width: 200px !important;
+	padding: 5px !important;
+	margin: 20px !important;
+	border: 1px solid red !important;
+}
+
 }

@@ -45,16 +45,7 @@ public class TopoController {
 		return "topos";
 	}
 	
-	@GetMapping(value="/topo-pret")
-	public String topoLoan (@RequestParam(name="idTopo") Long id, Model model) {
-		model.addAttribute("idTopo", id);
-		Topo topo = topoRepository.findTopoById(id);
-		model.addAttribute("topo", topo);
-		model.addAttribute("topoLoan", new TopoLoan());
-		return "topo-pret";
-	}
-	
-	@PostMapping(value="/topo-pret-confirmation")
+	@PostMapping(value="/topo-pret")
 	public String topoLoanConfirmation (
 			@RequestParam(name="idTopo") Long id, 
 			TopoLoan topoLoan,
@@ -69,24 +60,24 @@ public class TopoController {
 		topoLoan.setTopo(topo);
 		topoLoanRepository.save(topoLoan);
 		model.addAttribute("topoLoan", topoLoan);
-		return "topo-pret-confirmation";
+		return "redirect:/user/profil#nav-toposloan";
 	}
 	
 	@GetMapping(value="/create-topo")
-	public String createTopo (Model model) {
+	public String createTopoForm (Model model) {
 		Topo topo = new Topo();
 		model.addAttribute("topo", topo);
 		return "create-topo";
 	}
 	
 	@PostMapping(value="/create-topo")
-	public String createArea(
+	public String createTopo(
 			@ModelAttribute("topo") Topo topoToCreate, 
 			BindingResult result
 			){
 		if (result.hasErrors()){
-			LOGGER.debug("form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
-			return "creation-topo";
+			LOGGER.debug("Topo form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+			return "create-topo";
 		}
 		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		Topo topo = new Topo(

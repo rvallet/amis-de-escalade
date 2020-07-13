@@ -16,8 +16,21 @@
 		<main layout:fragment="main" role="main" th:remove="tag">
 			<section id="ClimbAreas">
 				<div class="container">				
-				
-					<H2>Nos Sites d'escalade</H2>
+					
+					<div class="col-md-12">
+<!-- 					Create Area -->
+					<form th:action="@{create-area}" sec:authorize="isAuthenticated()" method="get">
+						<button class="btn btn-outline-default btn-lg btn-block" type="submit" >Ajouter un Site</button>
+						<br />
+					</form>
+					<form th:action="@{create-area}" sec:authorize="!isAuthenticated()" method="get">
+						<button class="btn btn-outline-default btn-lg btn-block" type="submit" disabled>Ajouter un Site</button>
+						<p class="text-center"><small class="text-muted">Vous devez être connecté pour ajouter un Site</small></p>
+						<br />
+					</form>	
+					
+<!-- 					Basic Search Criteria			 -->
+					<H2>Rechercher un site</H2>
 					<form th:action="@{sites}" method="get">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -43,6 +56,7 @@
 						</div>
 					</form>
 					
+<!-- 					More Search Criteria -->
 					<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#searchCriteria" aria-expanded="false" aria-controls="searchCriteria">
 						<span class="collapsed">
 							Plus de critères
@@ -52,44 +66,48 @@
 						</span>
 					</button>
 					<div class="collapse" id="searchCriteria">
-	
+						<br />							
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelect01">Lieu</label>
+								<button class="btn btn-outline-secondary">Filtrer</button>
 							</div>
-							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Choisir...</option>
-								<option value="1">Lieu 1</option>
-								<option value="2">Lieu 2</option>
-								<option value="3">Lieu 3</option>
-							</select>
+							<input type="text" id="param3" name="param3" th:value="${param2}" class="form-control" placeholder="par lieu" />
+							<div class="input-group-append">								
+								<button class="btn btn-default btn-sm" onclick="document.getElementById('param3').value = ''">
+									<span class="glyphicon glyphicon-remove">Supprimer</span>
+								</button>
+							</div>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelect01">Cotation</label>
+								<label class="input-group-text">Cotation</label>
 							</div>
-							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Choisir...</option>
-								<option value="1">Lieu 1</option>
-								<option value="2">Lieu 2</option>
-								<option value="3">Lieu 3</option>
-							</select>
+							<select class="form-control">
+								<option value=""> -Sélectionner une cotation- </option>
+								<option th:each="climbingGrade : ${T(com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum).values()}"
+									th:value="${climbingGrade}"
+									th:utext="${climbingGrade}"/>
+							</select>	
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelect01">Nombre de secteurs</label>
+								<label class="input-group-text">Nb secteurs</label>
 							</div>
-							<select class="custom-select" id="inputGroupSelect01">
-								<option selected>Choisir...</option>
-								<option value="1">Lieu 1</option>
-								<option value="2">Lieu 2</option>
-								<option value="3">Lieu 3</option>
-							</select>
+							<select class="form-control">
+								<option value=""> -Sélectionner un Nb Secteur- </option>
+								<option th:each="climbingGrade : ${T(com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum).values()}"
+									th:value="${climbingGrade}"
+									th:utext="${climbingGrade}"/>
+							</select>	
 						</div>
 					</div>
 
+<!-- 					Sites Cards -->
 					<div class="card-deck">
-						<div class="card" id="areaList" th:each="area:${areaList}">
+						<br />
+						<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+						<div class="col mb-4" id="areaList" th:each="area:${areaList}">
+							<div class="card col">
 							<div class="logo" th:if="${area.isPromoted}">
 								<img class="img-fluid" width="40" height="40" th:src="@{/img/officiel-LADE_150x150.png}" alt="Sélection officiel LADE">
 							</div>
@@ -107,8 +125,12 @@
 									<button type="submit" class="btn btn-secondary btn-block">En savoir plus</button>
 								</form>
 							</div>
+							</div>
+						</div>
 						</div>
 					</div>
+					
+<!-- 					Pagination -->
 					<br />
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
@@ -123,6 +145,7 @@
 							</li>
 						</ul>
 					</nav>
+				</div>
 			
 				</div>
 			</section>

@@ -9,6 +9,7 @@ import com.ocesclade.amisdeescalade.entities.Route;
 public interface ClimbRouteRepository extends JpaRepository<Route,Integer>{
 
 	List<Route> findRoutesBySectorAreaId (Long areaId);
+	List<Route> findRoutesBySectorAreaIdOrderBySectorIdDesc(Long areaId);
 	List<Route> findAll();
 	Route findOneById (Long id);
 }

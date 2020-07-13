@@ -1,5 +1,9 @@
 package com.ocesclade.amisdeescalade.enumerated;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+
 public enum ClimbingGradeEnum {
 
 	UN("1"), 
@@ -33,7 +37,11 @@ public enum ClimbingGradeEnum {
 	NEUF_B_PLUS ("9b+"), 
 	NEUF_C ("9c");
 
-	private String climbingGrade;
+	private final String climbingGrade;
+	
+	public static ClimbingGradeEnum of(String value) {
+		return Arrays.stream(values()).filter(v -> v.toString().equalsIgnoreCase(value)).findFirst().orElse(null);
+	}
 
 	ClimbingGradeEnum(String climbingGrade){
 		this.climbingGrade = climbingGrade;
