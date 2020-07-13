@@ -151,23 +151,28 @@
 									</div>
 								</div>
 								<br />
-
-								<div class="col-md-12" th:each="route:${routeList}">
-									<dl class="row">
-										<dt class="col-sm-3">
-											<span th:text="${route.name}">Nom</span>
-										</dt>
-										<dd class="col-sm-9">
+								
+								<div class="col-md-12" th:each="sector:${sectorList}">
+									<fieldset>
+										<legend th:text="${sector.name}"></legend> 
+										<div class="col-md-12" th:each="route:${routeList}" th:if="${route.sector?.id == sector.id}">
 											<dl class="row">
 												<dt class="col-sm-3">
-													Niveau <span th:text="${route.climbingGrade}">Niveau</span>
+													<span th:text="${route.name}">Nom</span>
 												</dt>
 												<dd class="col-sm-9">
-													<span th:text="${route.description}">Description</span>
+													<dl class="row">
+														<dt class="col-sm-3">
+															Niveau <span th:text="${route.climbingGrade}">Niveau</span>
+														</dt>
+														<dd class="col-sm-9">
+															<span th:text="${route.description}">Description</span>
+														</dd>
+													</dl>
 												</dd>
 											</dl>
-										</dd>
-									</dl>
+										</div>					
+									</fieldset>
 								</div>
 							</div>
 						</div>
