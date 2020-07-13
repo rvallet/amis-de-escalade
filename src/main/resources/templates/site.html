@@ -153,8 +153,9 @@
 								<br />
 								
 								<div class="col-md-12" th:each="sector:${sectorList}">
-									<fieldset>
-										<legend th:text="${sector.name}"></legend> 
+								<br />
+									<fieldset class="myfieldset">
+										<legend class="text-center" th:text="'Secteur : ' + ${sector.name}"></legend> 
 										<div class="col-md-12" th:each="route:${routeList}" th:if="${route.sector?.id == sector.id}">
 											<dl class="row">
 												<dt class="col-sm-3">
@@ -163,7 +164,8 @@
 												<dd class="col-sm-9">
 													<dl class="row">
 														<dt class="col-sm-3">
-															Niveau <span th:text="${route.climbingGrade}">Niveau</span>
+															Cot. <span th:text="${route.climbingGrade}">Cotation</span>
+															<p><small th:text="'('+${route?.nbLength}+' longueur)'">nbLength</small></p>
 														</dt>
 														<dd class="col-sm-9">
 															<span th:text="${route.description}">Description</span>
