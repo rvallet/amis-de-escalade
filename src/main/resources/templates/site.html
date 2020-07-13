@@ -77,7 +77,8 @@
 										</ul>											
 									</div>
 <!-- 									Affichage visiteurs identifiés -->
-									<div class="container" sec:authorize="isAuthenticated()">
+									<div class="container text-center" sec:authorize="isAuthenticated()">
+										<br />
 										<form th:action="@{create-sector}" th:object="${area}" sec:authorize="isAuthenticated()" method="post">
 											<input type="hidden" name="id_area" th:value="${area.id}">
 											<button class="btn btn-success" type="submit">Ajouter un secteur</button>
@@ -102,24 +103,74 @@
 <!-- 						Start Nav Routes -->
 					<div class="tab-pane fade" id="nav-routes" role="tabpanel" aria-labelledby="nav-routes-tab">
 						<br />
-						<div class="col-md-12" th:each="route:${routeList}">
-							<dl class="row">
-								<dt class="col-sm-3">
-									<span th:text="${route.name}">Nom</span>
-								</dt>
-								<dd class="col-sm-9">
+							<div class="col-md-12">
+								<button class="btn btn-outline-default btn-lg btn-block" type="button" data-toggle="collapse" data-target="#addRoute" aria-expanded="false" aria-controls="addRoute">
+									<span class="collapsed">
+										Ajouter une voie
+									</span>
+									<span class="expanded">
+										Replier
+									</span>
+								</button>							
+								<div class="collapse" id="addRoute">
+<!-- 									Affichage visiteurs non identifiés -->
+									<div class="container text-center" sec:authorize="!isAuthenticated()">
+										<br />
+										<p>Vous devez être connecté pour ajouter une voie.</p>
+										<ul class="list-inline">
+											<li>
+												<button type="button" class="btn btn-success" onclick="window.location.href='/login'">
+													S'identifier
+												</button>
+											</li>
+											<li class="list-inline-item">
+												<p>Pas encore de compte ? <a th:href="@{/creation-compte}">créer un compte</a></p>
+											</li>
+										</ul>											
+									</div>
+<!-- 									Affichage visiteurs identifiés -->
+									<div class="container text-center" sec:authorize="isAuthenticated()">
+										<br />
+										<form th:action="@{create-route}" sec:authorize="isAuthenticated()" th:object="${sector}" method="post">
+											<div class="form-group row">
+												<label for="description" class="col-sm-2 col-form-label">
+													Sélection du secteur concerné 
+												</label>
+												<div class="col-sm-10">
+													<select class="form-control" id="id_sector" name="id_sector">
+														<option value=""> -- </option>
+														<option th:each="sector:${sectorList}"
+															th:value="${sector.id}"
+															th:utext="${sector.name}"/>
+													</select>
+												</div>
+											</div>
+											<input type="hidden" name="id_area" th:value="${area.id}">
+											<button class="btn btn-success" type="submit">Ajouter une voie</button>
+										</form>
+									</div>
+								</div>
+								<br />
+
+								<div class="col-md-12" th:each="route:${routeList}">
 									<dl class="row">
 										<dt class="col-sm-3">
-											Niveau <span th:text="${route.climbingGrade}">Niveau</span>
+											<span th:text="${route.name}">Nom</span>
 										</dt>
 										<dd class="col-sm-9">
-											<span th:text="${route.description}">Description</span>
+											<dl class="row">
+												<dt class="col-sm-3">
+													Niveau <span th:text="${route.climbingGrade}">Niveau</span>
+												</dt>
+												<dd class="col-sm-9">
+													<span th:text="${route.description}">Description</span>
+												</dd>
+											</dl>
 										</dd>
 									</dl>
-								</dd>
-							</dl>
+								</div>
+							</div>
 						</div>
-					</div>
 <!-- 					End Nav Routes	 -->
 						
 <!-- 						Start Nav Comments -->
