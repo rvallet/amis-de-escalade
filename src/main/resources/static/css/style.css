@@ -22,38 +22,58 @@ legend
 	background-color: #ffffff;
 }
 
-h1 {
+$(".custom-file-input").on("change", function()
+{
+	var fileName = $(this).val().split("\\").pop();
+	$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+$custom-file-text: (
+	en: "Browse",
+	fr: "Parcourir..."
+);
+
+
+
+h1
+{
 	color: #78ab46;
 }
 
-.error-message {
+.error-message
+{
 	color: #a94442;
 }
 
-.error-message:first-letter {
+.error-message:first-letter
+{
 	text-transform: capitalize;
 }
 
-.carousel-inner img {
+.carousel-inner img
+{
 	width: 100%;
 	height: 100%;
 }
 
-table td{
+table td
+{
 	vertical-align:top;
 	border:solid 1px #888;
 	padding:10px;
 }
 
 [aria-expanded="false"] > .expanded,
-[aria-expanded="true"] > .collapsed {
+[aria-expanded="true"] > .collapsed
+{
 	display: none;
 }
 
-.logo img {
+.logo img
+{
 	position:absolute;
 	}
-	
+
 html {
 	font-size: 1rem;
 }

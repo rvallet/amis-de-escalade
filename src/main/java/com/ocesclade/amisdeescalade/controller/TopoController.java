@@ -1,5 +1,10 @@
 package com.ocesclade.amisdeescalade.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,13 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ocesclade.amisdeescalade.entities.Area;
 import com.ocesclade.amisdeescalade.entities.Topo;
 import com.ocesclade.amisdeescalade.entities.TopoLoan;
 import com.ocesclade.amisdeescalade.entities.User;
@@ -72,13 +79,17 @@ public class TopoController {
 	
 	@PostMapping(value="/create-topo")
 	public String createTopo(
-			@ModelAttribute("topo") Topo topoToCreate, 
+			@ModelAttribute("topo") Topo topoToCreate,
+			@RequestParam(name = "file", required = false) MultipartFile file,
+			RedirectAttributes attributes,
 			BindingResult result
 			){
+		
 		if (result.hasErrors()){
 			LOGGER.debug("Topo form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
 			return "create-topo";
 		}
+		
 		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		Topo topo = new Topo(
 				topoToCreate.getName(), 
@@ -88,6 +99,21 @@ public class TopoController {
 				u.getPseudo(), 
 				u);
 		topo.setIsOnline(true);
+		
+		// FileName normalize and store
+		final String UPLOAD_DIR = "./src/main/resources/static/img/uploads/";
+		final String TH_IMG_ROOT_PATH = "/img/uploads/";
+		String fileName = "topo_"+System.currentTimeMillis()+"_"+StringUtils.cleanPath(file.getOriginalFilename());
+		try {
+			Path path = Paths.get(UPLOAD_DIR + fileName);
+			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			topo.setImgPathThAttribute(TH_IMG_ROOT_PATH+fileName);
+		} catch (IOException e) {
+			LOGGER.warn("============EXCEPTION TOPO-CREATE============");
+			LOGGER.debug("TOPO -> {} upload failed copy into {}", fileName, UPLOAD_DIR);
+			e.printStackTrace();
+		}
+				
 		LOGGER.info("user {} create a new Topo {}", u.getEmail(), topo.getName());		
 		topoRepository.save(topo);
 		return "redirect:/topos";

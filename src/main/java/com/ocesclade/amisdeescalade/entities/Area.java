@@ -25,11 +25,11 @@ public class Area implements Serializable {
 	private Long id;
 	
 	@NotNull
-	@Size(min = 5, max = 75)
+	@Size(min = 1, max = 75)
 	private String name;
 	
 	@NotNull
-	@Size(min = 5, max = 1000)
+	@Size(min = 1, max = 1000)
 	private String description;
 	
 	private String shortDescription;
@@ -59,8 +59,8 @@ public class Area implements Serializable {
 	}
 	
 	public Area(
-			@NotNull @Size(min = 5, max = 75) String name,
-			@NotNull @Size(min = 5, max = 1000) String description,
+			@NotNull @Size(min = 1, max = 75) String name,
+			@NotNull @Size(min = 1, max = 1000) String description,
 			@NotNull String author
 			) {
 		this.name = name;

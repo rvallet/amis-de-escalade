@@ -177,6 +177,7 @@ public class ClimbingAreasController {
 			RedirectAttributes attributes,
 			BindingResult result
 			){
+		
 		if (result.hasErrors()){
 			LOGGER.debug("Area form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
 			return "create-area";
@@ -187,19 +188,20 @@ public class ClimbingAreasController {
 				areaToCreate.getName(), 
 				areaToCreate.getDescription(), 
 				u.getPseudo());
-		
-		// FileName normalize and store
-		final String UPLOAD_DIR = "./src/main/resources/static/img/uploads/";
-		final String TH_IMG_ROOT_PATH = "/img/uploads/";
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		try {
-			Path path = Paths.get(UPLOAD_DIR + fileName);
-			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-			area.setImgPathThAttribute(TH_IMG_ROOT_PATH+fileName);
-		} catch (IOException e) {
-			LOGGER.debug("{} upload failed copy into {}", fileName, UPLOAD_DIR);
-			e.printStackTrace();
-		}
+
+			// FileName normalize and store
+			final String UPLOAD_DIR = "./src/main/resources/static/img/uploads/";
+			final String TH_IMG_ROOT_PATH = "/img/uploads/";
+			String fileName = "area_"+System.currentTimeMillis()+"_"+StringUtils.cleanPath(file.getOriginalFilename());
+			try {
+				Path path = Paths.get(UPLOAD_DIR + fileName);
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				area.setImgPathThAttribute(TH_IMG_ROOT_PATH+fileName);
+			} catch (IOException e) {
+				LOGGER.debug("Area --> {} upload failed copy into {}", fileName, UPLOAD_DIR);
+				e.printStackTrace();
+			}
+
 		
 		LOGGER.info("user {} create a new Area {}", u.getEmail(), area.getName());		
 	
