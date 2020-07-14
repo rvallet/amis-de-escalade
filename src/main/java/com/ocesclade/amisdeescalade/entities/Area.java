@@ -25,11 +25,11 @@ public class Area implements Serializable {
 	private Long id;
 	
 	@NotNull
-	@Size(min = 5, max = 75)
+	@Size(min = 1, max = 75)
 	private String name;
 	
 	@NotNull
-	@Size(min = 5, max = 1000)
+	@Size(min = 1, max = 1000)
 	private String description;
 	
 	private String shortDescription;
@@ -40,6 +40,8 @@ public class Area implements Serializable {
 	private Boolean isPromoted;	
 	
 	private Date releaseDate;
+	
+	private String imgPathThAttribute;
 	
 	@OneToMany(mappedBy = "area", fetch = FetchType.LAZY)
 	private Collection<Sector> sectorList;
@@ -57,8 +59,8 @@ public class Area implements Serializable {
 	}
 	
 	public Area(
-			@NotNull @Size(min = 5, max = 75) String name,
-			@NotNull @Size(min = 5, max = 1000) String description,
+			@NotNull @Size(min = 1, max = 75) String name,
+			@NotNull @Size(min = 1, max = 1000) String description,
 			@NotNull String author
 			) {
 		this.name = name;
@@ -115,6 +117,14 @@ public class Area implements Serializable {
 	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
+	
+	public String getImgPathThAttribute() {
+		return imgPathThAttribute;
+	}
+
+	public void setImgPathThAttribute(String imgPathThAttribute) {
+		this.imgPathThAttribute = imgPathThAttribute;
+	}
 
 	public Collection<Sector> getSectorList() {
 		return sectorList;
@@ -138,13 +148,14 @@ public class Area implements Serializable {
 
 	public void setShortDescription(String shortDescription) {
 		this.shortDescription = shortDescription.length() > 75 ? shortDescription.substring(0, 72)+"...": shortDescription;
-	}	
+	}
 
 	@Override
 	public String toString() {
 		return "Area [id=" + id + ", name=" + name + ", description=" + description + ", shortDescription="
 				+ shortDescription + ", author=" + author + ", isPromoted=" + isPromoted + ", releaseDate="
-				+ releaseDate + "]";
-	}
+				+ releaseDate + ", imgPathThAttribute=" + imgPathThAttribute + "]";
+	}	
+
 	
 }

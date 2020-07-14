@@ -29,11 +29,11 @@ public class Topo implements Serializable {
 	private Long id;
 	
 	@NotNull
-	@Size(min = 5, max = 40)
+	@Size(min = 1, max = 75)
 	private String name;
 
 	@NotNull
-	@Size(min = 15, max = 1000)
+	@Size(min = 1, max = 1000)
 	private String description;
 	
 	private String shortDescription;
@@ -47,6 +47,8 @@ public class Topo implements Serializable {
 	private String belongTo;
 	
 	private Boolean isOnline;
+	
+	private String imgPathThAttribute;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_user")
@@ -63,8 +65,8 @@ public class Topo implements Serializable {
 		this.releaseDate = new Date();
 	}
 
-	public Topo(@NotNull @Size(min = 5, max = 40) String name,
-			@NotNull @Size(min = 15, max = 1000) String description, 
+	public Topo(@NotNull @Size(min = 1, max = 75) String name,
+			@NotNull @Size(min = 1, max = 1000) String description, 
 			String location, 
 			Boolean isAvailableForLoan, 
 			String belongTo, 
@@ -183,13 +185,24 @@ public class Topo implements Serializable {
 
 	public void setIsOnline(Boolean isOnline) {
 		this.isOnline = isOnline;
+	}	
+	
+
+	public String getImgPathThAttribute() {
+		return imgPathThAttribute;
+	}
+
+	public void setImgPathThAttribute(String imgPathThAttribute) {
+		this.imgPathThAttribute = imgPathThAttribute;
 	}
 
 	@Override
 	public String toString() {
 		return "Topo [id=" + id + ", name=" + name + ", description=" + description + ", shortDescription="
 				+ shortDescription + ", location=" + location + ", releaseDate=" + releaseDate + ", isAvailableForLoan="
-				+ isAvailableForLoan + ", belongTo=" + belongTo + ", isOnline=" + isOnline + "]";
+				+ isAvailableForLoan + ", belongTo=" + belongTo + ", isOnline=" + isOnline + ", imgPathThAttribute="
+				+ imgPathThAttribute + ", user=" + user + ", topoLoan=" + topoLoan + "]";
 	}
+
 	
 }

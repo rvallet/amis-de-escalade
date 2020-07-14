@@ -35,6 +35,8 @@ public class Route implements Serializable {
 	
 	private String climbingGrade;
 	
+	private int nbLength;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_sector")
 	private Sector sector;
@@ -44,6 +46,7 @@ public class Route implements Serializable {
 		this.name="";
 		this.description="";
 		this.sector = new Sector();
+		this.nbLength=1;
 	}
 
 	public Route(
@@ -55,6 +58,7 @@ public class Route implements Serializable {
 		this.name = name;
 		this.description = description;
 		this.climbingGrade = climbingGrade.toString();
+		this.nbLength=1;
 		this.sector = sector;
 	}
 
@@ -88,9 +92,15 @@ public class Route implements Serializable {
 
 	public void setClimbingGrade(ClimbingGradeEnum climbingGrade) {
 		this.climbingGrade = climbingGrade.toString();
+	}	
+
+	public int getNbLength() {
+		return nbLength;
 	}
-	
-	
+
+	public void setNbLength(int nbLength) {
+		this.nbLength = nbLength;
+	}
 
 	public Long getId() {
 		return id;
@@ -107,8 +117,7 @@ public class Route implements Serializable {
 	@Override
 	public String toString() {
 		return "Route [id=" + id + ", name=" + name + ", description=" + description + ", climbingGrade="
-				+ climbingGrade + ", sector=" + sector + "]";
+				+ climbingGrade + ", nbLength=" + nbLength + ", sector=" + sector + "]";
 	}
-	
 		
 }

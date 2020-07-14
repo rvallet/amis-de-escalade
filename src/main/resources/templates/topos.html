@@ -33,7 +33,8 @@
 						<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 							<div class="col mb-4" id="topoList" th:each="topo:${topoList}" th:if="${topo.isOnline}">
 								<div class="card">
-									<img class="card-img-top img-fluid" th:src="@{/img/area1_200x100.jpg}" alt="...">
+									<img th:if="${topo.imgPathThAttribute == null}" class="card-img-top img-fluid" th:src="@{/img/area1_200x100.jpg}" th:alt="${topo.name}" alt="">
+									<img th:if="${topo.imgPathThAttribute != null}" class="card-img-top" th:src="@{${topo.imgPathThAttribute}}" th:alt="${topo.name}" alt="">
 									<div class="card-body">
 										<div class="card-header">
 											<p class="card-title text-center" th:text="${topo.name}">Nom</p>
