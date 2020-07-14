@@ -1,5 +1,10 @@
 package com.ocesclade.amisdeescalade.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,11 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ocesclade.amisdeescalade.dto.CommentDto;
 import com.ocesclade.amisdeescalade.entities.Area;
@@ -165,17 +173,33 @@ public class ClimbingAreasController {
 	@PostMapping(value="/create-area")
 	public String createArea(
 			@ModelAttribute("area") Area areaToCreate, 
+			@RequestParam(name = "file", required = false) MultipartFile file,
+			RedirectAttributes attributes,
 			BindingResult result
 			){
 		if (result.hasErrors()){
 			LOGGER.debug("Area form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
 			return "create-area";
-		}		
+		}
+		
 		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		Area area = new Area(
 				areaToCreate.getName(), 
 				areaToCreate.getDescription(), 
 				u.getPseudo());
+		
+		// FileName normalize and store
+		final String UPLOAD_DIR = "./src/main/resources/static/img/uploads/";
+		final String TH_IMG_ROOT_PATH = "/img/uploads/";
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		try {
+			Path path = Paths.get(UPLOAD_DIR + fileName);
+			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			area.setImgPathThAttribute(TH_IMG_ROOT_PATH+fileName);
+		} catch (IOException e) {
+			LOGGER.debug("{} upload failed copy into {}", fileName, UPLOAD_DIR);
+			e.printStackTrace();
+		}
 		
 		LOGGER.info("user {} create a new Area {}", u.getEmail(), area.getName());		
 	

@@ -22,7 +22,8 @@
 						<hr />
 						<p th:text="${area.description}">Description </p>
 						<br />
-						<img class="center-block img-fluid" th:src="@{/img/area1_1100x350.jpg}" alt="">
+						<img th:if="${area.imgPathThAttribute == null}" class="center-block img-fluid" th:src="@{/img/area1_1100x350.jpg}" th:alt="${area.name}">
+						<img th:if="${area.imgPathThAttribute != null}" class="center-block img-fluid" th:src="@{${area.imgPathThAttribute}}" th:alt="${area.name}">
 					</div>					
 					
 <!-- 					Onglets détail du site d'escalade -->
@@ -165,7 +166,7 @@
 													<dl class="row">
 														<dt class="col-sm-3">
 															Cot. <span th:text="${route.climbingGrade}">Cotation</span>
-															<p><small th:text="'('+${route?.nbLength}+' longueur)'">nbLength</small></p>
+															<br /><small th:text="'('+${route?.nbLength}+' longueur)'">nbLength</small>
 														</dt>
 														<dd class="col-sm-9">
 															<span th:text="${route.description}">Description</span>
