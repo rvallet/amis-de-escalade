@@ -188,7 +188,7 @@ public class ClimbingAreasController {
 				areaToCreate.getName(), 
 				areaToCreate.getDescription(), 
 				u.getPseudo());
-
+		if(!file.isEmpty()) {
 			// FileName normalize and store
 			final String UPLOAD_DIR = "./src/main/resources/static/img/uploads/";
 			final String TH_IMG_ROOT_PATH = "/img/uploads/";
@@ -201,9 +201,9 @@ public class ClimbingAreasController {
 				LOGGER.debug("Area --> {} upload failed copy into {}", fileName, UPLOAD_DIR);
 				e.printStackTrace();
 			}
-
+		}
 		
-		LOGGER.info("user {} create a new Area {}", u.getEmail(), area.getName());		
+		LOGGER.info("user {} create a new Area {} (Uploaded IMG : {})", u.getEmail(), area.getName(), !file.isEmpty());		
 	
 		climbAreaRepository.save(area);		
 		return "redirect:/sites";

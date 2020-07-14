@@ -95,9 +95,9 @@
 							</div>
 							<select class="form-control">
 								<option value=""> -Sélectionner un Nb Secteur- </option>
-								<option th:each="climbingGrade : ${T(com.ocesclade.amisdeescalade.enumerated.ClimbingGradeEnum).values()}"
-									th:value="${climbingGrade}"
-									th:utext="${climbingGrade}"/>
+								<option th:each="area:${areaList}"
+									th:value="${area.sectorList.size()}"
+									th:utext="${area.sectorList.size()}"/>					
 							</select>	
 						</div>
 					</div>

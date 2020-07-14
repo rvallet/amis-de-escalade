@@ -99,22 +99,23 @@ public class TopoController {
 				u.getPseudo(), 
 				u);
 		topo.setIsOnline(true);
-		
-		// FileName normalize and store
-		final String UPLOAD_DIR = "./src/main/resources/static/img/uploads/";
-		final String TH_IMG_ROOT_PATH = "/img/uploads/";
-		String fileName = "topo_"+System.currentTimeMillis()+"_"+StringUtils.cleanPath(file.getOriginalFilename());
-		try {
-			Path path = Paths.get(UPLOAD_DIR + fileName);
-			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-			topo.setImgPathThAttribute(TH_IMG_ROOT_PATH+fileName);
-		} catch (IOException e) {
-			LOGGER.warn("============EXCEPTION TOPO-CREATE============");
-			LOGGER.debug("TOPO -> {} upload failed copy into {}", fileName, UPLOAD_DIR);
-			e.printStackTrace();
+
+		if(!file.isEmpty()) {
+			// FileName normalize and store
+			final String UPLOAD_DIR = "./src/main/resources/static/img/uploads/";
+			final String TH_IMG_ROOT_PATH = "/img/uploads/";
+			String fileName = "topo_"+System.currentTimeMillis()+"_"+StringUtils.cleanPath(file.getOriginalFilename());
+			try {
+				Path path = Paths.get(UPLOAD_DIR + fileName);
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				topo.setImgPathThAttribute(TH_IMG_ROOT_PATH+fileName);
+			} catch (IOException e) {
+				LOGGER.debug("TOPO -> {} upload failed copy into {}", fileName, UPLOAD_DIR);
+				e.printStackTrace();
+			}
 		}
 				
-		LOGGER.info("user {} create a new Topo {}", u.getEmail(), topo.getName());		
+		LOGGER.info("user {} create a new Topo {} (Uploaded IMG : {})", u.getEmail(), topo.getName(), !file.isEmpty());		
 		topoRepository.save(topo);
 		return "redirect:/topos";
 	}
