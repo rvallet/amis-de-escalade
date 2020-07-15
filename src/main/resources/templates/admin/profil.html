@@ -101,7 +101,7 @@
 													<span th:text="${area?.isPromoted} ? 'Oui' : 'Non'">Description</span>
 													<form th:action="@{/admin/edit-area}" method="get">
 														<input type="hidden" name="id" th:value="${area?.id}">
-														<button type="submit">Edit</button>
+														<button type="submit">Modifier</button>
 													</form>
 												</div>
 											</td>								
@@ -146,14 +146,14 @@
 											<td>
 												<div class="text-center">
 														<button type="button" class="text-center" data-toggle="modal" data-target="#topoModalCenter" th:attr="data-target='#topoModalCenter'+${topo?.id}">
-															<span class="glyphicon glyphicon-trash"></span> Delete
+															<span class="glyphicon glyphicon-trash"></span> Supprimer
 														</button>
 <!-- 													Modal de confirmation -->
 														<div class="modal fade" th:id="topoModalCenter+${topo?.id}" tabindex="-1" role="dialog" aria-labelledby="topoModalCenterTitle" aria-hidden="true">
 															<div class="modal-dialog modal-dialog-centered" role="document">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h5 class="modal-title" id="topoModalLongTitle">DELETE</h5>
+																		<h5 class="modal-title" id="topoModalLongTitle">Archiver</h5>
 																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																			<span aria-hidden="true">&times;</span>
 																		</button>
@@ -214,18 +214,18 @@
 												<div class="text-center">
 													<form th:action="@{/admin/edit-comment}" th:object="${comment}" method="get">
 														<input type="hidden" name="id" th:value="${comment?.id}">
-														<button class="text-center" type="submit">Edit</button>
+														<button class="text-center" type="submit">Modifier</button>
 													</form>
 													<br />
 														<button type="button" class="text-center" data-toggle="modal" data-target="#commentModalCenter" th:attr="data-target='#commentModalCenter'+${comment?.id}">
-															Delete
+															Supprimer
 														</button>
 <!-- 													Modal de confirmation -->
 														<div class="modal fade" th:id="commentModalCenter+${comment?.id}" tabindex="-1" role="dialog" aria-labelledby="commentModalCenterTitle" aria-hidden="true">
 															<div class="modal-dialog modal-dialog-centered" role="document">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h5 class="modal-title" id="commentModalLongTitle">DELETE</h5>
+																		<h5 class="modal-title" id="commentModalLongTitle">Supprimer</h5>
 																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																			<span aria-hidden="true">&times;</span>
 																		</button>
@@ -242,7 +242,7 @@
 																		<form th:action="@{/admin/delete-comment}" th:object="${comment}" method="get">
 																			<input type="hidden" name="id" th:value="${comment?.id}">
 																			<input type="hidden" name="action" th:value="delete">
-																			<button type="submit" class="btn btn-primary">Delete</button>
+																			<button type="submit" class="btn btn-primary">Supprimer</button>
 																		</form>
 																	</div>
 																</div>
@@ -291,7 +291,7 @@
 														<form th:action="@{/admin/update}" th:object="${user}" method="post">
 															<input type="hidden" name="id" th:value="${user?.id}">
 															<input type="hidden" name="role" th:value="${user?.role}">
-															<button class="text-center" type="submit">Edit</button>
+															<button class="text-center" type="submit">Modifier</button>
 														</form>	
 													</div>									
 												</td>							
