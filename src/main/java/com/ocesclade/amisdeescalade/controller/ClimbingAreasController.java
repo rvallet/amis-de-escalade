@@ -106,11 +106,21 @@ public class ClimbingAreasController {
 			}
 			
 			Set<Integer> nbSectorSet = new HashSet<>();
+			Set<String> gradeSet = new HashSet<>();
 			for (Area area : areaList) {			
-				nbSectorSet.add(area.getSectorList().size());			
+				nbSectorSet.add(area.getSectorList().size());
+				for (Sector sector : area.getSectorList()) {
+					for (Route route : sector.getRouteList()) {
+						gradeSet.add(route.getClimbingGrade());
+					}
+				}
 			}
 			List<Integer> nbSectorList = new ArrayList<>(nbSectorSet);
+			List<String> gradeList = new ArrayList<>(gradeSet);
 			Collections.sort(nbSectorList);
+			gradeList.sort(Comparator.comparing( String::toString ));
+			
+			model.addAttribute("gradeList" , gradeList);
 			model.addAttribute("nbSectorList" , nbSectorList );
 			model.addAttribute("areaList" , areaList );
 			LOGGER.info("Résultat : {} sites", areaList.size());
