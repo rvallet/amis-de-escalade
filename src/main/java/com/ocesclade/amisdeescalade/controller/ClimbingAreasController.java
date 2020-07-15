@@ -5,7 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -72,7 +77,9 @@ public class ClimbingAreasController {
 			Model model,
 			@RequestParam(name="param1", required = false) String param1,
 			@RequestParam(name="param2", required = false) String param2,
-			@RequestParam(name="param3", required = false) String param3
+			@RequestParam(name="param3", required = false) String param3,
+			@RequestParam(name="param4", required = false) String param4,
+			@RequestParam(name="param5", required = false) String param5
 			){
 		List<Area> areaList = climbAreaRepository.findAll();
 				
@@ -97,10 +104,46 @@ public class ClimbingAreasController {
 						.collect(Collectors.toList());
 				model.addAttribute("param2", param2 );
 			}
+			
+			Set<Integer> nbSectorSet = new HashSet<>();
+			Set<String> gradeSet = new HashSet<>();
+			for (Area area : areaList) {			
+				nbSectorSet.add(area.getSectorList().size());
+				for (Sector sector : area.getSectorList()) {
+					for (Route route : sector.getRouteList()) {
+						gradeSet.add(route.getClimbingGrade());
+					}
+				}
+			}
+			List<Integer> nbSectorList = new ArrayList<>(nbSectorSet);
+			List<String> gradeList = new ArrayList<>(gradeSet);
+			Collections.sort(nbSectorList);
+			gradeList.sort(Comparator.comparing( String::toString ));
+			
+			model.addAttribute("gradeList" , gradeList);
+			model.addAttribute("nbSectorList" , nbSectorList );
 			model.addAttribute("areaList" , areaList );
 			LOGGER.info("Résultat : {} sites", areaList.size());
 		} else {
-		model.addAttribute("areaList" , areaList );
+		
+		Set<Integer> nbSectorSet = new HashSet<>();
+		Set<String> gradeSet = new HashSet<>();
+		for (Area area : areaList) {			
+			nbSectorSet.add(area.getSectorList().size());
+			for (Sector sector : area.getSectorList()) {
+				for (Route route : sector.getRouteList()) {
+					gradeSet.add(route.getClimbingGrade());
+				}
+			}
+		}
+		List<Integer> nbSectorList = new ArrayList<>(nbSectorSet);
+		List<String> gradeList = new ArrayList<>(gradeSet);
+		Collections.sort(nbSectorList);
+		gradeList.sort(Comparator.comparing( String::toString ));
+		
+		model.addAttribute("gradeList" , gradeList);
+		model.addAttribute("nbSectorList" , nbSectorList);
+		model.addAttribute("areaList" , areaList);
 		LOGGER.info("Chargement de {} sites", areaList.size());
 		}
 		
