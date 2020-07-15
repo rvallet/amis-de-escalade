@@ -39,9 +39,13 @@ Liste des fonctionnalités attendues :
 * une documentation succincte (un fichier README.md  suffit) expliquant comment déployer l'application (base de données, configuration sur serveur Tomcat...).
 
 @[MPD](https://github.com/rvallet/amis-de-escalade/blob/master/sql/MPD_OCP6_LADE.JPG) : Modèle Physique de Données
+
 @[SQL Script CREATE](https://github.com/rvallet/amis-de-escalade/blob/master/sql/escalade_bdd_create.sql) : Création de la BDD et des tables
+
 @[SQL Script INSERT](https://github.com/rvallet/amis-de-escalade/blob/master/sql/dump-escalade_bdd.sql) : Jeux de données de la BDD
+
 @[UML](https://github.com/rvallet/amis-de-escalade/blob/master/uml/class-diagram.jpg) : Diagram de classe des entitées
+
 @[JavaDoc](https://github.com/rvallet/amis-de-escalade/tree/master/doc/com/ocesclade/amisdeescalade) : JavaDoc du projet
 
 ## Installation
