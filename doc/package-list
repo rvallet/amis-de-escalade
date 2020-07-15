@@ -1,0 +1,9 @@
+com.ocesclade.amisdeescalade
+com.ocesclade.amisdeescalade.controller
+com.ocesclade.amisdeescalade.dto
+com.ocesclade.amisdeescalade.entities
+com.ocesclade.amisdeescalade.enumerated
+com.ocesclade.amisdeescalade.repository
+com.ocesclade.amisdeescalade.security
+com.ocesclade.amisdeescalade.service
+com.ocesclade.amisdeescalade.utils
