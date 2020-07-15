@@ -31,7 +31,6 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 		URL resource = this.getClass().getResource("passay_fr.properties");
 		
 		try {
-//			props.load(new FileInputStream("C:\\Utilisateurs\\A762211\\eclipse-workspace\\amis-de-escalade\\src\\main\\java\\com\\ocesclade\\amisdeescalade\\security\\passay.properties"));
 			props.load(new FileInputStream(resource.getPath()));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
