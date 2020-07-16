@@ -82,52 +82,42 @@ public class ClimbingAreasController {
 			@RequestParam(name="param5", required = false) String param5
 			){
 		List<Area> areaList = climbAreaRepository.findAll();
+		LOGGER.info("Chargement des sites paramètres de filtres : [{}, {}, {}, {}, {}]", param1, param2, param3, param4, param5);
 				
-		if (param1!=null && param2!=null) {
-			LOGGER.info("Chargement des sites (Nom {} - Description {})",param1, param2);
-			
-			if (param1.length()>0 && param2.length()>0) {
-				areaList = areaList.stream()
-						.filter(e -> e.getName().toLowerCase().contains(param1.toLowerCase()) 
-								|| e.getDescription().toLowerCase().contains(param2.toLowerCase()))
-						.collect(Collectors.toList());
-				model.addAttribute("param1", param1 );
-				model.addAttribute("param2", param2 );
-			} else if (param1.length()>0) {
-				areaList = areaList.stream()
-						.filter(e -> e.getName().toLowerCase().contains(param1.toLowerCase()))
-						.collect(Collectors.toList());
-				model.addAttribute("param1", param1 );
-			} else {
-				areaList = areaList.stream()
-						.filter(e -> e.getDescription().toLowerCase().contains(param2.toLowerCase()))
-						.collect(Collectors.toList());
-				model.addAttribute("param2", param2 );
-			}
-			
-			Set<Integer> nbSectorSet = new HashSet<>();
-			Set<String> gradeSet = new HashSet<>();
-			for (Area area : areaList) {			
-				nbSectorSet.add(area.getSectorList().size());
-				for (Sector sector : area.getSectorList()) {
-					for (Route route : sector.getRouteList()) {
-						gradeSet.add(route.getClimbingGrade());
-					}
-				}
-			}
-			List<Integer> nbSectorList = new ArrayList<>(nbSectorSet);
-			List<String> gradeList = new ArrayList<>(gradeSet);
-			Collections.sort(nbSectorList);
-			gradeList.sort(Comparator.comparing( String::toString ));
-			
-			model.addAttribute("gradeList" , gradeList);
-			model.addAttribute("nbSectorList" , nbSectorList );
-			model.addAttribute("areaList" , areaList );
-			LOGGER.info("Résultat : {} sites", areaList.size());
-		} else {
+		if (param1!=null && param1.length()>0) {
+			areaList = areaList.stream()
+					.filter(e -> e.getName().toLowerCase().contains(param1.toLowerCase()))
+					.collect(Collectors.toList());
+			model.addAttribute("param1", param1 );
+		}
+		
+		if (param2!=null && param2.length()>0) {
+			areaList = areaList.stream()
+					.filter(e -> e.getDescription().toLowerCase().contains(param2.toLowerCase()))
+					.collect(Collectors.toList());
+			model.addAttribute("param2", param2 );
+		}
+		
+		if (param3!=null && param3.length()>0) {
+			areaList = areaList.stream()
+					.filter(e -> e.getLocation().toLowerCase().contains(param3.toLowerCase()))
+					.collect(Collectors.toList());
+			model.addAttribute("param3", param3 );
+		}
+		
+		if (param4!=null && param4.length()>0) {
+			areaList = climbAreaRepository.findAreaBySectorAndByRouteClimbingGrade(param4);
+			model.addAttribute("param4", param4 );
+		}
+		
+		if (param5!=null && param5.length()>0) {
+			areaList = climbAreaRepository.findAreaBySectorAndByRouteNbLength(Integer.valueOf(param5));
+			model.addAttribute("param5", param5 );
+		}
 		
 		Set<Integer> nbSectorSet = new HashSet<>();
 		Set<String> gradeSet = new HashSet<>();
+		
 		for (Area area : areaList) {			
 			nbSectorSet.add(area.getSectorList().size());
 			for (Sector sector : area.getSectorList()) {
@@ -136,6 +126,7 @@ public class ClimbingAreasController {
 				}
 			}
 		}
+		
 		List<Integer> nbSectorList = new ArrayList<>(nbSectorSet);
 		List<String> gradeList = new ArrayList<>(gradeSet);
 		Collections.sort(nbSectorList);
@@ -145,7 +136,6 @@ public class ClimbingAreasController {
 		model.addAttribute("nbSectorList" , nbSectorList);
 		model.addAttribute("areaList" , areaList);
 		LOGGER.info("Chargement de {} sites", areaList.size());
-		}
 		
 		return "sites";		
 	}
@@ -229,7 +219,8 @@ public class ClimbingAreasController {
 		User u = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		Area area = new Area(
 				areaToCreate.getName(), 
-				areaToCreate.getDescription(), 
+				areaToCreate.getDescription(),
+				areaToCreate.getLocation(),
 				u.getPseudo());
 		if(!file.isEmpty()) {
 			// FileName normalize and store

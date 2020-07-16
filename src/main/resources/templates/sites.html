@@ -103,6 +103,10 @@
 					</div>
 
 <!-- 					Sites Cards -->
+					<div class="text-center" th:if="${areaList.size()<1}">
+						<h3>Aucune correspondance</h3>
+						<p class="text-muted text-center" th:text="${'Retirer vos filtres ou modifiez-les'}"></p>
+					</div>
 					<div class="card-deck">
 						<br />
 						<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
@@ -118,7 +122,10 @@
 									<p class="card-title text-center" th:text="${area.name}">Nom</p>
 								</div>
 								<p class="card-text" th:text="${area.shortDescription}">Description</p>
-								<p class="card-text text-right"><small class="text-muted" th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</small></p>
+								<p class="text-muted" th:if="${area.location}"> Lieu : <span th:text="${area.location}">Localisation</span></p>
+								<p class="card-text text-right">
+									<small class="text-muted" th:text="${#dates.format(area.releaseDate, 'dd/MM/yyyy')}">Date</small>
+								</p>
 							</div>
 							<div class="card-footer">
 								<form th:action="@{site}" method="get">

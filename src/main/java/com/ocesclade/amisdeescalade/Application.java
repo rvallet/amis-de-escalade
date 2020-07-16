@@ -177,18 +177,22 @@ public class Application implements CommandLineRunner {
 				new Area(
 						"areaName1",
 						"aeraDescription1 "+loremIpsum+StringTools.randomText(999,15),
+						"areaLocation1",
 						user1.getPseudo()),
 				new Area(
 						"areaName2",
 						"aeraDescription2 "+loremIpsum+StringTools.randomText(999,15),
+						"areaLocation2",
 						user2.getPseudo()),
 				new Area(
 						"areaName3",
 						"aeraDescription3 "+loremIpsum+StringTools.randomText(999,15),
+						"areaLocation3",
 						user3.getPseudo()),
 				new Area(
 						"areaName4",
 						"aeraDescription4 "+loremIpsum+StringTools.randomText(999,15),
+						"areaLocation4",
 						user4.getPseudo())
 					);
 			

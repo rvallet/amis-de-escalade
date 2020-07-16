@@ -38,30 +38,43 @@ Liste des fonctionnalités attendues :
 * les scripts SQL de création de la base de données et d'un jeu de données de démo
 * une documentation succincte (un fichier README.md  suffit) expliquant comment déployer l'application (base de données, configuration sur serveur Tomcat...).
 
+@[MPD](https://github.com/rvallet/amis-de-escalade/blob/master/sql/MPD_OCP6_LADE.JPG) : Modèle Physique de Données
+
+@[SQL Script CREATE](https://github.com/rvallet/amis-de-escalade/blob/master/sql/escalade_bdd_create.sql) : Création de la BDD et des tables
+
+@[SQL Script INSERT](https://github.com/rvallet/amis-de-escalade/blob/master/sql/dump-escalade_bdd.sql) : Jeux de données de la BDD
+
+@[UML](https://github.com/rvallet/amis-de-escalade/blob/master/uml/class-diagram.jpg) : Diagram de classe des entitées
+
+@[JavaDoc](https://github.com/rvallet/amis-de-escalade/tree/master/doc/com/ocesclade/amisdeescalade) : JavaDoc du projet
+
 ## Installation
 * Importer le projet dans votre repertoire de travail (git clone)
-* Créer une base donnée MySQL de nom "escalade_bdd" et lacer votre serveur (ex : WampServer)
-* Paramétrer l'accès au serveur de votre base de donnée dans le fichier application.properties (/amis-de-escalade/src/main/resources/application.properties)
-    * spring.datasource.url : votre adresse vers votre BDD (URL, Port, Nom de la BDD, paramètres)
-    * spring.datasource.username : l'identifiant de vore BDD (utilisteur aavec droits CRUD)
-    * spring.datasource.password : le mot de passe de votre BDD
-* Lancer un Maven Install ou Update pour télécharger les dépendances du projet
+* Créer une base donnée MySQL nommée "escalade_bdd" et lancer votre serveur local (ex : WampServer)
+* Paramétrer l'accès dans le fichier application.properties (/amis-de-escalade/src/main/resources/application.properties)
+    * spring.datasource.url : adresse vers votre BDD (URL, Port, Nom de la BDD, paramètres)
+    * spring.datasource.username : identifiant de vore BDD (utilisateur avec des droits CRUD)
+    * spring.datasource.password : mot de passe de votre BDD
+* Lancer un Maven Install ou Update pour télécharger les dépendances de ce projet
 * Lancer l'application (Boot Dashboard Start, serveur Apache Tomcat v8.0 ou ultérieure)
-    * Au lancement, l'application vas créer un jeu de donnée dans votre BDD (cf. /amis-de-escalade/src/main/java/com/ocesclade/amisdeescalade/Application.java). Une simple recherche de l'existance de l'utilisateur 'email@user1.fr' en BDD est effectuée (s'il existe, le jeu de donnée ne seras pas lancé). Si vous rencontrer un problème à l'initialisation du jeu de donnée, supprimer toute vos tables et relancer l'application
+    * Au lancement, l'application vas créer un jeu de donnée dans votre BDD (cf. /amis-de-escalade/src/main/java/com/ocesclade/amisdeescalade/Application.java). Une simple recherche de l'existance de l'utilisateur 'email@user1.fr' en BDD est effectuée (s'il existe, le jeu de donnée ne seras pas lancé). Si vous rencontrer un problème à l'initialisation du jeu de donnée, supprimer toute vos tables et relancer l'application.
 
-## Built With
+## Réalisé avec
 
 * [Eclipse](https://www.jetbrains.com/idea/) - IDE (JDK8)
-* [Maven](https://maven.apache.org/) - Dependency Management
+* [Maven](https://maven.apache.org/) - Pour la gestion des dépendances du projet
+* [SpringBoot v2.2.5](https://spring.io/projects/spring-boot) - Framework (+Spring DATA/JPA/HIBERNATE & Spring SECURITY) 
+* [Thymeleaf](https://www.thymeleaf.org/) - Moteur de templating Java
+* [Bootstrap 4](https://getbootstrap.com/) - framework de design responsive (Librairies HTML, CSS et JS)
 * [MySQL WorkBench](https://www.mysql.com/) - SGB MySQL, pour la conception du Modèle Physique de Donnée
 * [DBeaver](https://dbeaver.io/) - SGBD universelle, pour l'écriture des scripts SQL et des tests MySQL
-* [WampServer](http://www.wampserver.com/) - Plateforme Apache, PHP, MySQL (+PHP MyAdmin)
+* [WampServer](http://www.wampserver.com/) - Gestion de serveurs Apache, PHP, MySQL (+PHP MyAdmin)
 
-## Authors
+## Autheurs
 
 * **Rémy VALLET** - *Initial work* - [rvallet](https://github.com/rvallet)
 
-See also the list of [contributors](https://github.com/rvallet/amis-de-escalade/contributors) who participated in this project.
+<!-- Voir également la liste des [contributeurs](https://github.com/rvallet/amis-de-escalade/contributors) qui ont participés au projet. -->
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/rvallet/amis-de-escalade/blob/master/LICENSE) file for details

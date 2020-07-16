@@ -18,10 +18,17 @@
 				<div class="container">				
 				
 					<div class="col-md-12" th:value="${area}">
-						<H2><span th:text="${area.name}">Nom</span></H2>
+						<H2><span th:text="${area.name}">Nom</span></H2>						
 						<hr />
+						<small th:if="${area.location}" class="text-muted" th:text="${'Lieu : '+area.location}">Lieu</small>
+						<small class="text-muted" th:text="${'('+#dates.format(area.releaseDate, 'dd/MM/yyyy')+' - Autheur : '+area.author+')'}">Date</small>						
+						<br />
+						<br />
 						<p th:text="${area.description}">Description </p>
 						<br />
+						<div class="logo" th:if="${area.isPromoted}">
+							<img class="img-fluid" width="40" height="40" th:src="@{/img/officiel-LADE_150x150.png}" alt="Sélection officiel LADE">
+						</div>
 						<img th:if="${area.imgPathThAttribute == null}" class="center-block img-fluid" th:src="@{/img/area1_1100x350.jpg}" th:alt="${area.name}">
 						<img th:if="${area.imgPathThAttribute != null}" class="center-block img-fluid" th:src="@{${area.imgPathThAttribute}}" th:alt="${area.name}">
 					</div>					
