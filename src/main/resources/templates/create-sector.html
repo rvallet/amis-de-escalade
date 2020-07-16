@@ -24,7 +24,7 @@
 							Nom
 						</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nom du secteur">
+							<input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nom du secteur" required>
 							<p class="error-message" th:each="error : ${#fields.errors('name')}" th:text="${error}">Validation error</p>
 						</div>
 					</div>
@@ -33,7 +33,7 @@
 							Description
 						</label>
 						<div class="col-sm-10">
-							<textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Description du secteur"></textarea>
+							<textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Description du secteur" required></textarea>
 							<p class="error-message" th:each="error : ${#fields.errors('description')}" th:text="${error}">Validation error</p>
 						</div>
 					</div>

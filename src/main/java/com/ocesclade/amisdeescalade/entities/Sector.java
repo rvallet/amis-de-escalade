@@ -26,11 +26,11 @@ public class Sector implements Serializable {
 	private Long id;
 	
 	@NotNull
-	@Size(min = 5, max = 75)
+	@Size(min = 1, max = 75)
 	private String name;
 	
 	@NotNull
-	@Size(min = 5, max = 250)
+	@Size(min = 1, max = 999)
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -48,8 +48,8 @@ public class Sector implements Serializable {
 	}
 
 	public Sector(
-			@NotNull @Size(min = 5, max = 75) String name,
-			@NotNull @Size(min = 5, max = 250) String description,
+			@NotNull @Size(min = 1, max = 75) String name,
+			@NotNull @Size(min = 1, max = 999) String description,
 			Area area
 			) {
 		this.name = name;

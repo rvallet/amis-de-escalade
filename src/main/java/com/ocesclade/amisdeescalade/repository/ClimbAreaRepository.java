@@ -21,7 +21,7 @@ public interface ClimbAreaRepository extends JpaRepository<Area,Integer>{
 		JOIN route r ON s.id_sector = r.id_sector
 		WHERE nb_length = 1;
 	 * */
-	@Query("SELECT DISTINCT a from Area a JOIN Sector s ON a.id=s.id JOIN Route r ON s.id=r.id WHERE r.nbLength = ?1")
+	@Query("SELECT DISTINCT a from Area a JOIN Sector s ON s.area.id=a.id JOIN Route r ON r.sector.id=s.id WHERE r.nbLength = ?1")
 	List<Area> findAreaBySectorAndByRouteNbLength (int routeNbLength);
 	
 	/* 
@@ -31,7 +31,7 @@ public interface ClimbAreaRepository extends JpaRepository<Area,Integer>{
 		JOIN route r ON s.id_sector = r.id_sector
 		WHERE climbing_grade LIKE '8b';
 	 * */
-	@Query("SELECT DISTINCT a from Area a JOIN Sector s ON a.id=s.id JOIN Route r ON s.id=r.id WHERE r.climbingGrade LIKE %?1")
+	@Query("SELECT DISTINCT a from Area a JOIN Sector s ON s.area.id=a.id JOIN Route r ON r.sector.id=s.id WHERE r.climbingGrade LIKE %?1")
 	List<Area> findAreaBySectorAndByRouteClimbingGrade (String routeClimbingGrade);
 
 }

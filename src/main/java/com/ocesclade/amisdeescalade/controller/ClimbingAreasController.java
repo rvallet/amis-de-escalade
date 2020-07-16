@@ -106,11 +106,13 @@ public class ClimbingAreasController {
 		}
 		
 		if (param4!=null && param4.length()>0) {
+			LOGGER.info("Recherche Area avec Route de grade {} - Résultat = {} Area", param4, climbAreaRepository.findAreaBySectorAndByRouteClimbingGrade(param4).size());
 			areaList = climbAreaRepository.findAreaBySectorAndByRouteClimbingGrade(param4);
 			model.addAttribute("param4", param4 );
 		}
 		
 		if (param5!=null && param5.length()>0) {
+			LOGGER.info("Recherche Area avec Route de {} longeur - Résultat = {} Area", param5, climbAreaRepository.findAreaBySectorAndByRouteNbLength(Integer.valueOf(param5)).size());
 			areaList = climbAreaRepository.findAreaBySectorAndByRouteNbLength(Integer.valueOf(param5));
 			model.addAttribute("param5", param5 );
 		}
@@ -119,10 +121,10 @@ public class ClimbingAreasController {
 		Set<String> gradeSet = new HashSet<>();
 		
 		for (Area area : areaList) {			
-			nbSectorSet.add(area.getSectorList().size());
-			for (Sector sector : area.getSectorList()) {
+			for (Sector sector : area.getSectorList()) {				
 				for (Route route : sector.getRouteList()) {
 					gradeSet.add(route.getClimbingGrade());
+					nbSectorSet.add(route.getNbLength());
 				}
 			}
 		}
@@ -334,6 +336,7 @@ public class ClimbingAreasController {
 				ClimbingGradeEnum.of(routeToAdd.getClimbingGrade()),
 				sector
 				);
+		route.setNbLength(routeToAdd.getNbLength());
 		climbRouteRepository.save(route);
 		sector.getRouteList().add(routeToAdd);
 		
