@@ -136,8 +136,8 @@
 							<div class="logo" th:if="${area.isPromoted}">
 								<img class="img-fluid" width="40" height="40" th:src="@{/img/officiel-LADE_150x150.png}" alt="Sélection officiel LADE">
 							</div>
-							<img th:if="${area.imgPathThAttribute == null}" width="500" height="250" class="card-img-top img-fluid" th:src="@{/img/area1_200x100.jpg}" th:alt="${area.name}" alt="">
-							<img th:if="${area.imgPathThAttribute != null}" width="500" height="250" class="card-img-top img-fluid" th:src="@{${area.imgPathThAttribute}}" th:alt="${area.name}" alt="">
+							<img th:if="${area.imgPathThAttribute == null}" class="card-img-top img-fluid" th:src="@{/img/area/custom4_area_900x400.jpg}" th:alt="${area.name}" alt="">
+							<img th:if="${area.imgPathThAttribute != null}" class="card-img-top img-fluid" th:src="@{${area.imgPathThAttribute}}" th:alt="${area.name}" alt="">
 							<div class="card-body">
 								<div class="card-header">
 									<p class="card-title text-center" th:text="${area.name}">Nom</p>
