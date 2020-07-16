@@ -40,7 +40,7 @@
 											<p class="card-title text-center" th:text="${topo.name}">Nom</p>
 										</div>
 										<p class="card-text" th:text="${topo.shortDescription}">Description</p>
-										<p class="text-muted"> Localisation : <span th:text="${topo.location}">Lieu</span></p>
+										<p class="text-muted"> Lieu : <span th:text="${topo.location}">Localisation</span></p>
 										<p class="card-text text-right"><small class="text-muted" th:text="${#dates.format(topo.releaseDate, 'dd/MM/yyyy')}">Date</small></p>
 									</div>
 									<div class="card-footer">

@@ -24,7 +24,7 @@
 							Nom
 						</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nom du site">
+							<input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nom du site" required>
 							<p class="error-message" th:each="error : ${#fields.errors('name')}" th:text="${error}">Validation error</p>
 						</div>
 					</div>
@@ -33,11 +33,19 @@
 							Description
 						</label>
 						<div class="col-sm-10">
-							<textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Description du site"></textarea>
+							<textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Description du site" required></textarea>
 							<p class="error-message" th:each="error : ${#fields.errors('description')}" th:text="${error}">Validation error</p>
 						</div>
 					</div>
-
+					<div class="form-group row">
+						<label for="location" class="col-sm-2 col-form-label">
+							Lieu
+						</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="location" th:field="*{location}" placeholder="Localisation du site" required>
+							<p class="error-message" th:each="error : ${#fields.errors('location')}" th:text="${error}">Validation error</p>
+						</div>
+					</div>
 					<div class="form-group row">
 						<div class="col-sm-2">Image (optionnel)</div>
 						<div class="col-sm-10">
