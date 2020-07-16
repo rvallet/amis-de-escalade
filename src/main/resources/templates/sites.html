@@ -57,14 +57,22 @@
 					
 					
 <!-- 					More Search Criteria -->
-					<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#searchCriteria" aria-expanded="false" aria-controls="searchCriteria">
-						<span class="collapsed">
-							Plus de critères
-						</span>
-						<span class="expanded">
-							Moins de critères
-						</span>
-					</button>
+					<div class="d-flex justify-content-between">
+					<div>
+						<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#searchCriteria" aria-expanded="false" aria-controls="searchCriteria">
+							<span class="collapsed">
+								Plus de critères
+							</span>
+							<span class="expanded">
+								Moins de critères
+							</span>
+						</button>
+					</div>
+					<div class="d-flex justify-content-between">
+						<a th:href="@{/sites}"><button class="btn btn-outline-secondary" type="button" th:text="'Supprimer tous les filtres'"></button></a>
+					</div>
+					</div>
+
 					<div class="collapse" id="searchCriteria">
 						<br />							
 						<div class="input-group mb-3">
@@ -112,15 +120,16 @@
 						</div>
 					</div>
 					</form>
+					<br />
 
 <!-- 					Sites Cards -->
 					<div class="text-center" th:if="${areaList.size()<1}">
+					<br />
 						<h3>Aucune correspondance</h3>
 						<p class="text-muted text-center" th:text="${'Supprimer les filtres ?'}"></p>
 						<a th:href="@{/sites}"><button class="btn btn-outline-secondary" type="button" th:text="Supprimer"></button></a>
 					</div>
 					<div class="card-deck">
-						<br />
 						<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 						<div class="col mb-4" id="areaList" th:each="area:${areaList}">
 							<div class="card col">

@@ -121,10 +121,10 @@ public class ClimbingAreasController {
 		Set<String> gradeSet = new HashSet<>();
 		
 		for (Area area : areaList) {			
-			nbSectorSet.add(area.getSectorList().size());
-			for (Sector sector : area.getSectorList()) {
+			for (Sector sector : area.getSectorList()) {				
 				for (Route route : sector.getRouteList()) {
 					gradeSet.add(route.getClimbingGrade());
+					nbSectorSet.add(route.getNbLength());
 				}
 			}
 		}
@@ -336,6 +336,7 @@ public class ClimbingAreasController {
 				ClimbingGradeEnum.of(routeToAdd.getClimbingGrade()),
 				sector
 				);
+		route.setNbLength(routeToAdd.getNbLength());
 		climbRouteRepository.save(route);
 		sector.getRouteList().add(routeToAdd);
 		
