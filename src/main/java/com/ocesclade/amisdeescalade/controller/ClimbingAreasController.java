@@ -106,11 +106,13 @@ public class ClimbingAreasController {
 		}
 		
 		if (param4!=null && param4.length()>0) {
+			LOGGER.info("Recherche Area avec Route de grade {} - Résultat = {} Area", param4, climbAreaRepository.findAreaBySectorAndByRouteClimbingGrade(param4).size());
 			areaList = climbAreaRepository.findAreaBySectorAndByRouteClimbingGrade(param4);
 			model.addAttribute("param4", param4 );
 		}
 		
 		if (param5!=null && param5.length()>0) {
+			LOGGER.info("Recherche Area avec Route de {} longeur - Résultat = {} Area", param5, climbAreaRepository.findAreaBySectorAndByRouteNbLength(Integer.valueOf(param5)).size());
 			areaList = climbAreaRepository.findAreaBySectorAndByRouteNbLength(Integer.valueOf(param5));
 			model.addAttribute("param5", param5 );
 		}

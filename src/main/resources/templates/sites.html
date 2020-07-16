@@ -54,7 +54,7 @@
 								</button>
 							</div>
 						</div>
-					</form>
+					
 					
 <!-- 					More Search Criteria -->
 					<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#searchCriteria" aria-expanded="false" aria-controls="searchCriteria">
@@ -71,7 +71,7 @@
 							<div class="input-group-prepend">
 								<button class="btn btn-outline-secondary">Filtrer</button>
 							</div>
-							<input type="text" id="param3" name="param3" th:value="${param2}" class="form-control" placeholder="par lieu" />
+							<input type="text" id="param3" name="param3" th:value="${param3}" class="form-control" placeholder="par lieu" />
 							<div class="input-group-append">								
 								<button class="btn btn-default btn-sm" onclick="document.getElementById('param3').value = ''">
 									<span class="glyphicon glyphicon-remove">Supprimer</span>
@@ -82,30 +82,42 @@
 							<div class="input-group-prepend">
 								<label class="input-group-text">Cotation</label>
 							</div>
-							<select class="form-control">
+							<select class="form-control" id="param4" name="param4" th:value="${grade}">
 								<option value=""> -Sélectionner une cotation- </option>
 								<option th:each="grade : ${gradeList}"
 									th:value="${grade}"
 									th:utext="${grade}"/>
-							</select>	
+							</select>
+							<div class="input-group-append">								
+								<button type="submit" class="btn btn-outline-secondary">
+									Appliquer
+								</button>
+							</div>	
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<label class="input-group-text">Nb secteurs</label>
 							</div>
-							<select class="form-control">
+							<select class="form-control" id="param5" name="param5" th:value="${nbSector}">
 								<option value=""> -Sélectionner un Nb Secteur- </option>
 								<option th:each="nbSector:${nbSectorList}"
 									th:value="${nbSector}"
 									th:utext="${nbSector}"/>					
-							</select>	
+							</select>
+							<div class="input-group-append">								
+								<button type="submit" class="btn btn-outline-secondary">
+									Appliquer
+								</button>
+							</div>	
 						</div>
 					</div>
+					</form>
 
 <!-- 					Sites Cards -->
 					<div class="text-center" th:if="${areaList.size()<1}">
 						<h3>Aucune correspondance</h3>
-						<p class="text-muted text-center" th:text="${'Retirer vos filtres ou modifiez-les'}"></p>
+						<p class="text-muted text-center" th:text="${'Supprimer les filtres ?'}"></p>
+						<a th:href="@{/sites}"><button class="btn btn-outline-secondary" type="button" th:text="Supprimer"></button></a>
 					</div>
 					<div class="card-deck">
 						<br />
