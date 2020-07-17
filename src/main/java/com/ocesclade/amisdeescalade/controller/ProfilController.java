@@ -18,6 +18,7 @@ import com.ocesclade.amisdeescalade.entities.Comment;
 import com.ocesclade.amisdeescalade.entities.Topo;
 import com.ocesclade.amisdeescalade.entities.TopoLoan;
 import com.ocesclade.amisdeescalade.entities.User;
+import com.ocesclade.amisdeescalade.enumerated.RoleEnum;
 import com.ocesclade.amisdeescalade.enumerated.TopoLoanStatusEnum;
 import com.ocesclade.amisdeescalade.repository.ClimbAreaRepository;
 import com.ocesclade.amisdeescalade.repository.ClimbCommentRepository;
@@ -235,36 +236,28 @@ public class ProfilController {
 		return "redirect:/admin/profil#nav-topos";
 	}
 	
-//	@PostMapping("/admin/update")
-//	public String updateData(
-//			@RequestParam(name="type", required = false) String dataType,
-//			@RequestParam(name="id", required = false) Long dataId,
-//			BindingResult result, 
-//			Model model
-//		) {
-//		
-//		switch (dataType) {
-//		case "area":
-//			Area updatedArea = (Area) model.getAttribute(dataType);
-//			Area dbArea = climbAreaRepository.findOneById(dataId);
-//			dbArea.setIsPromoted(updatedArea.getIsPromoted());
-//			climbAreaRepository.save(dbArea);
-//			break;
-//		case "user":
-//			User updatedUser = (User) model.getAttribute(dataType);
-//			User dbUser = userService.findById(dataId);
-//			dbUser.setRole(updatedUser.getRole());
-//			result.getFieldValue("role");
-//			userRepository.save(dbUser);
-//			break;
-//		case "topo":
-//			break;
-//		case "comment":
-//			break;
-//		default:
-//			break;
-//		}
-//		
-//		return null;
-//	}
+	@GetMapping("/admin/edit-user")
+	public String editUser (
+			@RequestParam(name="id", required = false) Long userId,
+			Model model
+			) {
+		LOGGER.info("EDIT User id {}", userId);
+		User user = userService.findById(userId);
+		model.addAttribute("user", user);
+		return "/admin/edit-user";
+	}
+	
+	@PostMapping("/admin/update-user")
+	public String updateUser (
+			@RequestParam(name="id", required = false) Long userId,
+			@RequestParam(name="role", required = false) String role,
+			Model model
+		) {
+		LOGGER.info("UPDATE User id {}", userId);
+		User user = userService.findById(userId);
+		user.setRole(RoleEnum.of(role));
+		userRepository.save(user);
+		model.addAttribute("userList" , userRepository.findAll());
+		return "redirect:/admin/profil#nav-users";
+	}
 }

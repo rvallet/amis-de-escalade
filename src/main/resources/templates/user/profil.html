@@ -64,10 +64,30 @@
 							<br />
 							<h2>Profil Utilisateur</h2>
 							</br >
-							<p>Pseudo : <span th:text="${user?.pseudo}">Pseudo</span></p>
-							<p>Nom : <span th:text="${user?.lastName}">Nom</span></p>
-							<p>Prénom : <span th:text="${user?.firstName}">Prénom</span></p>
-							<p>Adresse e-mail : <span th:text="${user?.email}">e-Mail</span></p>				
+							<div class="input-group mb-3 col-md-9">
+								<div class="input-group-prepend">
+									<label class="input-group-text">Pseudo</label>
+								</div>
+								<input type="text" class="form-control" th:placeholder="${user?.pseudo}" disabled />
+							</div>
+							<div class="input-group mb-3 col-md-9">
+								<div class="input-group-prepend">
+									<label class="input-group-text">Nom</label>
+								</div>
+								<input type="text" class="form-control" th:placeholder="${user?.lastName}" disabled />
+							</div>
+							<div class="input-group mb-3 col-md-9">
+								<div class="input-group-prepend">
+									<label class="input-group-text">Prénom</label>
+								</div>
+								<input type="text" class="form-control" th:placeholder="${user?.firstName}" disabled />
+							</div>
+							<div class="input-group mb-3 col-md-9">
+								<div class="input-group-prepend">
+									<label class="input-group-text">e-Mail</label>
+								</div>
+								<input type="text" class="form-control" th:placeholder="${user?.email}" disabled />
+							</div>			
 						</div>
 					</div>
 					
