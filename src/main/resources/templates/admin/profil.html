@@ -64,10 +64,30 @@
 							<br />
 							<h2>Profil Administrateur</h2>
 							<br />
-							<p>Pseudo : <span th:text="${adminUser?.pseudo}">Pseudo</span></p>
-							<p>Nom : <span th:text="${adminUser?.lastName}">Nom</span></p>
-							<p>Prénom : <span th:text="${adminUser?.firstName}">Prénom</span></p>
-							<p>Adresse e-mail : <span th:text="${adminUser?.email}">e-Mail</span></p>				
+							<div class="input-group mb-3 col-md-9">
+								<div class="input-group-prepend">
+									<label class="input-group-text">Pseudo</label>
+								</div>
+								<input type="text" class="form-control" th:placeholder="${adminUser?.pseudo}" disabled />
+							</div>
+							<div class="input-group mb-3 col-md-9">
+								<div class="input-group-prepend">
+									<label class="input-group-text">Nom</label>
+								</div>
+								<input type="text" class="form-control" th:placeholder="${adminUser?.lastName}" disabled />
+							</div>
+							<div class="input-group mb-3 col-md-9">
+								<div class="input-group-prepend">
+									<label class="input-group-text">Prénom</label>
+								</div>
+								<input type="text" class="form-control" th:placeholder="${adminUser?.firstName}" disabled />
+							</div>
+							<div class="input-group mb-3 col-md-9">
+								<div class="input-group-prepend">
+									<label class="input-group-text">e-Mail</label>
+								</div>
+								<input type="text" class="form-control" th:placeholder="${adminUser?.email}" disabled />
+							</div>		
 						</div>
 					</div>
 					
@@ -288,11 +308,10 @@
 												<td>
 													<div class="text-center">
 														<span th:text="${user.role}">Accès</span>
-														<form th:action="@{/admin/update}" th:object="${user}" method="post">
-															<input type="hidden" name="id" th:value="${user?.id}">
-															<input type="hidden" name="role" th:value="${user?.role}">
+														<form th:action="@{/admin/edit-user}" method="get">
+															<input type="hidden" name="id" th:value="${user.id}">
 															<button class="text-center" type="submit">Modifier</button>
-														</form>	
+														</form>
 													</div>									
 												</td>							
 											</tr>
