@@ -94,7 +94,8 @@
 								<option value=""> -Sélectionner une cotation- </option>
 								<option th:each="grade : ${gradeList}"
 									th:value="${grade}"
-									th:utext="${grade}"/>
+									th:utext="${grade}"
+									th:selected="${grade}==${param4}"/>
 							</select>
 							<div class="input-group-append">								
 								<button type="submit" class="btn btn-outline-secondary">
@@ -110,7 +111,8 @@
 								<option value=""> -Sélectionner un Nb Secteur- </option>
 								<option th:each="nbSector:${nbSectorList}"
 									th:value="${nbSector}"
-									th:utext="${nbSector}"/>					
+									th:utext="${nbSector}"
+									th:selected="${nbSector}==${param5}"/>					
 							</select>
 							<div class="input-group-append">								
 								<button type="submit" class="btn btn-outline-secondary">
