@@ -34,6 +34,8 @@
     <!-- Gestion des dépendances -->
     <!-- =============================================================== -->
 	<dependencies>
+	
+		<!-- ~~~ SPRING BOOT ~~~ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -70,18 +72,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		
+		<!-- ~~~ SQL ~~~ -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
+		<!-- ~~~ Serveur Apache ~~~ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -98,6 +103,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- ~~~ Spring TH Security (+Passay) ~~~ -->		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -112,18 +119,26 @@
 			<artifactId>passay</artifactId>
 			<version>1.6.0</version>
 		</dependency>
+		
+		<!-- ~~~ Apache Commons (StringUtils) ~~~ -->		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 	</dependencies>
 
+	<!-- =============================================================== -->
+	<!-- Build -->
+	<!-- =============================================================== -->
 	<build>
 		<plugins>
+			<!-- Maven Plugins  -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<!-- Packaging JAR (Recupération de la version de l'application)-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>

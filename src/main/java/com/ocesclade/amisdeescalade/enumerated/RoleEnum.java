@@ -3,8 +3,8 @@ package com.ocesclade.amisdeescalade.enumerated;
 import java.util.Arrays;
 
 public enum RoleEnum {
-	USER ("Utilisateur"),
-	ADMIN ("Membre");
+	USER ("USER"),
+	ADMIN ("ADMIN");
 	
 	private final String role;
 	
