@@ -120,6 +120,23 @@
 								</button>
 							</div>	
 						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text">Nb longeur</label>
+							</div>
+							<select class="form-control" id="param6" name="param6" th:value="${nbLength}">
+								<option value=""> -Sélectionner un Nb Longeur- </option>
+								<option th:each="nbLength:${nbLengthList}"
+									th:value="${nbLength}"
+									th:utext="${nbLength}"
+									th:selected="${nbLength}==${param6}"/>					
+							</select>
+							<div class="input-group-append">								
+								<button type="submit" class="btn btn-outline-secondary">
+									Appliquer
+								</button>
+							</div>	
+						</div>
 					</div>
 					</form>
 					<br />
